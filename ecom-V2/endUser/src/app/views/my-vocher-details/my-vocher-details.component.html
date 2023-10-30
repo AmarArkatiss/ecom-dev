@@ -1,0 +1,170 @@
+<div class="row mt-3 ml-5 mr-5">
+  <div class="col-sm-2 py-2 px-2">
+    <app-account></app-account>
+  </div>
+  <div class="col-sm-7 px-2 py-2">
+    <div class="row card m-0 p-row">
+      <div class="col-lg-12 col-sm-12 p-0">
+        <p class="personal-info">Voucher Details</p>
+      </div>
+    </div>
+    <div class="col-sm-12 p-0 detaldiv1">
+      <div class="card p-0">
+        <div class="card-body p-0 row m-0">
+          <div class="col-sm-12 mt-3 heading-col">
+            <p class="heading-p1">{{orgName | titlecase}} Gift Vouchers.</p>
+            <p class="heading-p2">
+              Providing a Exclusive Gift Card Features For You.
+            </p>
+          </div>
+          <div class="col-sm-12 mt-4 text-center">
+            <img src="assets/images/voucher-main-img.png" />
+          </div>
+          <div class="col-sm-12 text-center pt-3 pb-5">
+            <button class="btn btn-warning send-btn" (click)="send()">
+              Send To Friends
+            </button>
+          </div>
+          <div class="col-sm-12 p-0" *ngIf="hide === true">
+            <div class="card p-0">
+              <div class="card-body">
+                <div class="col-sm-12 text-center">
+                  <p class="heading-p1">Send {{orgName | titlecase}} Gift Voucher</p>
+                </div>
+                <div class="col-sm-8 offset-sm-2">
+                  <form [formGroup]="recieptForm">
+                    <mat-form-field class="col-sm-12 p-0 font-12">
+                      <mat-label>Enter Receiver Name</mat-label>
+                      <input matInput formControlName="to" required autocomplete="off" type="email" />
+                    </mat-form-field>
+                    <mat-form-field class="col-sm-12 p-0 font-12">
+                      <mat-label>Enter Receiver Mail Id </mat-label>
+                      <input matInput formControlName="emailto" required autocomplete="off" />
+                    </mat-form-field>
+                    <mat-form-field class="col-sm-12 p-0 font-12">
+                      <mat-label>Write Any Message</mat-label>
+                      <input matInput formControlName="message" autocomplete="off" />
+                    </mat-form-field>
+                    <mat-form-field class="col-sm-12 p-0 font-12">
+                      <mat-label>Enter Sender Name</mat-label>
+                      <input matInput formControlName="from" required autocomplete="off" />
+                    </mat-form-field>
+                    <mat-form-field class="col-sm-12 p-0 font-12">
+                      <mat-label>Enter Gift Amount</mat-label>
+                      <input matInput formControlName="Amount" required autocomplete="off" type="number" />
+                    </mat-form-field>
+                    <div class="col-sm-12 p-0 text-center">
+                      <button type="submit" (click)="genarateGift()" class="submit-btn p-0" mat-raised-button>
+                        <i class="fa fa-sign-in-alt mr-2"></i>Send GiftCard</button>&nbsp;
+                      <button type="submit" (click)="hide = !hide" class="cancel-btn p-0" mat-raised-button>
+                        Cancel
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12 p-0">
+            <mat-accordion>
+              <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header class="expan-header">
+                  <mat-panel-title> Sent Vouchers </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="col-sm-6 p-0 offset-sm-3 text-center" *ngIf="VocherArray.length === 0">
+                  <img src="{{ imgurl }}noImag.png" alt="" class="img-height d-block pl-2 pr-0 cartEmptyText" />
+                  <p class="text-center">No Data Found</p>
+                </div>
+                <div class="col-sm-12 p-0" *ngIf="VocherArray.length > 0">
+                  <div class="card p-0" *ngFor="let VochersList of VocherArray">
+                    <div class="card-body">
+                      <div class="row m-0">
+                        <div class="col-sm-8 dashed-col pr-0">
+                          <div class="row m-0">
+                            <div class="col-sm-7 p-0">
+                              <p class="gift-rcv-name">
+                                Gifted To: {{ VochersList.to_name | titlecase }}
+                              </p>
+                            </div>
+                            <div class="col-sm-5">
+                              <p class="gift-rcv-name">
+                                Gifted On:
+                                {{ VochersList.date_added.split(" ")[0] }}
+                              </p>
+                            </div>
+                          </div>
+                          <p class="mb-1 gift-des">{{ VochersList.message }}</p>
+                          <p class="mt-4 card-value">
+                            Gift Card Value: $ {{ VochersList.amount }}
+                          </p>
+                        </div>
+                        <div class="col-sm-4 text-center">
+                          <img src="assets/images/Gift-img1.png" class="gift-img" />
+                          <div class="bottom-left">
+                            $ {{ VochersList.amount }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+          <div class="col-sm-12 p-0">
+            <mat-accordion>
+              <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header class="expan-header">
+                  <mat-panel-title> Received Vouchers </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="col-sm-6 offset-sm-3 p-0 text-center" *ngIf="myVocherDetailsArray.length === 0">
+                  <img src="{{ imgurl }}noImag.png" alt="" class="img-height d-block pl-2 pr-0 cartEmptyText" />
+
+                  <p class="text-center">No Data Found</p>
+                </div>
+                <div class="col-sm-12 p-0" *ngIf="myVocherDetailsArray.length > 0">
+                  <div class="card p-0" *ngFor="let VochersList of myVocherDetailsArray">
+                    <div class="card-body">
+                      <div class="row m-0">
+                        <div class="col-sm-8 dashed-col pr-0">
+                          <div class="row m-0">
+                            <div class="col-sm-7 p-0">
+                              <p class="gift-rcv-name">
+                                RCV FROM:
+                                {{ VochersList.from_name | titlecase }}
+                              </p>
+                            </div>
+                            <div class="col-sm-5">
+                              <p class="gift-rcv-name">
+                                RCV DT:
+                                {{ VochersList.date_added.split(" ")[0] }}
+                              </p>
+                            </div>
+                          </div>
+                          <p class="mb-1 gift-des">{{ VochersList.message }}</p>
+                          <p class="mt-4 card-value">
+                            Gift Card Value: $ {{ VochersList.amount }}
+                          </p>
+                        </div>
+                        <div class="col-sm-4 text-center">
+                          <img src="assets/images/Gift-img2.png" class="gift-img" />
+                          <div class="bottom-left">
+                            $ {{ VochersList.amount }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3 py-2 px-2">
+    <app-flash-page></app-flash-page>
+  </div>
+</div>
+<app-footer></app-footer>

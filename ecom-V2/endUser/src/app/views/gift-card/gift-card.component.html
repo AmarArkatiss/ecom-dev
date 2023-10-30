@@ -1,0 +1,85 @@
+<div class="totalPage">
+    <div class="container-fluid">
+        <carousel class="carouselCss" [images]="imagesUrl1" dots="true" cellWidth="100%" height="350" autoplay=true
+            autoplayInterval="1000">
+        </carousel>
+    </div>
+    <div class="row marqueeDiv">
+        <marquee>
+            <h6>DISCOUNTS ON GIFT VOUCHERS AND GIFT CARDS ALSO VALID DURING THE SALE ** DISCOUNTS ON GIFT VOUCHERS AND
+                GIFT CARDS ALSO VALID DURING THE SALE</h6>
+        </marquee>
+    </div>
+    <div class="row vocherDiv">
+        <div class="col-sm-1">
+        </div>
+        <div class="col-sm-4 giftviewDiv" [ngStyle]="{'background-image': 'url(' + imgurl + 'imagescard1.jfif)' }">
+            <div class="row">
+            </div>
+            <div class="row carddetails">
+                <div class="col-sm-6">
+                    <span>
+                    </span>
+                </div>
+                <div class="col-sm-6">
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-5">
+            <form [formGroup]="recieptForm">
+                <mat-form-field class="col-sm-12 p-0 font-12">
+                    <mat-label>Enter Amount</mat-label>
+                    <input matInput formControlName="Amount" required autocomplete="off" type="number">
+                </mat-form-field>
+                <mat-form-field class="col-sm-12 p-0 font-12">
+                    <mat-label>To</mat-label>
+                    <input matInput formControlName="to" required autocomplete="off" type="email">
+                </mat-form-field>
+                <mat-form-field class="col-sm-12 p-0 font-12">
+                    <mat-label>Email to </mat-label>
+                    <input matInput formControlName="emailto" required autocomplete="off">
+                </mat-form-field>
+                <mat-form-field class="col-sm-12 p-0 font-12">
+                    <mat-label>From</mat-label>
+                    <input matInput formControlName="from" required autocomplete="off">
+                </mat-form-field>
+                <mat-form-field class="col-sm-12 p-0 font-12">
+                    <mat-label>Email From</mat-label>
+                    <input matInput formControlName="fromemail" required autocomplete="off" type="email">
+                </mat-form-field>
+                <mat-form-field class="col-sm-12 p-0 font-12">
+                    <mat-label>Message</mat-label>
+                    <input matInput formControlName="message" required autocomplete="off">
+                </mat-form-field>
+                <mat-form-field class="col-sm-12 p-0 font-12">
+                    <mat-label>Quantity</mat-label>
+                    <input matInput formControlName="quality" required autocomplete="off" type="number">
+                </mat-form-field>
+                <div class="col-sm-12 p-0">
+                    <button type="submit" (click)="genarateGift()" class="col-sm-12 submit-btn p-0" mat-raised-button>
+                        <i class="fa fa-sign-in-alt mr-2"></i>Genate GiftCard
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div>
+    <footer id="footer">
+        <div class="row m-0">
+            <div class="col-sm-10">
+                <p class="offersDiv">Powered by <a href="https://arkatiss.com/" target="_blank"> Arkatiss</a></p>
+            </div>
+            <div class="col-sm-2 p-0 sharebtn">
+                <span class="ml-2 pointer font-14 fw-200">
+                    <i class="fa fa-share-alt  font-25 iconColor" aria-hidden="true"></i> <span
+                        class="font-20 iconColor"> Share</span>
+                </span>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<div class="col-sm-12 p-0">
+    <router-outlet></router-outlet>
+</div>

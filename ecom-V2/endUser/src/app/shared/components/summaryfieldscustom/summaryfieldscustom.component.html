@@ -1,0 +1,20 @@
+<div class="row" *ngIf="params.colDef.field === 'RequestedDeliveryDate'">
+  <input class="form-control form-control-sm font-11 fw-400 reqDataCss" #dpr="bsDatepicker" [(ngModel)]="requestedDate"
+    bsDatepicker [bsConfig]="{ dateInputFormat: 'MM/DD/YYYY', isAnimated: true, 
+    showWeekNumbers: false,  containerClass: 'theme-red catalog-custom-DatePicker', adaptivePosition: true }"
+    [minDate]="minDate" (bsValueChange)="changeitemDeliveryDate($event,params)">
+  <span class="font-10"><i class="fa fa-calendar-alt fa-lg cp-red font-16 " (click)="dpr.show()"
+      [attr.aria-expanded]="dpr.isOpen"></i></span>
+</div>
+
+<div class="row" *ngIf="params.colDef.field === 'Quantity'">
+  <i class="fa fa-minus cp-danger font-14 pr-2 pl-1 ml-2 mt-1 wd-18" (click)="qunatityChange('sub',params)"></i>
+  <input type="text" [(ngModel)]="quantity" class="font-12 pl-1 pr-1 text-center quanChange"
+    (focusout)="qunatityChange('',params)">
+  <i class="fa fa-plus cp-danger font-14 pl-2 pr-1 ml-1 mt-1 wd-18" (click)="qunatityChange('add',params)"></i>
+</div>
+
+<div class="row" *ngIf="params.colDef.field === 'ExtendedPrice'">
+  <input type="text" readonly [(ngModel)]="extendedCost" class="font-12 pl-1 pr-1 text-center extndCost">
+  <span class="widget-title--icon icon icon-trash cp-icon font-16 mr-0 trashIcon" (click)="deleteRow(params)"></span>
+  <!-- <i class="fal fa-minus cp-danger font-14 pr-2 pl-1 ml-2 mt-1" style="width:30%" (click)="deleteRow(params)"></i> -->

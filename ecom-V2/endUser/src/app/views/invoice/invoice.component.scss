@@ -1,0 +1,65 @@
+@import "src/assets/styles/scss/variables";
+
+.printCls {
+    background-color: $theme_color !important;
+    border-color: $theme_color !important;
+}
+
+.btn-outline-info {
+    color: $theme_color !important;
+    border-color: $theme_color !important;
+}
+
+.btn-outline-info:hover {
+    background-color: $theme_color !important;
+    color: white !important;
+}
+
+.table thead th {
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.frstName-txt {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 24px;
+    color: #2F294D;
+}
+
+.person-info {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 25px;
+    color: black;
+}
+
+th {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 24px;
+    color: #2F294D;
+}
+
+td {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 25px;
+    color: black;
+}
+
+.width {
+    width: 15%;
+}
+
+.tax-width {
+    width: 10%;
+}

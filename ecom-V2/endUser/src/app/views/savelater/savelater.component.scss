@@ -1,0 +1,102 @@
+.couponDiv {
+    padding: 1%;
+    border-width: 1px;
+
+}
+
+.imgaligin {
+    border: 1px;
+    border-color: red;
+
+}
+
+.v-r {
+    width: 120px;
+    height: 0px;
+    border: 1px dashed rgba(47, 41, 77, 0.55);
+    transform: rotate(90deg);
+}
+
+.dashed-col {
+    border-left: 2px dashed rgba(47, 41, 77, 0.55);
+}
+
+.oreredImg {
+    width: 100%;
+    padding: 16px 0px;
+    height: 108px;
+}
+
+
+
+.detaldiv1 {
+    height: 472px;
+    overflow-y: scroll;
+}
+
+.coup-code-btn {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+    width: 109px;
+    height: 39px;
+    background-image: url('https://png.pngtree.com/background/20210711/original/pngtree-blue-violet-light-marble-chaotic-texture-background-picture-image_1136004.jpg') !important;
+    background-size: contain;
+    border: 1px solid rgba(30, 137, 228, 0.75);
+    border-radius: 15px;
+}
+
+.prodName {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: rgba(51, 51, 51, 0.5);
+}
+
+.coupDes {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 20px;
+    color: #000000;
+}
+
+.tillDate {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 17px;
+    color: #333333;
+}
+
+.offPrice {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 43px;
+    color: #2F294D;
+}
+
+.offText {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    color: #2F294D;
+}
+
+.promo {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 22px;
+    color: rgba(51, 51, 51, 0.45);
+}

@@ -1,0 +1,26 @@
+
+
+.detaldiv1 {
+    height: 207px;
+    overflow-y: scroll;
+}
+
+.status{    
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 28px;
+}
+
+
+::ng-deep .mat-expansion-panel-body {
+    height: 207px;
+    overflow-y: scroll;
+}
+.cartEmptyText{
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+}

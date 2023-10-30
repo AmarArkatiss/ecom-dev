@@ -1,0 +1,458 @@
+<div class="navbar navbar-dark bg-dark top-nav p-0 fixed-top">
+  <div class="col-6 main-nav">
+    <div class="row m-0 main-nav">
+      <div class="col-sm-1"></div>
+      <div class="col-sm-3 p-0 pt-2 main-nav text-left text-white store-enq">
+        <span class="enquiry" (click)="storeSignUp()"
+          ><i class="fa fa-shopping-bag mr2px" aria-hidden="true"></i>
+          Store Enquiry
+        </span>
+      </div>
+      <div class="col-sm-7 pt-1 text-left text-white store-enq">
+        <span class="enquiry custSpan">
+          <img
+            src="{{ imgurl1 }}Customer Care.svg"
+            alt=""
+            class="pointer customrImg"
+          />
+          <span class="pt-1 pl-2">{{ phoneNum }}</span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="row m-0">
+      <div class="col-sm-8 p-0 text-right store-enq">
+        <span class="profile-name2 pointer" [matMenuTriggerFor]="currencyMenu">
+          <span *ngIf="currencyName; pointer">{{ currencyName }}</span>
+          &nbsp;&nbsp;<i class="fa fa-chevron-down fa-sm pointer"></i>
+        </span>
+      </div>
+      <div class="col-sm-4 p-0 text-center store-enq">
+        <span class="profile-name2">
+          <span
+            *ngIf="
+              storeName == '' || storeName == undefined || storeId === 'all'
+            "
+            [matMenuTriggerFor]="storeMenu"
+            class="pointer lttrspc"
+            >{{ orgName | titlecase }}</span
+          >
+          <span
+            *ngIf="storeName && storeId !== 'all'"
+            class="pointer"
+            [matMenuTriggerFor]="storeMenu"
+            >{{ storeName | uppercase }}</span
+          >&nbsp;&nbsp; <i class="fa fa-chevron-down fa-sm pointer"></i>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="navbar navbar-expand-lg navbar-light mainHead fixed-top fixed-top-2"
+>
+  <div class="row m-0 d-flex align-items-center cat-row">
+    <div class="col-lg-2 col-md-3 col-sm-4 text-center">
+      <span *ngIf="storeId == null || storeId === 'all' || storeId === '0'">
+        <img
+          [src]="mainLogo"
+          alt=""
+          class="pointer main-img"
+          [routerLink]="'/home'"
+      /></span>
+      <span
+        class="pointer"
+        *ngIf="
+          storeId !== 'all' &&
+          storeId !== '0' &&
+          (logo == null || logo == undefined || logo === '')
+        "
+        [routerLink]="'/home'"
+      >
+        <h1 class="logo-font">{{ storeName }}</h1>
+      </span>
+      <span
+        class="pointer"
+        *ngIf="
+          logo !== null &&
+          logo !== undefined &&
+          logo !== '' &&
+          storeId !== '0' &&
+          storeId !== 'all'
+        "
+      >
+        <img
+          [src]="logo"
+          alt=""
+          class="pointer main-img"
+          [routerLink]="'/home'"
+        />
+      </span>
+
+    </div>
+    <div class="col-lg-2 col-md-3 col-sm-4 p-0">
+      <span class="pl-5" *ngIf="menuObj.menuData.length > 5">
+        <span class="allCat pointer" (mouseover)="viewCategory($event)">
+          All Categories&nbsp;&nbsp;<i class="fa fa-chevron-down fa-sm"></i>
+        </span>
+      </span>
+      <span class="pl-5" *ngIf="menuObj.menuData.length <= 5">
+        <span class="allCat pointer" [matMenuTriggerFor]="menu">
+          All Categories &nbsp;&nbsp;<i class="fa fa-chevron-down fa-sm"></i>
+        </span>
+        <mat-menu #menu="matMenu">
+          <span *ngFor="let m of menuObj.menuData; let i = index">
+            <span mat-menu-item (click)="categoryView(m)">
+              <!-- m.parentName -->
+              {{ m.parentName | titlecase }}
+            </span>
+          </span>
+        </mat-menu>
+      </span>
+    </div>
+    <div class="form-group global-search col-lg-4 col-md-3 col-sm-4 pl-0 mb-0">
+      <div class="input-group">
+        <input
+          type="search"
+          class="form-control search-inp"
+          placeholder="Product Search"
+          [(ngModel)]="searchedKey"
+          (keydown.enter)="search(searchedKey)"
+        />
+        <div class="input-group-append">
+          <span
+            class="input-group-text searchbtn pointer"
+            id="basic-addon2"
+            (click)="search(searchedKey)"
+          >
+            <i class="fa fa-search fa-sm"></i>
+          </span>
+        </div>
+        <ngx-spinner class="spinnerCss" *ngIf="searchFlag">
+          <p class="spinnerText">Loading....</p>
+        </ngx-spinner>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-12 text-right p-0">
+      <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-3 p-0">
+          <button class="badge-ico float-right">
+            <!--  [disabled]="botEnable !=='/home'" -->
+            <img
+              [src]="traditionSelected"
+              class="pr-3"
+              (click)="offclicked('tradition')"
+              *ngIf="!botView"
+              matTooltip="Tradition View"
+            />
+            <img
+              [src]="traditionUnSelected"
+              class="pr-3"
+              (click)="offclicked('tradition')"
+              *ngIf="botView"
+              matTooltip="Tradition View"
+            />
+            <img
+              [src]="tabUnSelected"
+              (click)="offclicked('bot')"
+              *ngIf="!botView"
+              matTooltip="Tab View"
+            />
+            <img
+              [src]="tabselected"
+              (click)="offclicked('bot')"
+              *ngIf="botView"
+              matTooltip="Tab View"
+            />
+          </button>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-2 text-center pt-2">
+          <img
+            src="assets/svg/Wishlist.svg"
+            width="27"
+            class="enquiry"
+            (click)="wishList()"
+            routerLinkActive="active"
+          />
+          <span class="badge badge-warning wishlist-badge">
+            {{ totWishCount }}
+          </span>
+        </div>
+        <div class="col-sm-2 col-lg-2 col-md-2 pt-2 text-center cart">
+          <img src="assets/svg/Cart.svg" width="27" (click)="cart()" />
+          <span class="badge badge-warning wishlist-badge">
+            {{ totCartCount }}
+          </span>
+        </div>
+        <div class="col-sm-5 col-lg-5 col-md-5 p-0 text-center">
+          <!-- {{frstName | titlecase}} -->
+          <span
+            class="profile-name p-0"
+            [matMenuTriggerFor]="beforeMenu"
+            *ngIf="profileDw"
+          >
+            {{ frstName }} {{ lastName }} &nbsp;&nbsp;<i
+              class="fa fa-chevron-down fa-sm"
+            ></i>
+          </span>
+          <span *ngIf="loginBtnUp">
+            <button class="loginBtn" (click)="loginCknSplash()">Login</button>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <mat-menu #storeMenu="matMenu" xPosition="before" class="storemenu">
+      <button mat-menu-item (click)="select('all', '')">All</button>
+      <ng-container *ngFor="let item of storeList">
+        <button mat-menu-item (click)="select(item.store_id, item)">
+          {{ item.name | uppercase }}
+        </button>
+      </ng-container>
+    </mat-menu>
+
+    <mat-menu #currencyMenu="matMenu" xPosition="before" class="storemenu">
+      <!-- <button  mat-menu-item (click)="select('all')">All</button> -->
+      <ng-container *ngFor="let item of currencyDropList">
+        <button mat-menu-item (click)="onSelectCurrency(item)">
+          {{ item.title | titlecase }}
+        </button>
+      </ng-container>
+    </mat-menu>
+    <mat-menu #beforeMenu="matMenu" xPosition="before" class="storemenu">
+      <p mat-menu-item class="user-menu-option" [routerLink]="'/profile'">
+        <i class="fas fa-user-circle user-menu-icon"></i>
+        <span class="user-menu-text"> My Profile </span>
+      </p>
+      <p mat-menu-item class="user-menu-option" [routerLink]="'/myorders'">
+        <i class="fa fa-shopping-basket user-menu-icon"></i>
+        <span class="user-menu-text"> Orders & Returns </span>
+      </p>
+      <p mat-menu-item class="user-menu-option" [routerLink]="'/wishlist'">
+        <i class="fas fa-heart user-menu-icon"></i>
+        <span class="user-menu-text"> Wish List </span>
+      </p>
+      <p mat-menu-item class="user-menu-option" (click)="handleNoInfo()">
+        <i class="fas fa-tags user-menu-icon"></i>
+        <span class="user-menu-text"> Coupons </span>
+      </p>
+      <p mat-menu-item class="user-menu-option" (click)="handlegiftCard()">
+        <i class="fa fa-gift user-menu-icon"></i>
+        <span class="user-menu-text"> Gift Cards </span>
+      </p>
+      <p mat-menu-item class="user-menu-option" [routerLink]="'/affiliate'">
+        <i class="fas fa-tags user-menu-icon"></i>
+        <span class="user-menu-text"> Affiliations </span>
+      </p>
+      <p mat-menu-item class="user-menu-option" (click)="handleLogOut()">
+        <i class="fa fa-power-off user-menu-icon"></i>
+        <span class="user-menu-text"> Logout </span>
+      </p>
+    </mat-menu>
+  </div>
+</div>
+<div class="white-bg categories-div cat-div">
+  <div class="row ml-4 mt-2">
+
+  </div>
+  <!-- </div> container-fluid.// -->
+</div>
+
+<div class="col-sm-12 p-0 main mt-4">
+  <router-outlet></router-outlet>
+</div>
+
+<!-- <footer id="footer">
+   
+    <div class="row m-0">
+        <div class="col-sm-1">
+         
+        </div>
+        <div class="col-sm-3">
+            <h5>About</h5>
+             <a><p>About Us</p></a>
+            <p>Private Brands</p>
+            <p>Store Departments</p>
+            <p>News & Media</p>
+            <p>Community</p>
+            <p>School Food Pantry</p>
+            <p>Guiding Stars</p>
+            <p>Security</p>
+        </div>
+        <div class="col-sm-3">
+            <h5>Customer Support</h5>
+            <p>Contact Us</p>
+            <p>Help</p>
+            <p>Coupon Policy</p>
+            <p>Food Safety</p>
+            <p>Product Recalls</p>
+            <p>Refer-a-friend</p>
+            <p>COVID-19</p>
+            <p>Business Delivery</p>
+            <p>Freshness Guarantee</p>
+        </div>
+        <div class="col-sm-3">
+            <h5>Make Money with Us</h5>
+            <p>Sell On Botcom</p>
+            <p>Advertise Your Products</p>
+            <p>Help Desk</p>        
+            <h5>Strore Address & Location</h5>        
+            <div>
+            </div>
+        </div>
+        <div class="col-sm-2 p-0 sharebtn">
+            <span class="ml-2 pointer font-14 fw-200">
+               
+                <i class="fa fa-share-alt  font-25 iconColor" aria-hidden="true" ></i> <span
+                    class="font-20 iconColor"> Share</span>              
+            </span>
+        </div>
+    </div>
+</footer> -->
+<!-- <div class="col-sm-12">
+</div> -->
+
+<ng-template #affiliationDetails>
+  <div class="row m-2">
+    <div class="col-sm-12 p-0">
+      <div class="card p-4">
+        <div class="row pl-3 pr-3 pb-3">
+          <div class="col-sm-8 p-0">
+            <h4 class="text-right pr-4">Store Enquiry</h4>
+          </div>
+          <div class="col-sm-4 p-0 aff-text"></div>
+        </div>
+        <div class="row pl-3 pr-3 pb-3" style="text-align: center">
+          <div class="offset-2 col-sm-7 offset-3">
+            <form [formGroup]="createform">
+              <!-- <div class="row">
+                    <div class=" col-sm-4 m-0 "> -->
+              <mat-form-field appearance="legacy">
+                <mat-label>Name</mat-label>
+                <input
+                  matInput
+                  placeholder="Enter Name"
+                  formControlName="name"
+                  required
+                /> </mat-form-field
+              ><br />
+              <mat-form-field appearance="legacy">
+                <mat-label> Phone Number</mat-label>
+                <input
+                  matInput
+                  placeholder="Enter Phone Number"
+                  formControlName="num"
+                  required
+                /> </mat-form-field
+              ><br />
+
+              <!-- </div>
+                    <div class="col-sm-4 m-0"> -->
+
+              <mat-form-field appearance="legacy">
+                <mat-label>E-mail</mat-label>
+                <input
+                  matInput
+                  placeholder="Enter E-mail"
+                  formControlName="mail"
+                  required
+                /> </mat-form-field
+              ><br />
+              <mat-form-field appearance="legacy">
+                <mat-label>Short Note</mat-label>
+                <textarea
+                  matInput
+                  placeholder="Short Note"
+                  formControlName="note"
+                ></textarea>
+                <!-- <input matInput placeholder="Short Note" formControlName="note"> -->
+              </mat-form-field>
+              <!--  </div>
+                    <div class="col-sm-4 m-0"> -->
+              <button
+                mat-flat-button
+                color="primary"
+                class="mt-3 submit-btn"
+                (click)="submit()"
+              >
+                Submit</button
+              >&nbsp;
+              <button
+                class="btn btn-outline cancel-btn"
+                (click)="dialog.closeAll()"
+              >
+                Cancel
+              </button>
+              <!-- </div>
+                </div> -->
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<div class="overlay" *ngIf="categoriesFlag"></div>
+<div *ngIf="categoriesFlag" id="categoryDetails" class="main-menu-card" (mouseout)="hideCard($event)">
+  <div class="menu_popup">
+  <!-- <div class="row m-0 float-right pointer">
+    <i
+      class="fa fa-times fa-close pointer"
+      aria-hidden="true"
+      (click)="dialog.closeAll()"
+    ></i>
+  </div> -->
+  <div class="row m-2">
+    <div class="row col-sm-12">
+      <div class="col-sm-2" *ngFor="let m of menuObj.menuData; let i = index">
+        <p class="brandName">{{ m.parentName | titlecase }}</p>
+        <div *ngFor="let a of m.categoryDetails">
+          <ul class="brands">
+            <li (click)="goToProducts(a.childId, a.childName)" class="bNames">
+              {{ a.childName }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!---- <div class="col-sm-3 p-0">
+      <div class="row" *ngFor="let m of menuObj.menuData; let i = index">
+        <div class="col-sm-12 pl-0">
+          <a
+            class="name"
+            data-bs-toggle="dropdown"
+            (click)="parentCatClick(m, true)"
+          >
+            <img src="{{ m.parentImg }}" class="parent-img" /> &nbsp;
+            <span
+              [class]="parentId === m.parentId ? 'parentactive' : 'cat-text'"
+              class="pointer"
+              >{{ m.parentName | titlecase }}</span
+            >
+            <span *ngIf="parentId === m.parentId" class="drop-icon float-right"
+              ><i class="fa fa-chevron-right" aria-hidden="true"></i
+            ></span>
+          </a>
+          <hr *ngIf="menuObj.menuData.length - 1 !== i" />
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-9 p-0">
+      <div class="row ml-5 mt-2">
+        <div
+          class="col-sm-4 p-0 mb-5"
+          *ngFor="let c of categoryList; let i = index"
+          (click)="goToProducts(c.childId, c.childName)"
+        >
+          <span class="pointer">{{ c.childName | titlecase }}</span>
+          
+        </div>
+      
+      </div>
+    </div>-->
+  </div>
+  </div>
+</div> 

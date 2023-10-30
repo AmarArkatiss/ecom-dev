@@ -1,0 +1,54 @@
+<div class="col-sm-10 p-0 offset-sm-1">
+    <div class="row m-0">
+        <div class="col-sm-3 py-2 px-2">
+            <app-account></app-account>
+        </div>
+        <div class="col-sm-9 px-2 py-2">
+            <div class="col-sm-12 p-0">
+                <div class="card p-0">
+                    <div class="card-body p-0 row m-0">
+                        <div class="col-12 p-0 pb-3">
+                            <div class="row m-0">
+
+                                <div class="col-12 pt-3">
+                                    <div class="row m-0">
+                                        <div class="col-9 p-3">
+                                            <p class="personal-info">
+                                                <span>
+                                                    Purchased Vouchers Information
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div style="width: 100%;">
+                                            <div class="card ordersDiv" *ngFor="let VochersList of VocherArray">
+                                                <div class="card-body cardInOrderHistory">
+                                                    <div class="col-sm-12 row">
+
+                                                        <div class="col-sm-6">
+                                                            <p class="mb-1 prodName">Gifted TO:
+                                                                <b>{{VochersList.to_name}}</b></p>
+                                                            <p class="mb-1">To Email: <b> {{VochersList.to_email}}</b>
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <p class="mb-1">Descrption:<b> {{VochersList.message}} </b>
+                                                            </p>
+                                                            <p class="mb-1"> Amount: {{VochersList.amount}}</p>
+                                                            <p class="mb-1"> Genarated Date: {{VochersList.date_added}}
+                                                            </p>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

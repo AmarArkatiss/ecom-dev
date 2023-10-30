@@ -1,0 +1,176 @@
+.delAddrDiv {
+  margin-top: 1%;
+  height: 400px;
+  overflow-y: scroll;
+  margin-left: 5%;
+}
+
+.addressInfoDiv {
+  height: 100px;
+  overflow-y: scroll;
+}
+
+.IconNewAddress {
+  cursor: pointer;
+  background-color: #33ccc6;
+  border-radius: 10;
+  padding: 1%;
+}
+
+.example-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+}
+
+.addTitle,
+.AddressPopupTitle {
+  font-family: Poppins;
+  font-size: 14px;
+  color: #1A6796;
+  cursor: pointer;
+  margin-left: 1.3rem;
+
+}
+
+.relateddiv {
+  border-color: #141414;
+  border-width: 1px;
+  margin: 2%;
+  margin-top: 1%;
+}
+
+.rdiv {
+  padding-top: 1%;
+}
+
+.ImageSelected {
+  width: 30%;
+  height: 40%;
+}
+
+.imgcenterr {
+  width: 30%;
+  margin-left: 30%;
+}
+
+#Productname {
+  float: left;
+  font-size: medium;
+  padding-left: 10px;
+}
+
+.Producttitle {
+  padding-left: 10px;
+}
+
+.circles {
+  height: 0.938em;
+  width: 0.938em;
+  border: 0.188em solid rgb(185, 184, 108);
+  border-radius: 50%;
+  display: inline-block;
+}
+
+#returnid {
+  font-size: 16px !important;
+  font-family: Roboto !important;
+  font-weight: 400;
+  font-style: normal;
+  background-color: #00a99d;
+  color: #ffffff;
+  margin: 0px;
+  margin-top: 2%;
+  margin-left: 45%;
+  border-radius: 8px !important;
+}
+
+.active {
+  background-color: #ffa500;
+  color: #ffa500;
+}
+
+.circle-desc-active {
+  font-weight: bold;
+  color: #ffa500;
+  background-color: #ffa500;
+}
+
+.textArea {
+  border-color: #141414;
+  border-width: .5px;
+  border-style: solid;
+  border-radius: 0;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  color: #080808;
+  display: inline-block;
+  font-family: 'Raleway', sans-serif;
+  font-size: 15px;
+  height: 120px;
+  line-height: 25px;
+  min-width: 305px;
+  margin-top: 20px;
+  padding: 5px 10px;
+  text-transform: uppercase;
+  width: 10%;
+  -webkit-appearance: none;
+  vertical-align: top;
+}
+
+.bar {
+  width: 16%;
+  height: 0.503em;
+  margin-bottom: 0.269em;
+  border: #29f101;
+  color: #29f101;
+  background-color: #29f101;
+  display: inline-block;
+  text-align: center;
+  margin: "0 auto";
+}
+
+.container {
+  min-width: 320px;
+  margin: "0px auto";
+  text-align: center;
+}
+
+.circle-desc {
+  position: static;
+  top: 5.000em;
+  font-size: 1.125em;
+  width: auto;
+  max-width: 9.375em;
+  margin-left: -0.750em;
+}
+
+@media only screen and (max-width: 320px) {
+  body {
+    font-size: 20%
+  }
+}
+
+/*extra small devices*/
+@media only screen and (max-width: 600px) {
+  body {
+    font-size: 40%
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  body {
+    font-size: 60%
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  body {
+    font-size: 80%
+  }
+}
+
+
+/* Large devices (laptops/desktops, 992px and up) */

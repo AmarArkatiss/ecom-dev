@@ -1,0 +1,50 @@
+.giftcardLogo {
+    text-align: center;
+    margin-top: 10%;
+    margin-left: 40%;
+}
+
+.giftviewDiv {
+    background-repeat: no-repeat;
+    margin-top: 8%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden
+}
+
+.vocherDiv {
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.carddetails {
+    margin-top: 30%;
+}
+
+.title2 {
+    float: right;
+    margin-left: 40%;
+}
+
+.carouselCss {
+    z-index: 0;
+    margin: 1%;
+    object-fit: cover;
+}
+
+footer#footer {
+    background: #001524;
+    color: #6B7780;
+    padding: 60px;
+}
+
+marquee {
+    width: 100%;
+    direction: left;
+    color: #33ccc6;
+}
+
+.marqueeDiv {
+    background-color: clearcolor;
+}

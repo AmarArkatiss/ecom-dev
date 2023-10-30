@@ -1,0 +1,317 @@
+<div class="row mt-3 ml-5 mr-5">
+  <div class="col-sm-2 py-2 px-2">
+    <app-account></app-account>
+  </div>
+  <div class="col-sm-7 px-2 py-2">
+    <ngx-spinner class="spinnerCss">
+      <p class="spinnerText">Loading....</p>
+    </ngx-spinner>
+    <div class="row card m-0 p-row">
+      <div class="col-lg-12 col-sm-12 p-0">
+        <p class="personal-info">Order History</p>
+      </div>
+    </div>
+    <div class="col-sm-12 p-0" *ngIf="noItemImage">
+      <div class="card p-0">
+        <div class="col-sm-6 offset-sm-3 mt-4 mb-3">
+          <img src="{{ imgurl }}noImag.png" alt="" class="img-fluid d-block pl-2 pr-0 cartEmptyText" />
+          <h4 class="heading m-2 p-2 text-center">Your Order List Is Empty</h4>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12 p-0 detaldiv1">
+      <div class="card p-0">
+        <div class="card m-3 order-card" *ngFor="let product of this.ord.data">
+          <div class="card-header">
+            <div class="row m-0">
+              <div class="col-sm-6 p-0">
+                <p class="card-head-p1">Order #: {{ product?.orderId }}</p>
+              </div>
+              <div class="col-sm-6 p-0 text-right">
+                <p class="card-head-p2 pointer" (click)="orderDetails(product)">
+                  View Full Details
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="card-body cardInOrderHistory">
+            <div class="row m-0 mt-3">
+              <div class="col-sm-2 p-0 imgaligin" (click)="orderDetails(product)">
+                <img src="{{ product?.image }}" class="img-responsive oreredImg" />
+              </div>
+              <div class="col-sm-6 p-0">
+                <p class="mb-1 product-name" (click)="orderDetails(product)">
+                  {{ product?.name }}
+                </p>
+                <p class="p-price">
+                  {{ product?.currencyIndicator }}{{ product?.price }}
+                </p>
+                <p class="order-status">
+                  <span [ngClass]="{
+                      process:
+                        product?.itemStatus !== 'Order Cancelled' &&
+                        product?.itemStatus !== 'Draft',
+                      cancelOrder: product?.itemStatus === 'Order Cancelled',
+                      draft: product?.itemStatus === 'Draft'
+                    }"></span>
+                  <span *ngIf="product?.itemStatus !== 'Order Cancelled'">{{
+                    product?.itemStatus
+                    }}</span>
+                  <span *ngIf="product?.itemStatus === 'Order Cancelled'">{{ product?.itemStatus }} On
+                    {{ product?.cancelledDate }}</span>
+                </p>
+                <p *ngIf="product?.subFromDate != '0'">
+                  <span class="recurring-active">Subscription Active</span>&nbsp;
+                  <span>
+                    <img src="assets/images/info.png" [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger" />
+                  </span>
+                  <mat-menu #menu="matMenu">
+                    <div class="row m-2">
+                      <div class="col-sm-8 p-0">
+                        <p class="sub-head pl-3">Subscription Summary</p>
+                      </div>
+                      <div class="col-sm-4 text-right">
+                        <i class="fa fa-times fa-close curser close-ico pointer" aria-hidden="true"
+                          (click)="menu.closeMenu()"></i>
+                      </div>
+                    </div>
+                    <hr class="p-hr1" />
+                    <div class="row m-0">
+                      <div class="col-sm-7">
+                        <span class="sub-col">Subscription Valid From</span>
+                      </div>
+                      <div class="col-sm-5 text-right">
+                        <span class="sub-price">
+                          {{ product?.subFromDate.split(" ")[0] }}</span>
+                      </div>
+                    </div>
+                    <div class="row m-0">
+                      <div class="col-sm-7">
+                        <span class="sub-col">Subscription Valid Up To</span>
+                      </div>
+                      <div class="col-sm-5 text-right">
+                        <span class="sub-price">{{
+                          product?.subToDate.split(" ")[0]
+                          }}</span>
+                      </div>
+                    </div>
+                    <div class="row m-0">
+                      <div class="col-sm-7">
+                        <span class="sub-col">Delivery Interval</span>
+                      </div>
+                      <div class="col-sm-5 text-right">
+                        <span class="sub-price">{{ product?.subCycle }}
+                          {{ product?.subDuration }}</span>
+                      </div>
+                    </div>
+                  </mat-menu>
+                </p>
+                <p *ngIf="product?.recurringId > 0">
+                  <span class="recurring-active">Recurring Active</span>&nbsp;
+                  <span>
+                    <img src="assets/images/info.png" [matMenuTriggerFor]="recurringmenu"
+                      #menuTrigger="matMenuTrigger" />
+                  </span>
+                  <mat-menu #recurringmenu="matMenu">
+                    <div class="row m-2">
+                      <div class="col-sm-8 p-0">
+                        <p class="sub-head pl-3">Recurring Summary</p>
+                      </div>
+                      <div class="col-sm-4 text-right">
+                        <i class="fa fa-times fa-close curser close-ico pointer" aria-hidden="true"
+                          (click)="menu.closeMenu()"></i>
+                      </div>
+                    </div>
+                    <hr class="p-hr1" />
+                    <div class="col-sm-12 text-center">
+                      <p class="sub-col text-center">
+                        {{ product?.recurringName }}
+                      </p>
+                    </div>
+                  </mat-menu>
+                </p>
+              </div>
+              <div class="col-sm-4 orderStatusDiv text-right">
+                <p class="order-date">Ordered On: {{ product?.orderedDate }}</p>
+
+                <div *ngIf="
+                    product?.paymentStatus == 'Pending' &&
+                    product?.itemStatus == 'Draft'
+                  " class="mt-3">
+                  <button type="button" class="btn btn-outline-warning btn-sm cancel" (click)="
+                      cancelOrder(
+                        product.orderId,
+                        product.productId,
+                        product.orderLineId
+                      )
+                    ">
+                    Cancel</button>&nbsp;
+                  <button type="button" class="btn btn-warning btn-sm repay"
+                    (click)="repayClick(paymentPopup, product)">
+                    Pay
+                  </button>
+                </div>
+                <div *ngIf="product?.itemStatus == 'Order Processing'" class="mt-3">
+                  <button type="button" class="btn btn-outline-warning cancel btn-sm" (click)="
+                      cancelOrder(
+                        product.orderId,
+                        product.productId,
+                        product.orderLineId
+                      )
+                    ">
+                    Cancel</button>&nbsp;
+                  <button type="button" class="btn btn-warning repay btn-sm"
+                    (click)="handleReorder(product.orderId, product.productId)">
+                    Reorder
+                  </button>
+                </div>
+                <div *ngIf="product?.itemStatus == 'Delivered'" class="mt-3">
+                  <button type="button" class="btn btn-outline-warning cancel btn-sm" id="returnid" (click)="
+                      handleReturn(
+                        product.orderId,
+                        product.productId,
+                        product.orderLineId
+                      )
+                    ">
+                    Return</button>&nbsp;
+                  <button type="button" class="btn btn-warning repay btn-sm"
+                    (click)="handleReorder(product.orderId, product.productId)">
+                    Reorder
+                  </button>
+                </div>
+                <ng-template #paymentPopup>
+                  <div class="row m-2">
+                    <div class="col-sm-12 p-0">
+                      <p class="card-head-p1">Payment Options</p>
+                    </div>
+                  </div>
+                  <hr />
+                  <div class="row m-2 ml-4 mt-4">
+                    <div class="col-sm-3 p-0">
+                      <input type="radio" name="payment" id="RazorpayBtn" (click)="handlePayments('razor')" /><img
+                        src="{{ imgurl }}razorpaywebnew.svg" alt="" class="Razor img-fluid" />
+                    </div>
+
+                    <div class="col-sm-4 p-0">
+                      <input type="radio" name="payment" id="visaBtn" (click)="handlePayments('cod')" />
+                      <span class="codBtn pl-2">Cash On Delivery</span>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 text-right mt-4">
+                    <button type="button" class="btn btn-outline-warning btn-sm cancel" (click)="dialog.closeAll()">
+                      CANCEL</button>&nbsp;
+                    <button type="button" class="btn btn-warning btn-sm repay" *ngIf="paypalFlag"
+                      (click)="paypalClk(paypalPopup)">
+                      PROCEED
+                    </button>
+                    <button type="button" class="btn btn-warning btn-sm repay" *ngIf="stripeFlag"
+                      (click)="stripeClk(stripePop)">
+                      PROCEED
+                    </button>
+                    <button type="button" class="btn btn-warning btn-sm repay" *ngIf="razorFlag" (click)="rClick()">
+                      PROCEED
+                    </button>
+                    <button type="button" class="btn btn-warning btn-sm repay" *ngIf="codFlag"
+                      (click)="codClick(product.orderId)">
+                      PROCEED
+                    </button>
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3 py-2 px-2">
+    <app-flash-page></app-flash-page>
+  </div>
+</div>
+<app-footer></app-footer>
+
+<ng-template #paypalPopup>
+  <div class="row m-2">
+    <div class="col-sm-12 p-0">
+      <p class="card-head-p1">Card Info</p>
+    </div>
+  </div>
+  <hr />
+  <div class="row m-2 ml-4 mt-4">
+    <div class="col-sm-8">
+      <div class="row">
+        <div class="col-sm-6">
+          <label for="cname" class="cardLbl">Name on Card</label>
+        </div>
+        <div class="col-sm-6">
+          <input type="text" id="cname" name="cardname" placeholder="Enter Card Name" />
+        </div>
+        <br />
+        <div class="col-sm-6">
+          <label for="ccnum" class="cardLbl">Credit card number</label>
+        </div>
+        <div class="col-sm-6">
+          <input type="text" id="ccnum" name="cardnumber" placeholder="Enter Card Number" />
+        </div>
+        <br />
+        <div class="col-sm-6">
+          <label for="expmonths" class="cardLbl">Exp Month </label>
+        </div>
+        <div class="col-sm-6">
+          <input type="text" id="expyear" name="expyear" placeholder="Enter expire Date on Card" />
+        </div>
+        <br />
+        <div class="col-sm-6">
+          <label for="cvv" class="cardLbl">CVV</label>
+        </div>
+        <div class="col-sm-6">
+          <input type="text" id="cvv" name="cvv" placeholder="Enter CVV" />
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12 mt-4 ml-2 p-0">
+      <button type="button" class="btn btn-outline-warning btn-sm cancel" (click)="dialog.closeAll()">
+        CANCEL</button>&nbsp;
+      <button type="button" class="btn btn-warning btn-sm repay" (click)="dialog.closeAll()">
+        SUBMIT
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #stripePop>
+  <div class="row m-2">
+    <div class="col-sm-12 p-0">
+      <p class="card-head-p1">Card Info</p>
+    </div>
+  </div>
+  <hr />
+  <div class="row m-2 ml-4 mt-4">
+    <div class="col-sm-12">
+      <label class="form-label">Card Number</label><br />
+      <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+        placeholder="Enter Card Number" (keyup)="keyup($event.target.value)" />
+
+      <div class="errormsg">
+        <p *ngIf="does">Your card number is incomplete.</p>
+        <p *ngIf="lenth16more">Card number is invalid</p>
+      </div>
+    </div>
+    <br />
+    <div class="col-sm-12 pt-3">
+      <label class="form-label">Card Details</label><br />
+      <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+        placeholder="MM/YY" />
+      <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+        placeholder="CVV" (keyup)="cvvup($event.target.value)" />
+      <p *ngIf="cvverror" class="errormsg">Invalid CVV</p>
+    </div>
+  </div>
+  <div class="col-sm-12 mt-4 ml-4">
+    <button type="button" class="btn btn-outline-warning btn-sm cancel" (click)="dialog.closeAll()">
+      CANCEL</button>&nbsp;
+    <button type="button" class="btn btn-warning btn-sm repay" (click)="dialog.closeAll()">
+      SUBMIT
+    </button>
+  </div>
+</ng-template>

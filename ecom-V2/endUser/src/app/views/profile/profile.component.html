@@ -1,0 +1,133 @@
+<div class="row mt-3 ml-5 mr-5">
+  <div class="col-sm-2 py-2 px-2">
+    <app-account></app-account>
+  </div>
+  <div class="col-sm-7 px-2 py-2">
+    <div class="row card m-0 p-row">
+      <div class="col-9 p-0">
+        <p class="personal-info">Personal Information</p>
+      </div>
+      <div class="col-3 p-3">
+        <span *ngIf="showdisablename">
+          <i class="fa fa-user-edit float-right pointer font-16 editiconcolor" matTooltip="Edit Information"
+            (click)="is_edit = !is_edit; editPersonalInfo('show')"></i>
+        </span>
+      </div>
+    </div>
+
+    <div class="col-sm-12 p-0">
+      <div class="card p-0">
+        <div class="card-body p-0 row m-0">
+          <div class="col-12 p-5">
+            <div class="col-sm-12 pr-0">
+              <mat-form-field class="col-12 pl-0" appearance="outline">
+                <mat-label>First Name</mat-label>
+                <input matInput placeholder="First Name" [(ngModel)]="firstName" class="profile-inp"
+                  [ngClass]="{ disabledcursor: is_edit === true }" [disabled]="is_edit" required />
+              </mat-form-field>
+            </div>
+            <div class="col-sm-12 pr-0">
+              <mat-form-field class="col-12 pl-0" appearance="outline">
+                <mat-label>Last Name</mat-label>
+                <input matInput placeholder="Last Name" [(ngModel)]="lastName" class="profile-inp"
+                  [ngClass]="{ disabledcursor: is_edit === true }" [disabled]="is_edit" appearance="fill" required />
+              </mat-form-field>
+            </div>
+            <div class="col-sm-12 pr-0 pl-4">
+              <mat-radio-group aria-label="Select an option" class="genderRadio" [(ngModel)]="gender">
+                <mat-label [disabled]="is_edit" [ngClass]="{ 'disabledcursor-lable ': is_edit === true }"
+                  class="requiredcls">Gender</mat-label><br />
+                <mat-radio-button value="male" [disabled]="is_edit" [ngClass]="{ disabledcursor: is_edit === true }">
+                  Male
+                </mat-radio-button>
+                <mat-radio-button value="female" class="ml-4" [ngClass]="{ disabledcursor: is_edit === true }"
+                  [disabled]="is_edit">Female
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <div class="col-sm-12 pr-0">
+              <mat-form-field class="col-12 pl-0" appearance="outline">
+                <mat-label>Mobile</mat-label>
+                <input matInput placeholder="Mobile Number" [(ngModel)]="mobile" class="profile-inp"
+                  [ngClass]="{ disabledcursor: is_edit === true }" [disabled]="is_edit" required />
+              </mat-form-field>
+            </div>
+            <div class="col-sm-12 pr-0">
+              <mat-form-field class="col-12 pl-0" appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="Email Address" [(ngModel)]="email" class="profile-inp"
+                  [ngClass]="{ disabledcursor: is_edit === true }" [disabled]="is_edit" required />
+              </mat-form-field>
+            </div>
+            <div class="row m-0 mt-3">
+              <div class="col-sm-5 p-0">
+                <a class="pb-3 password pointer" (click)="showpasswords()">
+                  Change password
+                </a>
+              </div>
+              <div class="col-sm-7 text-right" *ngIf="showeditablename">
+                <button type="button" class="btn btn-warning update-btn" (click)="profilesave()">
+                  UPDATE
+                </button>
+                &nbsp;
+                <button type="button" class="btn cancel-btn" (click)="is_edit = !is_edit; editPersonalInfo('hide')">
+                  CANCEL
+                </button>
+              </div>
+            </div>
+            <div class="row m-0 mt-4" *ngIf="showpassword">
+              <div class="col-4 p-0">
+                <mat-form-field class="col-10 pl-0">
+                  <input matInput [type]="oldhide ? 'password' : 'text'" placeholder="Current password"
+                    [(ngModel)]="old_password" type="password" required />
+                  <button mat-icon-button matSuffix (click)="oldhide = !oldhide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+                    <mat-icon>{{
+                      oldhide ? "visibility_off" : "visibility"
+                      }}</mat-icon>
+                  </button>
+                </mat-form-field>
+              </div>
+
+              <div class="col-4 p-0">
+                <mat-form-field class="col-10 pl-0">
+                  <input matInput [type]="newhide ? 'password' : 'text'" placeholder="New Password"
+                    [(ngModel)]="new_password" type="password" required />
+                  <button mat-icon-button matSuffix (click)="newhide = !newhide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+                    <mat-icon>{{
+                      newhide ? "visibility_off" : "visibility"
+                      }}</mat-icon>
+                  </button>
+                </mat-form-field>
+              </div>
+              <div class="col-4 p-0">
+                <mat-form-field class="col-10 pl-0">
+                  <input matInput [type]="confirmhide ? 'password' : 'text'" placeholder="Confirm Password"
+                    [(ngModel)]="retype_password" type="password" required />
+                  <button mat-icon-button matSuffix (click)="confirmhide = !confirmhide"
+                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <mat-icon>{{
+                      confirmhide ? "visibility_off" : "visibility"
+                      }}</mat-icon>
+                  </button>
+                </mat-form-field>
+              </div>
+              <div class="col-6 p-0">
+                <button class="mt-2 btn btn-primary addCart pointer" (click)="changepwd()">
+                  Save</button>&nbsp;
+                <button type="button" class="btn btn-warning mt-2 cancel-btn" (click)="showpassword = !showpassword">
+                  CANCEL
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3 py-2 px-2">
+    <app-flash-page></app-flash-page>
+  </div>
+</div>
+<app-footer></app-footer>

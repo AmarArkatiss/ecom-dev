@@ -1,0 +1,409 @@
+<div class="container-fluid p-0 bg-white cart-ht">
+    <ngx-spinner class="spinnerCss">
+        <p class="spinnerText">Loading....</p>
+    </ngx-spinner>
+    <div class=" row p-4 ml-4 mr-2 divscroll1 text-center" *ngIf="noCarts || this.cartModal.productData.length === 0">
+        <div class="col-sm-6 offset-sm-3 mt-5">
+            <img src="{{imgurl}}noImag.png" alt="" class="img-fluid d-block pl-2 pr-0 cartEmptyText">
+            <h4 class="heading m-2 p-2 cartEmptyText">Your Cart Is Empty</h4>
+        </div>
+    </div>
+    <div class="row p-4 ml-4 mr-2" *ngIf="this.cartModal.productData.length>0">
+        <div class="col-lg-8 col-md-8 col-sm-6">
+            <p class="num-product">{{cartModal.productData.length}} Product</p>
+            <p class="shpngCart">Shopping Cart</p>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6 text-right">
+            <p class="backshopng pointer" [routerLink]="'/home'">Back To Shopping</p>
+        </div>
+    </div>
+    <div class="row  p-4 ml-4 mr-2" *ngIf="this.cartModal.productData[0]">
+        <div class="col-lg-8 col-md-8 col-sm-12 divscroll pr-0">
+            <div class="card cart-card mb-2" *ngFor="let data of this.cartModal.productData;let i=index">
+                <div class="row m-0 cart-row">
+                    <div class="col-sm-3 p-0" (click)="getProductsFromRelated(data?.productId)">
+                        <figure class=" imgcenter pointer pt-4 pl-3">
+                            <img src="{{data?.image}}" alt="" class="img-fluid d-block pl-2 pr-0 imgHeight">
+                        </figure>
+                    </div>
+                    <div class="col-sm-5 mt-4">
+                        <p class="product-name pointer" (click)="getProductsFromRelated(data?.productId)">
+                            {{data?.productName
+                            |titlecase}}
+                        </p>
+                        <div class="row m-0">
+                            <span class="product-model" [title]="data?.model">{{data?.model}}</span>
+                        </div>
+                        <div class="row m-0 pt-2" *ngIf="data.subscriptionFromDate === 0 && data.recurringId === 0">
+                            <span class="p-price" *ngIf="data.discountPrice == '0.00'">{{data?.currencyIndicator}}
+                                {{data?.price}}</span>
+                            <span class="p-price" *ngIf="data.discountPrice != '0.00'">{{data?.currencyIndicator}}
+                                {{data?.offPrice}}</span>
+                            <span class="off-price"
+                                *ngIf="data.discountPrice != '0.00'">{{data?.currencyIndicator}}{{data?.price}}</span>
+                            &nbsp;
+                            <span class="text-success offPrice"
+                                *ngIf="data.discountPrice != '0.00'">{{data?.currencyIndicator}}{{data?.discountPrice}}
+                                Off</span>
+                        </div>
+                        <div class="row m-0 pt-2" *ngIf="data.subscriptionFromDate !== 0">
+                            <span class="p-price" *ngIf="data?.totalFlag === 0">
+                                {{data?.currencyIndicator}} {{data?.finalAmount}}
+                            </span>
+                            <span class="p-price" *ngIf="data?.totalFlag === 1">
+                                {{data?.currencyIndicator}} {{data?.finalAmount}}
+                            </span>
+                        </div>
+                        <div class="row m-0 pt-2" *ngIf="data.recurringId > 0">
+                            <span class="p-price">
+                                {{data?.currencyIndicator}} {{data?.finalAmount}}
+                            </span>
+                        </div>
+                        <div class="row m-0 pt-2 pb-2">
+                            <span class="p-qty">Quantity</span> &nbsp;&nbsp;
+                            <span>
+                                <select class="p-select" [(ngModel)]="data.quantity"
+                                    (change)="plus($event.target.value,data)">
+                                    <option *ngFor="let item of optionTypeList" value="{{item}}">{{item}}</option>
+                                </select>
+                            </span> &nbsp; &nbsp;
+                            <span *ngIf="data.inadequateQty !== ''" class="inadequateQty">{{data.inadequateQty}}
+                                left</span>
+                        </div>
+                        <div class="row m-0" *ngIf="data.subscriptionFromDate !== 0">
+                            <p>
+                                <span class="p-recurring">Subscription Active</span>&nbsp;
+                                <span>
+                                    <!-- (mouseenter)="mouseEnter(menuTrigger)"  (mouseleave)="mouseLeave(menuTrigger)" -->
+                                    <img src="assets/images/info.png" [matMenuTriggerFor]="menu"
+                                        #menuTrigger="matMenuTrigger">
+
+                                </span>
+                                <mat-menu #menu="matMenu">
+                                    <div class="row m-2">
+                                        <div class="col-sm-8 p-0">
+                                            <p class="sub-head pl-3">Subscription Summary</p>
+                                        </div>
+                                        <div class="col-sm-4 text-right"><i
+                                                class="fa fa-times fa-close curser close-ico" aria-hidden="true"
+                                                (click)="menu.closeMenu();"></i></div>
+                                    </div>
+                                    <hr class="p-hr1">
+                                    <div class="row m-0">
+                                        <div class="col-sm-7">
+                                            <span class="sub-col">Subscription Valid Up To</span>
+                                        </div>
+                                        <div class="col-sm-5 text-right">
+                                            <span class="sub-price">{{data.subscriptionToDate.split(' ')[0]}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row m-0">
+                                        <div class="col-sm-7">
+                                            <span class="sub-col">Subscription Amount</span>
+                                        </div>
+                                        <div class="col-sm-5 text-right">
+                                            <span
+                                                class="sub-price">{{data?.currencyIndicator}}{{data?.finalAmount}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row m-0" *ngIf="data?.subscriptionDiscount !== 0">
+                                        <div class="col-sm-7">
+                                            <span class="sub-col">Discount</span>
+                                        </div>
+                                        <div class="col-sm-5 text-right">
+                                            <span
+                                                class="sub-price">{{data?.currencyIndicator}}{{data?.subscriptionDiscount}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row m-0">
+                                        <div class="col-sm-7">
+                                            <span class="sub-col">Delivery Interval</span>
+                                        </div>
+                                        <div class="col-sm-5 text-right">
+                                            <span class="sub-price">{{data?.cycle}} {{data?.period}}</span>
+                                        </div>
+                                    </div>
+
+                                </mat-menu>
+                            </p>
+                        </div>
+                        <div class="row m-0" *ngIf="data.recurringId > 0">
+                            <p>
+                                <span class="p-recurring">Recurring Active</span>&nbsp;
+                                <span>
+                                    <!-- (mouseenter)="mouseEnter(menuTrigger)"  (mouseleave)="mouseLeave(menuTrigger)" -->
+                                    <img src="assets/images/info.png" [matMenuTriggerFor]="recurringMenu"
+                                        #menuTrigger="matMenuTrigger">
+
+                                </span>
+                                <mat-menu #recurringMenu="matMenu">
+                                    <div class="row m-2">
+                                        <div class="col-sm-8 p-0">
+                                            <p class="sub-head pl-3">Recurring Summary</p>
+                                        </div>
+                                        <div class="col-sm-4 text-right"><i
+                                                class="fa fa-times fa-close curser close-ico" aria-hidden="true"
+                                                (click)="menu.closeMenu();"></i></div>
+                                    </div>
+                                    <hr class="p-hr1">
+                                    <div class="row m-0">
+                                        <div class="col-sm-12">
+                                            <span class="sub-col1 pl-2">Selected Recurring Plan:</span>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <span class="sub-price pl-2">{{data?.recurringName}}</span>
+                                        </div>
+                                    </div>
+                                </mat-menu>
+                            </p>
+                        </div>
+                        <hr class="p-hr">
+                        <p class="p-wish">
+                            <span *ngIf="data.wishlistStatus === 1" [matMenuTriggerFor]="afterMenu">
+                                <i class="fa fa-heart heartIco"></i> Save to wishlist
+                            </span>&nbsp;
+                            <span *ngIf="data.wishlistStatus === 0">
+                                <i class="fa fa-heart SelectedHeartIco"
+                                    (click)="removeWishlist( data.wishlistStatusId, i)"></i> Remove from wishlist
+                            </span>&nbsp;
+                            <span (click)="itemDelete(data.cartId)"> <i class="fa fa-trash-o"></i> Remove</span>
+                            <mat-menu #afterMenu="matMenu" xPosition="before">
+                                <div mat-menu-item [disableRipple]="true" (click)="$event.stopPropagation()"
+                                    class="saveMenuItem wishlistform">
+                                    <div class="row p-0">
+                                        <div class="col-12 pt-2" *ngIf="foldervisible">
+                                            <div class="col-12">
+                                                <mat-form-field appearance="outline" class="font-10">
+                                                    <mat-label>Folder Name</mat-label>
+                                                    <input matInput placeholder="Enter Name" [(ngModel)]="folderName"
+                                                        name="foldername">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 row m-0">
+                                                <div class="col-6 p-0">
+                                                    <p class="newfolder text-center" (click)="hidefolder()">
+                                                        Back
+                                                    </p>
+                                                </div>
+                                                <div class="col-6 pr-3" (click)="addFolder()">
+                                                    <p class="newfolder text-center">
+                                                        Add
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 pt-2" *ngIf="formhide">
+                                            <form>
+                                                <div class="col-sm-12">
+                                                    <mat-form-field class="font-10" appearance="outline">
+                                                        <mat-label>Folder</mat-label>
+                                                        <mat-select [(ngModel)]="folderList" name="folders">
+                                                            <mat-option *ngFor="let a of folders" [value]="a.folder_id">
+                                                                {{a.folder_name}}
+                                                                <!-- <span> {{a.folder_name}}</span> <span><button class="btn btn-primary" (click)="onClickOption(a)">edit</button></span> -->
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-12 row m-0">
+                                                    <div class="col-6 p-0" (click)="showfolder()">
+                                                        <p class="newfolder text-center">
+                                                            New Folder
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-6 pr-3" (click)="addtoWishlist(data,i)">
+                                                        <p class="newfolder text-center">
+                                                            Add
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-menu>
+                        </p>
+                    </div>
+                    <div class="col-sm-4 p-0 mt-4">
+                        <img src="assets/images/delivery-truck 1.png">&nbsp;<span
+                            class="p-recurring">{{data.prodEstTime}} </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12 divscroll pr-0">
+            <div class="card cart-card1">
+                <div class="card-header">
+                    <div class="col-sm-8 pl-0">
+                        <span class="coup-heading" *ngIf="coupontag === false">Have You A Coupon ?</span>
+                        <span class="coup-heading" *ngIf="coupontag === true">
+                            Coupon Code : {{couponPromoCode}}
+                        </span>
+                    </div>
+                    <div class="col-sm-4 text-right pr-0">
+                        <button type="button" class="btn btn-link card-btn" (click)="viewCoupon()"
+                            *ngIf="coupontag === false">Apply</button>
+                        <button type="button" class="btn btn-link card-btn" (click)="viewCoupon()"
+                            *ngIf="coupontag === true">Change</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- <p class="card-text">Know About Tax Details</p>
+                    <p class="click-here">Click Here</p>
+                    <hr> -->
+
+                    <mat-accordion>
+                        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                            class="cart-pannel">
+                            <mat-expansion-panel-header class="pl-0 pr-1">
+                                <mat-panel-title>
+                                    <p class="card-text2">Price Details</p>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="col-sm-12 p-0">
+                                <table class="addsImg">
+                                    <thead>
+                                        <tr>
+                                            <th class="blackclr">S.NO </th>
+                                            <th class="blackclr" style="width: 50%; "> Product Name</th>
+                                            <th class="text-right blackclr">Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let data of this.cartModal.productData;let i=index">
+                                            <td>{{i+1}}</td>
+                                            <td>{{data?.productName |titlecase}}</td>
+                                            <td class="text-center"
+                                                *ngIf="data.subscriptionFromDate === 0 && data.recurringId === 0 && data.discountPrice == '0.00' ">
+                                                {{data?.currencyIndicator}} {{data?.price}}</td>
+                                            <td class="text-right"
+                                                *ngIf="data.subscriptionFromDate === 0 && data.recurringId === 0 && data.discountPrice !== '0.00' ">
+                                                {{data?.currencyIndicator}} {{data?.price}}</td>
+                                            <td class="text-right"
+                                                *ngIf="data.subscriptionFromDate !== 0 || data.recurringId !== 0">
+                                                {{data?.currencyIndicator}} {{data?.finalAmount}}</td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                    <!-- <p class="card-text2">Price Details</p> -->
+                    <hr>
+                    <p class="card-row">
+                        <span class="card-text">Shopping Cart Total</span>
+                        <span class="card-text-price"> {{currencyIndicator}} {{totalCartPrice}}</span>
+                    </p>
+                    <p class="card-row" *ngIf="couponDiscount != '0' && couponDiscount !== '0.00' ">
+                        <span class="card-text">Coupon Discount</span>
+                        <span class="discountPrice"> - {{currencyIndicator}} {{couponDiscount}}</span>
+                    </p>
+                    <p class="card-row" *ngIf="totalDiscount !='0.00'">
+                        <span class="card-text">Product Discount</span>
+                        <span class="discountPrice"> - {{currencyIndicator}} {{totalDiscount}}</span>
+                    </p>
+                    <p class="text-danger coupntxt pb-2" *ngIf="couponMsg !== '' ">
+                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                        {{couponMsg}}
+                    </p>
+                    <p class="saved-Price saveAmt discountPrice" *ngIf="totalSavePrice >0">You will save
+                        {{currencyIndicator}}{{totalSavePrice |number : '1.2-2'}} on this order</p>
+                    <!-- <p class="saveAmt">You save $24 on this product</p> -->
+                </div>
+                <hr class="divider">
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p><span class="totalAmt">Total Price</span></p>
+                            <p class="p-price"> {{currencyIndicator}} {{totalPrice}}</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <button type="button" class="btn btn-info checkout-btn float-right"
+                                (click)="placeOrderClk()">CHECK OUT</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #couponDetails>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h3 class="coup-card-heading">Exclusive Offers</h3>
+            </div>
+            <div class="col-sm-6 text-right">
+                <i class="fa fa-times fa-close curser" aria-hidden="true" (click)="dialog.closeAll();"></i>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-12">
+                <input type="text" class="form-control coup-input" placeholder="Enter Coupon Code"
+                    [(ngModel)]="couponPromoCode">
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 text-center">
+                <button type="button" class="btn btn-outline-primary apply-coup-btn" (click)="applyCouponClks()"
+                    *ngIf="coupontag === false">Apply</button>
+                <button type="button" class="btn btn-outline-primary apply-coup-btn" (click)="removeCoupon()"
+                    *ngIf="coupontag === true">Remove</button>
+            </div>
+            <div class="col-sm-12">
+                <p class="coup-p"> Available Coupons are shown below on basis of items you added</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <mat-tab-group mat-align-tabs="start" class="headerTabBodyCart">
+                    <mat-tab label="Available Coupons">
+                        <div class="card mt-3 mb-1 coup-card"
+                            *ngFor="let CouponsList of this.productCouponsArray ; let i = index">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <button type="button" class="btn  coup-code-btn">{{CouponsList.code}}</button>
+                                </div>
+                                <div class="col-sm-6 text-right">
+                                    <button type="button" class="btn btn-link app-card"
+                                        (click)="selectedAddress(CouponsList.code,i)">Apply</button>
+                                </div>
+                                <div class="col-sm-12 pt-3">
+                                    <p class="coup-card-text" *ngIf="CouponsList.type === 'F'">
+                                        {{CouponsList.currency_indicator}}{{CouponsList.discount}} Instant
+                                        Discount on Minimum Purchase:
+                                        {{CouponsList.currency_indicator}}{{CouponsList.total_amount}} |
+                                        Valid
+                                        only on {{CouponsList.category_name}} Deals.</p>
+                                    <p class="coup-card-text" *ngIf="CouponsList.type === 'P'">
+                                        {{CouponsList.discount}}{{CouponsList.type_symbol}} Instant
+                                        Discount on Minimum Purchase:
+                                        {{CouponsList.currency_indicator}}{{CouponsList.total_amount}} |
+                                        Valid
+                                        only on {{CouponsList.category_name}} Deals.</p>
+                                </div>
+                                <div class="col-sm-6">
+
+                                    <p class="card-footer-text">
+                                        Max Discount : <span *ngIf="CouponsList.type === 'F'">
+                                            {{CouponsList.currency_indicator}}{{CouponsList.discount}}</span> <span
+                                            *ngIf="CouponsList.type === 'P'">{{CouponsList.discount}}
+                                            {{CouponsList.type_symbol}} </span>
+                                    </p>
+                                </div>
+                                <div class="col-sm-6 text-right">
+                                    <p class="card-footer-text">Valid upto : {{CouponsList.date_end.split(' ')[0]}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Best Coupons">
+                        <p class="coup-p"> No coupons found </p>
+
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</ng-template>

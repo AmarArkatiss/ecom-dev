@@ -1,0 +1,1084 @@
+<!-- <div class='col-sm-12 p-0'>
+    <div class="row">
+        <div class="col-md-2 col-sm-6 hidden-xs">
+            <div class="btn-group btn-group-sm">
+                <button type="button" id="grid-view" class="btn btn-default active" data-toggle="tooltip" title=""
+                    data-original-title="Grid" (click)="gridViewShow($event)"><i class="fa fa-th"></i></button>
+                <button type="button" id="list-view" class="btn btn-default" data-toggle="tooltip" title=""
+                    data-original-title="List" (click)="listViewShow($event)"><i class="fa fa-th-list"></i></button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row m-0" *ngIf= "gridViewStatus">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12"  *ngFor= "let product of productList.Product_Details">
+            <div class="card p-0">
+                <div class= "card-body">
+                    <div class="col-sm-12 text-center">
+                        <img src="http://cart.intellobots.com/image/cache/catalog/demo/apple_cinema_30-228x228.jpg"
+                            class="img-responsive" (click)=goToProductsView(product.product_id)>
+                    </div>
+                </div>
+               
+                <div>
+                    <div class="caption">
+                        <h4><a (click)=goToProductsView(product.product_id)>
+                                {{product.name}}
+                            </a></h4>
+                        <p style="overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 4;
+                -webkit-box-orient: vertical;text-align: justify;">
+                            {{product.description}}
+                        </p>
+                        <p class="price" *ngIf="product.discount_price!='Null'"> <span class="price-new"
+                                style="text-decoration: line-through"> {{product.symbol_left}}
+                                {{product.price}}</span>
+                            <span class="price-tax"> {{product.symbol_left}} {{product.discount_price}} </span>
+                            <span class="price-tax">Ex Tax: {{product.symbol_left}} {{product.discount_price}}
+                            </span>
+                        </p>
+                        <p class="price" *ngIf="product.discount_price=='Null'"> <span class="price-new">
+                                {{product.symbol_left}} {{product.price}}</span>
+                            <span class="price-tax">Ex Tax: {{product.symbol_left}} {{product.price}} </span>
+                        </p>
+                    </div>
+                    <div class="button-group">
+                        <button type="button" (click)="addToCart(product)"><i class="fa fa-shopping-cart"></i> <span
+                                class="hidden-xs hidden-sm hidden-md">Add to Cart</span></button>
+                        <button type="button" data-toggle="tooltip" title="" onclick="wishlist.add('42');"
+                            data-original-title="Add to Wish List"><i class="fa fa-heart"></i></button>
+                        <button type="button" data-toggle="tooltip" title="" onclick="compare.add('42');"
+                            data-original-title="Compare this Product"><i class="fa fa-exchange"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row" *ngIf=listViewStatus>
+        <div class="product-layout product-list col-xs-12" *ngFor='let product of productList.Product_Details'>
+            <div class="product-thumb">
+                <div class="image  col-xs-4"><a (click)=goToProductsView(product.product_id)><img
+                            src="http://cart.intellobots.com/image/cache/catalog/demo/apple_cinema_30-228x228.jpg"
+                            alt="Apple Cinema 30&quot;" title="Apple Cinema 30&quot;" class="img-responsive"></a>
+                </div>
+                <div class="col-xs-8" style="padding-right: 0px;">
+                    <div class="caption">
+                        <h4><a (click)=goToProductsView(product.product_id)>
+                                {{product.name}}
+                            </a></h4>
+                        <p style="overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 5;
+                -webkit-box-orient: vertical;text-align: justify;">
+                            {{product.description}}
+                        </p>
+                        <p class="price"> <span class="price-new">{{product.price}}</span>
+                            <span class="price-tax">Ex Tax: ₹90.00</span>
+                        </p>
+                    </div>
+                    <div class="button-group">
+                        <button type="button" (click)="addToCart(product)"><i class="fa fa-shopping-cart"></i> <span
+                                class="hidden-xs hidden-sm hidden-md">Add to Cart</span></button>
+                        <button type="button" data-toggle="tooltip" title="" onclick="wishlist.add('42');"
+                            data-original-title="Add to Wish List"><i class="fa fa-heart"></i></button>
+                        <button type="button" data-toggle="tooltip" title="" onclick="compare.add('42');"
+                            data-original-title="Compare this Product"><i class="fa fa-exchange"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-6 text-left"></div>
+        <div class="col-sm-6 text-right">Showing 1 to 2 of 2 (1 Pages)</div>
+    </div>
+</div> -->
+
+<!-- bannerRectangle 493.png -->
+<div class="super_container" id="mainheader">
+  <div class="row mt-3" style="background-color: #fff">
+    <!-- <img [src]="imageURL + 'bannerRectangle 493.png'" class="summBannerImg"> -->
+    <!-- <img
+      [src]="imageURL + 'Middle Banner Veterneo1.png'"
+      class="summBannerImg"
+      *ngIf="bannerImg === ''"
+    /> -->
+    <img [src]="defaultCatBanner" class="summBannerImg" *ngIf="bannerImg === ''" />
+
+    <img [src]="bannerImg" class="summBannerImg" *ngIf="bannerImg !== ''" />
+    <!-- <nav style="margin-top: -19%; margin-left: 35px">
+      <ol class="breadcrumb" #fff>
+        <li class="breadcrumb-item pointer"><a (click)="hClick()">Home</a></li>
+        <li class="breadcrumb-item text-white">{{ catName }}</li>
+      </ol>
+    </nav> -->
+  </div>
+
+  <div class="row titleimagesrow">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8 feacturesDiv" style="background-color: #fff">
+      <div class="row">
+        <div class="col-sm-3">
+          <img [src]="imageURL + 'fast-delivery 1.png'" class="LabelTitle2" />
+          <p class="tilteLbl">Fast Delivery</p>
+        </div>
+        <div class="col-sm-3">
+          <img [src]="imageURL + 'qualityi.png'" class="LabelTitle2" />
+          <p class="tilteLbl">Genuine Products</p>
+        </div>
+        <div class="col-sm-3">
+          <img [src]="imageURL + '_x32_4_Hours_Support.png'" class="LabelTitle2" />
+          <p class="tilteLbl">24 X 7 Customer Support</p>
+        </div>
+        <div class="col-sm-3">
+          <img [src]="imageURL + 'coupon2I.png'" class="LabelTitle2" />
+          <p class="tilteLbl">Affordable Prices</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-1"></div>
+  </div>
+
+  <div class="row" style="background-color: #fff" #mainheader>
+    <div class="col-sm-2 filtercard">
+      <div class="p-0">
+        <div class="row p-0">
+          <div class="col-sm-12 p-0">
+            <mat-accordion>
+              <mat-expansion-panel expanded *ngFor="
+                  let filter of this.filterModelObject.attr_details;
+                  let index = index
+                " class="m-0 filterpanel" expanded>
+                <mat-expansion-panel-header>
+                  <mat-panel-title class="font-14">
+                    {{ filter.attr_grp_name }}
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ul *ngFor="
+                    let arr of filter.attribute_details;
+                    let attrindex = index
+                  " class="font-13 check-Price p-0">
+                  <mat-checkbox class="example-margin" [(ngModel)]="arr.attribute" (change)="
+                      changeFilter(
+                        $event,
+                        'attr',
+                        arr.attribute,
+                        attrindex,
+                        arr.attribute_id
+                      )
+                    ">
+                    <li>{{ arr.attr_name }}</li>
+                  </mat-checkbox>
+                </ul>
+              </mat-expansion-panel>
+            </mat-accordion>
+            <mat-accordion>
+              <mat-expansion-panel class="m-0 filterpanel" expanded *ngIf="brandsData.length > 0">
+                <mat-expansion-panel-header>
+                  <mat-panel-title class="font-14"> Brand </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ul *ngFor="
+                    let brand of filterModelObject.Brands;
+                    let bidx = index
+                  " class="font-13 check-Price p-0">
+                  <mat-checkbox class="example-margin" [(ngModel)]="brand.namee" (change)="
+                      changeFilter(
+                        $event,
+                        'brand',
+                        brand.name,
+                        bidx,
+                        brand.manufacturer_id
+                      )
+                    ">
+                    <li>{{ brand.name }}</li>
+                  </mat-checkbox>
+                </ul>
+              </mat-expansion-panel>
+            </mat-accordion>
+            <mat-accordion *ngIf="filteroptdetails.length > 0">
+              <mat-expansion-panel class="m-0 filterpanel" expanded
+                *ngFor="let options of filteroptdetails; let idx = index">
+                <mat-expansion-panel-header>
+                  <mat-panel-title class="font-14">
+                    {{ options.opt_name }}
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ul *ngFor="let opt of options.option_details; let optidx = index" class="font-13 check-Price p-0">
+                  <mat-checkbox class="example-margin" [(ngModel)]="opt.name" (change)="
+                      changeFilter(
+                        $event,
+                        'optiondetails',
+                        opt.name,
+                        optidx,
+                        opt.option_value_id
+                      )
+                    ">
+                    <li>{{ opt.opt_val_name }}</li>
+                  </mat-checkbox>
+                </ul>
+              </mat-expansion-panel>
+            </mat-accordion>
+            <mat-accordion>
+              <mat-expansion-panel expanded class="filterpanel" *ngIf="filterpricelist.length > 0">
+                <mat-expansion-panel-header>
+                  <mat-panel-title class="font-14"> Price </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ul *ngFor="let p of filterpricelist; let pindex = index" class="font-13 check-Price p-0">
+                  <mat-checkbox class="example-margin w100" (change)="changeFilter($event, 'price', p, pindex, p)"
+                    value="{{ p }}">
+                    <li>{{ p }}</li>
+                  </mat-checkbox>
+                  <!-- {{p |json}} -->
+                </ul>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-10 mb-4">
+      <div class="card products-results-card" style="border: 0px solid #fff">
+        <div class="row col-sm-12">
+          <div class="col-sm-6">
+            <div *ngIf="productCount === 1">
+              <p class="product-header" *ngIf="this.summaryData.productDetails.length > 0">
+                {{ catName | uppercase }} {{ productCount }} Item Available
+              </p>
+            </div>
+            <div *ngIf="productCount > 1">
+              <p class="product-header" *ngIf="this.summaryData.productDetails.length > 0">
+                {{ catName | uppercase }} {{ productCount }} Items Available
+              </p>
+            </div>
+
+            <!-- <p class="product-header" *ngIf="this.summaryData.productDetails.length == 0 ">
+                            No Items Available For This Category
+                        </p> -->
+            <ngx-spinner class="spinnerCss">
+              <p class="spinnerText">Loading....</p>
+            </ngx-spinner>
+          </div>
+          <div class="col-sm-2"></div>
+          <div class="col-sm-3">
+            <div class="row col-sm-12">
+              <div class="col-sm-6">
+                <!-- <select id="DrpDwn">
+                  <option class="opdrpDwn" value="volvo">Best Sellers</option>
+                  <option class="opdrpDwn" value="saab">Sort</option>
+                  <option class="opdrpDwn" value="opel">Featured</option>
+                  <option class="opdrpDwn" value="audi">Best selling</option>
+                  <option class="opdrpDwn" value="audi">
+                    Price, high to low
+                  </option>
+                </select> -->
+              </div>
+              <div class="col-sm-6">
+                <!-- <div class="shareDiv pointer">
+                  <img
+                    [src]="imageURL + 'share (1) 1.png'"
+                    (click)="share()"
+                    class="shareImgs"
+                  />
+                  <p class="shareLbl">Share</p>
+                </div> -->
+              </div>
+              <span> </span>
+              <span> </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12" *ngIf="this.summaryData.productDetails.length == 0">
+          <div class="row m-0">
+            <div class="col-sm-6 offset-sm-2 mt-5">
+              <img src="{{ imageURL }}noImag.png" alt="" class="img-fluid d-block pl-2 pr-0 cartEmptyText" />
+              <h5 class="heading m-2 p-2 text-center">
+                No Items Available For This Category
+              </h5>
+              <!-- <img src="{{imgurl}}noitems-found.jpg" alt="" class="pointer imgcenter"> -->
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 productsPage">
+          <!-- <div class="row m-0" *ngIf="productView == 'grid'">
+            <div
+              class="col-lg-3 col-md-4 col-sm-6 mb-3"
+              *ngFor="let p of this.summaryData.productDetails; let i = index"
+            >
+              <div
+                class="card p-0 grid-product-card d-flex align-items-stretch"
+              >
+                <div class="card-body pb-0 pt-2 pr-2 pl-2 prodImgAlign2">
+                  <div class="row" style="height: 35px">
+                    <div class="col-sm-6">
+                      <span *ngIf="p?.discountPrice > 0">
+                        <img
+                          src="assets/loginImgs/offerImg.png"
+                          class="off-img"
+                        />
+                        <span class="off-text3">
+                          <p>Save</p>
+                          <p
+                            [ngClass]="{
+                              disPrice1: p.discountPrice.length > 5
+                            }"
+                            *ngIf="p?.priceType === 'F'"
+                          >
+                            {{ p?.currencyIndicator }}{{ p?.discountPrice }}
+                          </p>
+                          <p
+                            [ngClass]="{
+                              disPrice1: p.discountPrice.length > 5
+                            }"
+                            *ngIf="p?.priceType === 'P'"
+                          >
+                            {{ p?.discountPrice }}{{ p?.symbolLeft }}
+                          </p>
+                        </span>
+                      </span>
+                    </div>
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-2 wishBtn">
+                      <p
+                        class="addCart"
+                        title="Whishlist"
+                        *ngIf="p.wishlistflag === 1"
+                        [matMenuTriggerFor]="afterMenu"
+                      >
+                        <i class="fa fa-heart"></i>
+                      </p>
+                      <p
+                        class="addCart"
+                        *ngIf="p.wishlistflag === 0"
+                        (click)="removeWishlist(i, p.wishlistStatusId)"
+                      >
+                        <i class="fas fa-heart whishListAddedIcon"></i>
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="col-sm-12 prodImgAlign p-0"
+                    (click)="goToProductsView(p.productId)"
+                  >
+                    <img [src]="p.image" class="product-image" />
+                  </div>
+                  <div class="col-sm-12 m12">
+                    <p
+                      class="productName"
+                      title="{{ p?.name }}"
+                      (click)="goToProductsView(p.productId)"
+                    >
+                      {{ p?.name | titlecase }}
+                    </p>
+                  </div>
+                  <div
+                    class="row p-0 m5lo ml-0"
+                    (click)="goToProductsView(p.productId)"
+                  >
+                    <div class="col-sm-6 mpopx">
+                      <span
+                        class="special-price"
+                        *ngIf="
+                          p.discountPrice !== '0.00' &&
+                          p.discountPrice !== undefined &&
+                          p.discountPrice !== null
+                        "
+                        >{{ p?.currencyIndicator }}&nbsp;{{ p?.offPrice }}</span
+                      >
+                      <span
+                        class="special-price"
+                        *ngIf="
+                          p.discountPrice === '0.00' ||
+                          p.discountPrice === undefined ||
+                          p.discountPrice === null
+                        "
+                        >{{ p?.currencyIndicator }}&nbsp;{{ p?.price }}
+                      </span>
+                    </div>
+                    <div class="col-sm-5 mpopx2">
+                      <span
+                        class="regular-price"
+                        *ngIf="
+                          p.discountPrice !== '0.00' &&
+                          p.discountPrice !== undefined &&
+                          p.discountPrice !== null
+                        "
+                      >
+                        {{ p?.currencyIndicator }}&nbsp;{{ p?.price }}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="row m5">
+                    <div class="col-sm-6">
+                      <ngb-rating
+                        class="warning font-20 ngbRatingColor"
+                        [max]="5"
+                        [(rate)]="p.averageRating"
+                        [starTemplate]="t"
+                        [readonly]="true"
+                      >
+                      </ngb-rating>
+                      {{ p?.averageRating }}
+                      <ng-template #t let-fill="fill">
+                        <span class="star" [class.full]="fill === 100">
+                          <span class="half" [style.width.%]="fill"
+                            ><em class="fa fa-star text-warning"></em></span
+                          ><em class="fa fa-star-o text-warning cursor"></em>
+                        </span>
+                      </ng-template>
+                    </div>
+                    <div class="col-sm-6">
+                      <p class="ClkViewBtn" (click)="cartClk(p, price)">
+                        Add to cart
+                      </p>
+                    </div>
+                  </div>
+                  <div class="row m-0 p-2">
+                    <div class="col-sm-4 p-0 text-center"></div>
+                    <div
+                      class="col-sm-4 p-0 text-center"
+                      title="SaveLater"
+                    ></div>
+                    <div
+                      class="col-sm-4 p-0 text-center"
+                      title="Add to Cart"
+                    ></div>
+                  </div>
+                  <mat-menu #afterMenu="matMenu" xPosition="before">
+                    <div
+                      mat-menu-item
+                      [disableRipple]="true"
+                      (click)="$event.stopPropagation()"
+                      class="saveMenuItem wishlistform"
+                    >
+                      <div class="row p-0">
+                        <div class="col-12 pt-2" *ngIf="foldervisible">
+                          <div class="col-12">
+                            <mat-form-field
+                              appearance="outline"
+                              class="font-10"
+                            >
+                              <mat-label>Folder Name</mat-label>
+                              <input
+                                matInput
+                                placeholder="Enter Name"
+                                [(ngModel)]="folderName"
+                                name="foldername"
+                              />
+                            </mat-form-field>
+                          </div>
+                          <div class="col-12 row m-0">
+                            <div class="col-6 p-0">
+                              <p
+                                class="newfolder text-center"
+                                (click)="hidefolder()"
+                              >
+                                Back
+                              </p>
+                            </div>
+                            <div class="col-6 pr-3" (click)="addFolder()">
+                              <p class="newfolder text-center">Add</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-12 pt-2" *ngIf="formhide">
+                          <form>
+                            <div class="col-sm-12">
+                              <mat-form-field
+                                class="font-10"
+                                appearance="outline"
+                              >
+                                <mat-label>Folder</mat-label>
+                                <mat-select
+                                  [(ngModel)]="folderList"
+                                  name="folders"
+                                >
+                                  <mat-option
+                                    *ngFor="let a of folders"
+                                    [value]="a.folder_id"
+                                  >
+                                    {{ a.folder_name }}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-12 row m-0">
+                              <div class="col-6 p-0" (click)="showfolder()">
+                                <p class="newfolder text-center">New Folder</p>
+                              </div>
+                              <div
+                                class="col-6 pr-3"
+                                (click)="addtoWishlist(p, i)"
+                              >
+                                <p class="newfolder text-center">Add</p>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </mat-menu>
+                </div>
+              </div>
+            </div>
+          </div> -->
+
+          <div *ngIf="productView == 'grid'">
+            <div class="d-flex flex-wrap">
+              <div class="item-card mt-4 ml-4 p-0" *ngFor="let p of this.summaryData.productDetails; let i = index">
+                <span class="text-right">
+                  <span *ngIf="p.wishlistflag === 1" [matMenuTriggerFor]="afterMenu">
+                    <!-- <i class="fa fa-heart heartIco product-Wishlist"></i> -->
+                    <img src="assets/svg/Wishlist.svg" alt="Wishlist" width="25px" height="25px"
+                      class="product-Wishlist" />
+                  </span>
+                  <mat-menu #afterMenu="matMenu" xPosition="before">
+                    <div mat-menu-item [disableRipple]="true" (click)="$event.stopPropagation()"
+                      class="saveMenuItem wishlistform">
+                      <div class="row p-0">
+                        <div class="col-12 pt-2" *ngIf="foldervisible">
+                          <div class="col-12">
+                            <mat-form-field appearance="outline" class="font-10">
+                              <mat-label>Folder Name</mat-label>
+                              <input matInput placeholder="Enter Name" [(ngModel)]="folderName" name="foldername" />
+                            </mat-form-field>
+                          </div>
+                          <div class="col-12 row m-0">
+                            <div class="col-6 p-0">
+                              <p class="newfolder text-center" (click)="hidefolder()">
+                                Back
+                              </p>
+                            </div>
+                            <div class="col-6 pr-3" (click)="addFolder()">
+                              <p class="newfolder text-center">Add</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-12 pt-2" *ngIf="formhide">
+                          <form>
+                            <div class="col-sm-12">
+                              <mat-form-field class="font-10" appearance="outline">
+                                <mat-label>Folder</mat-label>
+                                <mat-select [(ngModel)]="folderList" name="folders">
+                                  <mat-option *ngFor="let a of folders" [value]="a.folder_id">
+                                    {{ a.folder_name }}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-12 row m-0">
+                              <div class="col-6 p-0" (click)="showfolder()">
+                                <p class="newfolder text-center">New Folder</p>
+                              </div>
+                              <div class="col-6 pr-3" (click)="addtoWishlist(p, i)">
+                                <p class="newfolder text-center">Add</p>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </mat-menu>
+
+                  <span *ngIf="p.wishlistflag === 0">
+                    <!-- <i
+                      class="fa fa-heart whishListAddedIcon product-Wishlist"
+                      (click)="removeWishlist(i, p.wishlistStatusId)"
+                    ></i> -->
+                    <img src="assets/svg/btn-whishlist-selected.svg" alt="Wishlist" width="25px" height="25px"
+                      class="product-Wishlist" (click)="removeWishlist(i, p.wishlistStatusId)" />
+                  </span>
+                </span>
+
+                <div class="product-img d-flex justify-content-center" (click)="goToProductsView(p.productId)">
+                  <!-- <img
+                    src="{{ p.imageUrl }}"
+                    alt="watch-icon"
+                    height="200px"
+                    (click)="goToProductsView(p.product_id)"
+                  /> -->
+                  <img [src]="p.image" alt="watch-icon" height="200px" width="100%" class="p-prod-img p-3 pt-4 pb-4" />
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="product-offer" *ngIf="p?.discountPrice > 0">
+                    <span>Save</span>
+                    <span [ngClass]="{ disPrice1: p.discountPrice.length > 5 }" *ngIf="p.priceType === 'F'">
+                      {{ p.currencyIndicator
+                      }}{{ p.discountPrice | slice : 0 : 7 }}
+                    </span>
+                    <span [ngClass]="{ disPrice1: p.discountPrice.length > 5 }" *ngIf="p.priceType === 'P'">
+                      {{ p.discountPrice | slice : 0 : 7 }}{{ p.symbolLeft }}
+                    </span>
+                  </span>
+                  <span class="d-flex align-items-center star-rating">
+                    &nbsp; {{ p.averageRating }}&nbsp;
+                    <img src="assets/svg/star.svg" alt="star-logo" />&nbsp; |
+                    &nbsp; 5&nbsp;&nbsp;
+                  </span>
+                </div>
+
+                <div class="d-flex flex-column product-content">
+                  <div class="d-flex align-items-center justify-content-between pb-3"
+                    (click)="goToProductsView(p.productId)">
+                    <span class="product-name" title="{{ p.name }}">{{
+                      p.name | titlecase
+                      }}</span>
+                    <!-- <img src="assets/svg/rating_latest.svg" alt="rating" /> -->
+                    <!-- <span>
+                      <ngb-rating
+                        class="warning font-20 ml-2 ngbRatingColor"
+                        [max]="5"
+                        [(rate)]="img.average_rating"
+                        [starTemplate]="t"
+                        [readonly]="true"
+                      >
+                      </ngb-rating>
+                      {{ img.average_rating }}
+  
+                      <ng-template #t let-fill="fill">
+                        <span class="star" [class.full]="fill === 100">
+                          <span class="half" [style.width.%]="fill"
+                            ><em class="fa fa-star text-warning"></em></span
+                          ><em class="fa fa-star-o text-warning cursor"></em>
+                        </span>
+                      </ng-template>
+                    </span> -->
+                  </div>
+                  <div class="d-flex align-items-center justify-content-between">
+                    <span class="d-flex align-items-center">
+                      <span class="product-currency" *ngIf="
+                          p.discountPrice !== '0.00' &&
+                          p.discountPrice !== undefined &&
+                          p.discountPrice !== null
+                        ">
+                        {{ p.currencyIndicator }}{{ p.offPrice }}
+                      </span>
+                      <span class="product-currency" *ngIf="
+                          p.discountPrice === '0.00' ||
+                          p.discountPrice === undefined ||
+                          p.discountPrice === null
+                        ">
+                        {{ p.currencyIndicator }}{{ p.price }}
+                      </span>
+                      <span class="OfferPricewek1 ml-1" *ngIf="
+                          p.discountPrice !== '0.00' &&
+                          p.discountPrice !== undefined &&
+                          p.discountPrice !== null
+                        ">
+                        {{ p.currencyIndicator }}{{ p.price }}
+                      </span>
+                    </span>
+
+                    <button class="add-cart" (click)="cartClk(p, price)">
+                      ADD TO CART
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 productsPage p-0">
+          <!-- <div class="row m-0" *ngIf="productView == 'list'">
+                        <div class="col-sm-12">
+                            <div class="card list-product-card mb-3"
+                                *ngFor="let p of this.summaryData.productDetails; let i = index">
+                                <div class="card-body">
+                                    <div class="row m-0" (click)=goToProductsView(p.productId)>
+                                        <div class=" col-sm-3 px-2">
+                                            <div class="row m-0">
+                                                <div class="col-sm-11 p-0 text-center img-center">
+                                                    <img [src]="p.image" class="product-image"
+                                                        (click)=goToProductsView(p.productId)>
+                                                </div>
+                                                <div title="Whishlist" class="col-sm-1 p-0"
+                                                    *ngIf="p.wishlistflag === 1">
+                                                    <i class="fa fa-heart pt-2" [matMenuTriggerFor]="afterMenu"></i>
+                                                </div>
+                                                <div class="col-sm-1 p-0" *ngIf="p.wishlistflag === 0"
+                                                    (click)="removeWishlist(i,p.wishlistStatusId)">
+                                                    <i class="fas fa-heart pt-2 whishListAddedIcon"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <mat-menu #afterMenu="matMenu" xPosition="before">
+                                            <div mat-menu-item [disableRipple]="true" (click)="$event.stopPropagation()"
+                                                class="saveMenuItem wishlistform">
+                                                <div class="row p-0">
+                                                    <div class="col-sm-12 pt-2" *ngIf="foldervisible">
+                                                        <mat-form-field appearance="outline" class="font-10 col-sm-12">
+                                                            <mat-label></mat-label>
+                                                            <input matInput placeholder="Enter Name"
+                                                                [(ngModel)]="folderName">
+                                                        </mat-form-field>
+                                                        <div class="col-12 row m-0">
+                                                            <div class="col-6 p-0">
+                                                                <p class="newfolder text-center" (click)="hidefolder()">
+                                                                    Back
+                                                                </p>
+                                                            </div>
+                                                            <div class="col-6 pr-3" (click)="addFolder()">
+
+                                                                <p class="newfolder text-center">
+                                                                    Add
+                                                                </p>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12 pt-2" *ngIf="formhide">
+                                                        <mat-form-field class="font-12 col-sm-12" appearance="outline">
+                                                            <mat-label>Folder</mat-label>
+                                                            <mat-select [(ngModel)]="folderList">
+                                                                <mat-option *ngFor="let a of folders"
+                                                                    [value]="a.folder_id">
+                                                                    {{a.folder_name}}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+
+                                                        <div class="col-12 row m-0">
+                                                            <div class="col-6 p-0" (click)="showfolder()">
+
+                                                                <p class="newfolder text-center">
+                                                                    New Folder
+                                                                </p>
+
+                                                            </div>
+                                                            <div class="col-6 pr-3" (click)="addtoWishlist(p,i)">
+
+                                                                <p class="newfolder text-center">
+                                                                    Add
+                                                                </p>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </mat-menu>
+                                        <div class=" col-sm-7 fl">
+                                            <p class="productNameListView" (click)=goToProductsView(product.productId)
+                                                title="{{p?.name | titlecase }}">
+                                                {{p?.name | titlecase }}</p>
+                                            <p>
+                                                <span class="badge badge-success startBadgeSize"
+                                                    *ngIf="p.averageRating !== null && p.averageRating !== undefined && p.averageRating  >= 3"><i
+                                                        class="fa fa-star"></i> {{p?.averageRating}} &nbsp; </span>
+                                                <span class="badge badge-warning startBadgeSize"
+                                                    *ngIf="p.averageRating !== null && p.averageRating !== undefined && p.averageRating  >1 && p.averageRating <3"><i
+                                                        class="fa fa-star whiteColorClass"></i><span
+                                                        class="whiteColorClass"> {{p?.averageRating}}</span> &nbsp;
+                                                </span>
+                                                <span class="badge badge-danger startBadgeSize"
+                                                    *ngIf="p.averageRating !== null && p.averageRating !== undefined && p.averageRating <= 1"><i
+                                                        class="fa fa-star"></i> {{p?.averageRating}} &nbsp; </span>
+                                                <span class="reviewAndRatingInfo">
+                                                    <span *ngIf="p?.ratingCount != 0">{{p?.ratingCount}} Ratings &
+                                                    </span>
+                                                    <span *ngIf="p?.reviewCount != 0">{{p?.reviewCount}} Reviews</span>
+                                                </span>
+                                                <span class="reviewAndRatingInfo"
+                                                    *ngIf="p?.ratingCount === 0 && p?.reviewCount === 0">No Ratings &
+                                                    Reviews</span>
+                                            </p>
+                                            <p class="listViewDescription" [innerHTML]="p?.description"></p>
+                                            <p class="float-left">
+                                                <span class="special-price"
+                                                    *ngIf="p.discountPrice !== '0.00' && p.discountPrice !== undefinded && p.discountPrice !== null">{{p?.currencyIndicator}}&nbsp;{{p?.offPrice}}</span>
+                                                <span class="special-price"
+                                                    *ngIf="p.discountPrice === '0.00' || p.discountPrice === undefined || p.discountPrice === null">{{p?.currencyIndicator}}&nbsp;{{p?.price}}</span>
+                                                <span class="regular-price" *ngIf="p.discountPrice !== '0.00'">
+                                                    {{p?.currencyIndicator}}&nbsp;{{p?.price}}</span>
+                                                <span class="product-off-price" *ngIf="p.discountPrice !== '0.00'">
+                                                    {{p?.currencyIndicator}}&nbsp;{{p?.discountPrice}} off
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class=" col-sm-2 " title="View Detail">
+                                            <div class="row m-0">
+                                                <p class="addCart text-center" (click)="addToCart(p)">
+                                                    <i class="fas fa-shopping-cart"></i>&nbsp;View Details
+                                                </p>
+                                            </div>
+                                            <div class="row m-0 pt-2" title="Shop Later">
+                                                <p class="addCart " (click)="shopLaterClk(p)"><i
+                                                        class="fa fa-floppy-o"></i>&nbsp;Shop Later</p>
+                                            </div>
+                                            <div class="row m-0 pt-2" title="Add to Cart">
+                                                <p class="addCart" (click)="cartClk(p , price)"><i
+                                                        class="fa fa-cart-arrow-down"></i>&nbsp;Shop Later</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+        </div>
+      </div>
+    </div>
+    <ng-template let-bottomSheetRef="bottomSheetRef" #shareDetails>
+      <div class="row m-2">
+        <div class="col-sm-12 text-right">
+          <i class="fa fa-times fa-close pointer" aria-hidden="true" (click)="bottomSheet.dismiss()"></i>
+        </div>
+        <div class="col-sm-12 p-5 d-col">
+          <div class="row">
+            <strong>{{ catName | uppercase }}</strong>
+          </div>
+          <div class="row">
+            <div class="col-sm-10 p-0">
+              <p>
+                Here's the link <a>{{ url }}</a>
+              </p>
+            </div>
+            <div class="col-sm-2">
+              <i class="fa fa-clone d-ico" aria-hidden="true" (click)="copyText(url)"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>
+<app-footer></app-footer>
+
+<!--
+    <div class="row m-0" *ngIf=listViewStatus>
+        <div class="product-layout product-list col-xs-12" *ngFor='let product of productList.Product_Details'>
+            <div class="product-thumb">
+                <div class="image  col-xs-4"><a (click)=goToProductsView(product.product_id)><img
+                            src="http://cart.intellobots.com/image/cache/catalog/demo/apple_cinema_30-228x228.jpg"
+                            alt="Apple Cinema 30&quot;" title="Apple Cinema 30&quot;" class="img-responsive"></a>
+                </div>
+                <div class="col-xs-8" style="padding-right: 0px;">
+                    <div class="caption">
+                        <h4><a (click)=goToProductsView(product.product_id)>
+                                {{product.name}}
+                            </a></h4>
+                        <p style="overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 5;
+                -webkit-box-orient: vertical;text-align: justify;">
+                            {{product.description}}
+                        </p>
+                        <p class="price"> <span class="price-new">{{product.price}}</span>
+                            <span class="price-tax">Ex Tax: ₹90.00</span>
+                        </p>
+                    </div>
+                    <div class="button-group">
+                        <button type="button" (click)="addToCart(product)"><i class="fa fa-shopping-cart"></i> <span
+                                class="hidden-xs hidden-sm hidden-md">Add to Cart</span></button>
+                        <button type="button" data-toggle="tooltip" title="" onclick="wishlist.add('42');"
+                            data-original-title="Add to Wish List"><i class="fa fa-heart"></i></button>
+                        <button type="button" data-toggle="tooltip" title="" onclick="compare.add('42');"
+                            data-original-title="Compare this Product"><i class="fa fa-exchange"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+<!-- <div class="row m-0">
+        <div class="col-sm-6 text-left"></div>
+        <div class="col-sm-6 text-right">Showing 1 to 2 of 2 (1 Pages)</div>
+    </div> -->
+
+<!-- <div class="row rowbg mt-3 ml-2 mr-2 mb-6" *ngIf="this.reviewData.reviewProductDetails.length > 0">
+    <div class="col-sm-12 mt-3 ml-3 mb-3">
+        <h4>Reviews for Popular Products</h4>
+    </div><hr>
+    <div class="col-sm-12  p-0">
+        <div class="row m-0">
+            <div class="col-sm-12">
+                <div class="card list-product-card mb-3"
+                    *ngFor="let p of  this.reviewData.reviewProductDetails; let i = index">
+                    <div class="card-body">
+                        <div class="row m-0">
+                            <div class=" col-sm-3 px-2">
+                                <div class="row m-0">
+                                    <div class="col-sm-11 p-0 text-center img-center">
+                                        <img [src]="p.image" class="product-image"
+                                            (click)=goToProductsView(p.productId)>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" col-sm-3 fl">
+                                <p class="productNameListView2" (click)=goToProductsView(product.productId)
+                                    title="{{p?.name | titlecase }}">
+                                    {{p?.name | titlecase }}</p>
+                                <p>
+                                    <span class="badge badge-success startBadgeSize"
+                                        *ngIf="p.averageRating !== null && p.averageRating !== undefined && p.averageRating  >= 3"><i
+                                            class="fa fa-star"></i> {{p?.averageRating}} &nbsp; </span>
+                                    <span class="badge badge-warning startBadgeSize"
+                                        *ngIf="p.averageRating !== null && p.averageRating !== undefined && p.averageRating  >1 && p.averageRating <3"><i
+                                            class="fa fa-star whiteColorClass"></i><span class="whiteColorClass">
+                                            {{p?.averageRating}}</span> &nbsp; </span>
+                                    <span class="badge badge-danger startBadgeSize"
+                                        *ngIf="p.averageRating !== null && p.averageRating !== undefined && p.averageRating <= 1"><i
+                                            class="fa fa-star"></i> {{p?.averageRating}} &nbsp; </span>
+                                    <span class="reviewAndRatingInfo">
+                                        <span *ngIf="p?.ratingCount != 0">{{p?.ratingCount}} Ratings & </span>
+                                        <span *ngIf="p?.reviewCount != 0">{{p?.reviewCount}} Reviews</span>
+                                    </span>
+                                    <span class="reviewAndRatingInfo"
+                                        *ngIf="p?.ratingCount === 0 && p?.reviewCount === 0">No Ratings &
+                                        Reviews</span>
+                                </p>                              
+                                <p class="float-left">
+                                    <span class="special-price"
+                                        *ngIf="p.discountPrice !== '0.00' && p.discountPrice !== undefinded && p.discountPrice !== null">{{p?.currencyIndicator}}&nbsp;{{p?.offPrice}}</span>
+                                    <span class="special-price"
+                                        *ngIf="p.discountPrice === '0.00' || p.discountPrice === undefined || p.discountPrice === null">{{p?.currencyIndicator}}&nbsp;{{p?.price}}</span>
+                                    <span class="regular-price" *ngIf="p.discountPrice !== '0.00'">
+                                        {{p?.currencyIndicator}}&nbsp;{{p?.price}}</span>
+                                    <span class="product-off-price" *ngIf="p.discountPrice !== '0.00'">
+                                        {{p?.currencyIndicator}}&nbsp;{{p?.discountPrice}} off
+                                    </span>
+                                </p>
+                            </div>
+                            <div class=" col-sm-3 " title="helpful review">
+                                <p class="reviewheading">Most Helpful Review</p>
+                                <p class="productNameListView" title="{{p?.helpAuthor | titlecase }}">
+                                    <span class="badge badge-success startBadgeSize"
+                                        *ngIf="p.helpRating !== null && p.helpRating !== undefined && p.helpRating  >= 3"><i
+                                            class="fa fa-star"></i> {{p?.helpRating}}  &nbsp;</span>
+                                    <span class="badge badge-warning startBadgeSize"
+                                        *ngIf="p.helpRating !== null && p.helpRating !== undefined && p.helpRating  >1 && p.helpRating <3"><i
+                                            class="fa fa-star whiteColorClass"></i><span class="whiteColorClass">
+                                            {{p?.helpRating}}</span>  &nbsp;</span>
+                                    <span class="badge badge-danger startBadgeSize"
+                                        *ngIf="p.helpRating !== null && p.helpRating !== undefined && p.helpRating <= 1"><i
+                                            class="fa fa-star"></i> {{p?.helpRating}}  &nbsp;</span>  
+                                            &nbsp;<span>{{p?.helpAuthor | titlecase }}</span>
+                                </p>
+                                <p class="reviewContent">{{p?.helpcoment}}</p>
+                                <p>{{p?.helpDateAdded.split(' ')[0] }}</p>
+
+                            </div>
+                            <div class=" col-sm-3 " title="recent review">
+                                <p class="reviewheading">Recent Review</p>
+                                <p class="productNameListView" title="{{p?.recentAuthor | titlecase }}">
+                                    <span class="badge badge-success startBadgeSize"
+                                        *ngIf="p.recentRating !== null && p.recentRating !== undefined && p.recentRating  >= 3"><i
+                                            class="fa fa-star"></i> {{p?.recentRating}} &nbsp;</span>  
+                                    <span class="badge badge-warning startBadgeSize"
+                                        *ngIf="p.recentRating !== null && p.recentRating !== undefined && p.recentRating  >1 && p.recentRating <3"><i
+                                            class="fa fa-star whiteColorClass"></i><span class="whiteColorClass">
+                                            {{p?.recentRating}}</span> &nbsp;  </span>  
+                                    <span class="badge badge-danger startBadgeSize"
+                                        *ngIf="p.recentRating !== null && p.recentRating !== undefined && p.recentRating <= 1"><i
+                                            class="fa fa-star"></i> {{p?.recentRating}}&nbsp;</span>
+                                            &nbsp; <span>{{p?.recentAuthor | titlecase }}</span>
+                                </p>
+                                <p class="reviewContent">{{p?.recentComent}}</p>
+                                <p>{{p?.recentDateAdded.split(' ')[0] }}</p>
+                            </div>
+                        </div>                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+<!-- <footer id="footer">
+    <div class="row m-0">       
+        <div class="col-sm-3">
+            <h5 class="footer-heading">ABOUT</h5>
+            <p class="footer-links">Contact Us</p>
+            <p class="footer-links">About Us</p>
+            <p class="footer-links">Careers </p>      
+            <p class="footer-links">News</p>    
+            <p class="footer-links">Corporate Information</p>
+        </div>
+        <div class="col-sm-3">
+            <h5 class="footer-heading">Help</h5>
+            <p class="footer-links">Payments</p>
+            <p class="footer-links">Shipping</p>
+            <p class="footer-links">Cancellation & Returns</p>
+            <p class="footer-links">FAQ’s</p>
+            <p class="footer-links">Reports</p>
+            <p class="footer-links">Refer-a-friend</p>
+            <p class="footer-links">Shining a Light</p>        
+        </div>
+        <div class="col-sm-3">
+            <h5 class="footer-heading">Legal</h5>
+            <p class="footer-links">General Info</p>
+            <p class="footer-links">Privacy Policy</p>
+            <p class="footer-links">Terms of Service</p>         
+        </div>
+        <div class="col-sm-3">
+            <h5 class="footer-heading">Address & Location</h5>
+            <div>
+                <p class="footer-links">4400 Route 9 South Freehold</p>
+                <p class="footer-links"><span>New Jersey</span>,<span>07728</span></p>
+                <p class="footer-links">USA</p>
+                <p class="footer-links">ecomsupport@arkatiss.com</p>
+            </div>
+        </div>
+    </div><hr>
+    <div class="row mt-5">
+        <div class="col-lg-4 col-md-4 col-sm-5">
+            <img src="{{imgurl}}cswg.png'" alt=""
+                class="pointer logo-img" >
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-3">
+            <p class=" text-center footer-text"> © 2022 BOTCOM. All Rights Reserved. </p>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4">
+            <div class="example-button-container text-center">
+             
+                <button mat-mini-fab color="primary" class="bg-fb">
+                  <i class="fa fa-facebook" aria-hidden="true"></i>
+                  </button>&nbsp;&nbsp;
+                  <button mat-mini-fab color="primary" class="bg-ln">
+                    <i class="fa fa-linkedin" aria-hidden="true"></i>
+                  </button> &nbsp;&nbsp;
+                  <button mat-mini-fab color="primary" class="bg-google"   matTooltip="Share this site with your friends">
+                    <i class="fa fa-share-alt  font-18" aria-hidden="true" ></i>
+                  </button>
+              </div>
+        </div>     
+    </div>
+
+</footer> -->
+
+<!-- <mat-menu #afterMenu="matMenu" xPosition="after">
+    <span mat-menu-item [disableRipple]="true" (click)="$event.stopPropagation()" class="saveMenuItem">
+      <div class="row p-0">
+        <div class="col-sm-12 pt-2">
+          <form  >
+            <div class="col-sm-4">
+                <mat-form-field appearance="ouline">
+                    <mat-label>folder</mat-label>
+                    <mat-select [(ngModel)]="folderList" name="folders">
+                      <mat-option *ngFor="let a of folders" [value]="a.folder_id">
+                        {{a.folder_name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+              <mat-form-field appearance="outline" class="font-10">
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="Enter Price" [(ngModel)]="folderName" name="foldername">
+              </mat-form-field>
+            </div>
+            <div class="col-sm-12 ">
+              <button mat-raised-button class="text-info font-12 float-right" type="button" (click)="addtoWishlist()"> Add</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </span>
+  </mat-menu> -->

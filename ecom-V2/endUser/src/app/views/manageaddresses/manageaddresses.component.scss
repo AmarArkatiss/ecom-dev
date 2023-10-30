@@ -1,0 +1,118 @@
+@import "src/assets/styles/scss/variables";
+// @import "../../../assets/styles/scss/variables";
+
+.disabledcursor {
+  cursor: no-drop;
+}
+
+.editiconcolor {
+  color: #007bff;
+}
+
+.password {
+  text-decoration: none;
+}
+
+.detaldiv1 {
+  height: 472px;
+  overflow-y: scroll;
+}
+
+.detaldiv2 {
+  height: 824px;
+}
+
+.addCart {
+  padding: 10px;
+  font-size: 14px;
+  font-family: "Poppins";
+  letter-spacing: 0.02rem;
+  line-height: 18px;
+  color: #007bff;
+  border-radius: 8px;
+  background-color: #007bff1a;
+}
+
+.card-footer {
+  background-color: white !important;
+  border-top: 0px !important;
+}
+
+.frstName-txt {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 24px;
+  color: #2f294d;
+}
+
+.person-info {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 25px;
+  color: rgba(47, 41, 77, 0.75);
+}
+
+.edit-btn {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 19px;
+  color: $theme_color !important;
+}
+
+.edit-btn:hover {
+  color: white;
+  background-color: $theme_color !important;
+}
+
+.profile-card {
+  display: flex;
+  flex-direction: column;
+  padding: 0px;
+  gap: 16px;
+  height: 220px;
+  background: #fefefe;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+}
+
+.new-add {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+  color: $theme_color !important;
+}
+
+.update-btn {
+  width: 107px;
+  height: 36px;
+  background: $theme_color !important;
+  border-radius: 5px;
+  border-color: $theme_color !important;
+  color: #fff;
+}
+
+.cancel-btn {
+  width: 107px;
+  height: 36px;
+  color: $theme_color !important; // white;
+  border-radius: 5px;
+  background: none !important;
+  border-color: $theme_color !important; // #a5aeaf;
+}
+
+.reqField {
+  color: red;
+  margin-bottom: 0px;
+}
+
+.defaultAdd {
+  background-color: #e53030;
+}

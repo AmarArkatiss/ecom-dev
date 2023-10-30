@@ -1,0 +1,396 @@
+@import "src/assets/styles/scss/variables";
+
+.carouselCss {
+  height: 90%;
+}
+
+.signUpLinkBacktosignin {
+  color: #828282;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+  float: left;
+}
+
+.signUpLinkBacktosignin2 {
+  padding-left: 5px;
+  color: #333333;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.loginPad {
+  margin-top: 20%;
+  width: 400px;
+  border-radius: 20px;
+  margin-bottom: auto;
+}
+
+.loginFormIcon {
+  width: 220px;
+  margin-top: 17%;
+  margin-left: 5%;
+}
+
+.gmailClkDiv {
+  align-items: center;
+  padding: 5px;
+  border: 1px solid;
+  border-color: #e8e8e8;
+  border-radius: 5px;
+  margin-top: 14px;
+}
+
+.gmailClkcls {
+  font-family: Nunito Sans;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 19px;
+  letter-spacing: 0em;
+  text-align: center;
+  color: #828282;
+  width: 60%;
+  margin-top: 4px;
+  margin-left: 44px;
+}
+
+.orsignDiv {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 14px;
+  text-align: center;
+  color: #999898;
+  margin-top: 14px;
+}
+
+.titlelog {
+  margin-top: 13px;
+  width: 366px;
+  height: 43px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 43px;
+  color: #504747;
+}
+
+.signuptitlelog {
+  width: 366px;
+  height: 19px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 19px;
+  color: #525252;
+}
+
+.titlelog2 {
+  float: left;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 24px;
+}
+
+.colororange {
+  color:  $theme_color !important;
+  margin-left: 3px;
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.colorusgreen {
+  color:  $theme_color !important;
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+#ccc {
+  background-color:  $theme_color !important;
+  border-color: transparent;
+}
+
+.loginIcon {
+  width: 13%;
+  height: 11%;
+}
+
+.example-button-container {
+  display: flex;
+  justify-content: center;
+  width: 120px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.login_image {
+  position: absolute;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.login-text {
+  font-size: 16px;
+  font-family: Poppins;
+  font-weight: 500;
+  font-style: normal;
+  opacity: 0.9;
+  color: #000000;
+}
+
+.signin {
+  font-size: 18px;
+  font-family: Poppins;
+  font-weight: 500;
+  font-style: normal;
+  color:  $theme_color !important;
+  margin: 0px;
+}
+
+.submit-btn {
+  font-size: 16px !important;
+  font-family: Roboto !important;
+  font-weight: 400;
+  font-style: normal;
+  background-color:  $theme_color !important;
+  color: #ffffff;
+  margin: 0px;
+  border-radius: 8px !important;
+}
+
+#orId {
+  color:  $theme_color !important;
+}
+
+#floatingBarsG {
+  position: relative;
+  width: 16px;
+  height: 20px;
+}
+
+.blockG {
+  position: absolute;
+  background-color: #c4c4c4;
+  width: 3px;
+  height: 6px;
+  border-radius: 3px 3px 0 0;
+  transform: scale(0.4);
+  animation-name: fadeG;
+  animation-duration: 0.8s;
+  animation-iteration-count: infinite;
+  animation-direction: linear;
+}
+
+.gImage {
+  width: 25px;
+  height: 25px;
+  float: left;
+  margin-left: 20%;
+}
+
+#rotateG_01 {
+  left: 0;
+  top: 7px;
+  animation-delay: 0.3s;
+  transform: rotate(-90deg);
+}
+
+#rotateG_02 {
+  left: 2px;
+  top: 3px;
+  animation-delay: 0.4s;
+  transform: rotate(-45deg);
+}
+
+#rotateG_03 {
+  left: 7px;
+  top: 1px;
+  animation-delay: 0.5s;
+  transform: rotate(0deg);
+}
+
+#rotateG_04 {
+  right: 2px;
+  top: 3px;
+  animation-delay: 0.6s;
+  transform: rotate(45deg);
+}
+
+#rotateG_05 {
+  right: 0;
+  top: 7px;
+  animation-delay: 0.7s;
+  transform: rotate(90deg);
+}
+
+#rotateG_06 {
+  right: 2px;
+  bottom: 2px;
+  animation-delay: 0.8s;
+  transform: rotate(135deg);
+}
+
+#rotateG_07 {
+  bottom: 0;
+  left: 7px;
+  animation-delay: 0.9s;
+  transform: rotate(180deg);
+}
+
+#rotateG_08 {
+  left: 2px;
+  bottom: 2px;
+  animation-delay: 1s;
+  transform: rotate(-135deg);
+}
+
+@keyframes fadeG {
+  0% {
+    background-color: #000000;
+  }
+
+  100% {
+    background-color: #c4c4c4;
+  }
+}
+
+.okText {
+  font-size: 13px;
+  color: #bebebd;
+  text-align: center;
+  margin-top: 0.29rem;
+}
+
+.signUpLink {
+  cursor: pointer;
+  color: #868686;
+  margin-left: 40%;
+}
+
+.signUpLinkforgot {
+  color: #868686;
+  margin-left: 42%;
+  font-size: 12px;
+}
+
+.signUpLinklbl {
+  color: #333333;
+  text-align: left;
+  font-family: "Lato";
+  font-style: normal;
+  font-size: 16px;
+}
+
+.remcheck {
+  width: 12px;
+  height: 12px;
+  float: left;
+  margin-top: 2px;
+}
+
+.rememberCls {
+  font-size: 12px;
+  color: #868686;
+  margin-left: 15px;
+}
+
+.notregdiv {
+  margin-top: 24px;
+}
+
+.notregisLbl {
+  font-size: 16px;
+  color: #828282;
+  font-family: "Lato";
+  text-align: right;
+  font-style: normal;
+  padding-right: 10px;
+}
+
+/* Amar styles */
+.eyeIcon {
+  line-height: 19px;
+}
+
+.socialIconsDiv {
+  text-align: center;
+}
+
+.SocialImage {
+  width: 30%;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.header {
+  text-align: end;
+}
+
+.submit-btn {
+  margin-right: 107px;
+  margin-top: 6%;
+  color: #ffffff;
+}
+
+.inquiry {
+  cursor: pointer;
+  font-size: 14px;
+  color:  $theme_color !important;
+}
+
+.inquiry:hover {
+  color: blue;
+}
+
+.bg-fb {
+  background-color: #3b5998;
+}
+
+.bg-google {
+  background-color: #ea4335;
+}
+
+.bg-ln {
+  background-color: #1da1f2;
+}
+.row-bg {
+  background-color: white;
+}
+.margl2p {
+  margin-top: 6%;
+}
+.logback {
+  color: #868686;
+  font-size: 14px;
+}
+
+.veterneo {
+  font-family: "Roboto";
+  font-weight: 600;
+  color: #3b5998;
+  padding-left: 6px;
+}
+.form-section {
+  box-shadow: 2px 4px 14px rgba(0, 0, 0, 0.09);
+  border-radius: 9px;
+}

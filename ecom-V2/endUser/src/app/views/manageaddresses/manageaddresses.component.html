@@ -1,0 +1,178 @@
+<div class="row mt-3 ml-5 mr-5">
+  <div class="col-sm-2 py-2 px-2">
+    <app-account></app-account>
+  </div>
+  <div class="col-sm-7 px-2 py-2">
+    <div class="row card m-0 p-row">
+      <div class="col-lg-7 col-sm-7 p-0">
+        <p class="personal-info" *ngIf="editFlag === false && addFlag === false">
+          Manage Addresses
+        </p>
+        <p class="personal-info" *ngIf="addFlag === true">New Address</p>
+        <p class="personal-info" *ngIf="editFlag === true">Edit Address</p>
+      </div>
+      <div class="col-lg-5 col-sm-5 text-right p-3" *ngIf="editFlag === false && addFlag === false">
+        <a class="ml-3 pl-2 password pointer new-add" (click)="addaddress()">ADD A NEW ADDRESS
+        </a>
+      </div>
+      <div class="col-lg-5 col-sm-5 text-right p-2" *ngIf="addFlag === true">
+        <button mat-flat-button color="primary" class="mt-1 mr-3" (click)="getLiveLocation()">
+          <i class="fa-solid fa-location-crosshairs"></i>Use current location
+        </button>
+      </div>
+    </div>
+    <div class="col-sm-12 p-0 detaldiv1" *ngIf="editFlag === false && addFlag === false">
+      <div class="card p-0">
+        <div class="row m-0 text-center" *ngIf="norecordsFlag">
+          <div class="col-sm-6 offset-sm-3 mt-3 mb-3">
+            <img src="{{ imgurl }}noImag.png" alt="" class="img-fluid d-block pl-2 pr-0 cartEmptyText" />
+            <h5 class="m-2 p-2 cartEmptyText">No Address Found</h5>
+          </div>
+        </div>
+        <div class="card m-3 profile-card" *ngFor="let address of addressDetailsArray; let i = index">
+          <div class="card-body">
+            <div class="col-sm-12">
+              <p class="frstName-txt">
+                <span>{{ address.firstname | titlecase }}
+                  {{ address.lastname | titlecase }}</span>
+                &nbsp;
+                <span class="badge badge-secondary add-type-badge" *ngIf="
+                    address.address_type !== undefinded &&
+                    address.address_type !== null &&
+                    address.address_type !== ''
+                  ">
+                  {{ address.address_type | titlecase }}</span>
+              </p>
+              <p class="person-info">
+                {{ address.address_1 }} {{ address.city | titlecase }},
+              </p>
+              <p class="person-info">
+                {{ address.zone_name | titlecase }} {{ address.postcode }},
+                {{ address.country_name }}
+              </p>
+              <p class="person-info">
+                <span *ngIf="
+                    address.mobile !== undefinded && address.mobile !== null
+                  ">Ph: {{ address.mobile }} </span>&nbsp;
+                <span *ngIf="
+                    address.mobile === undefinded || address.mobile === null
+                  ">Ph: {{ mobile }} </span>&nbsp;
+                <span *ngIf="address.default_address === 0" class="badge badge-secondary defaultAdd">Default</span>
+              </p>
+            </div>
+          </div>
+          <hr class="mb-0 mr-3 ml-3" />
+          <div class="card-footer">
+            <div class="col-sm-12 text-right">
+              <button type="button" class="btn delete-btn" (click)="deleteAddress(address)">
+                Delete
+              </button>
+              &nbsp;
+              <button type="button" class="btn btn-outline-warning edit-btn" (click)="editAddress(address)">
+                Edit Address
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12 p-0 detaldiv1" *ngIf="editFlag === true || addFlag === true">
+      <div class="card p-0">
+        <div class="card-body p-0 row ml-5 mr-5 p-2 ml-3">
+          <div class="col-12 p-0">
+            <mat-form-field class="col-12 p-0">
+              <input matInput placeholder="First Name" [(ngModel)]="manageaddressfields.firstname" required />
+            </mat-form-field>
+          </div>
+          <div class="col-12 p-0">
+            <mat-form-field class="col-12 p-0">
+              <input matInput placeholder="Last Name" [(ngModel)]="manageaddressfields.lastname" required />
+            </mat-form-field>
+          </div>
+          <div class="col-12 p-0">
+            <mat-form-field class="col-12 p-0">
+              <input matInput placeholder="Phone Number" [(ngModel)]="manageaddressfields.mobile" required />
+            </mat-form-field>
+          </div>
+          <div class="col-12 p-0">
+            <mat-form-field class="col-12 p-0">
+              <textarea matInput placeholder="Address1" [(ngModel)]="manageaddressfields.address_1" required>
+            </textarea>
+            </mat-form-field>
+          </div>
+          <div class="col-12 p-0">
+            <mat-form-field class="col-12 p-0">
+              <textarea matInput placeholder="Address2" [(ngModel)]="manageaddressfields.address_2"></textarea>
+            </mat-form-field>
+          </div>
+          <div class="col-12 p-0">
+            <mat-form-field class="col-12 p-0">
+              <input matInput placeholder="Company" [(ngModel)]="manageaddressfields.company" />
+            </mat-form-field>
+          </div>
+          <div class="col-12 p-0">
+            <mat-form-field class="col-12 p-0">
+              <input matInput placeholder="Street Name" [(ngModel)]="manageaddressfields.street_area" />
+            </mat-form-field>
+          </div>
+          <div class="col-12 p-0">
+            <mat-form-field class="col-12 p-0">
+              <input matInput placeholder="City" [(ngModel)]="manageaddressfields.city" required />
+            </mat-form-field>
+          </div>
+          <div class="col-12 p-0">
+            <mat-form-field class="col-12 p-0">
+              <input matInput placeholder="PostCode" [(ngModel)]="manageaddressfields.postcode" required />
+            </mat-form-field>
+          </div>
+          <div class="col-12 p-0">
+            <mat-form-field class="col-12 p-0">
+              <mat-label>Country</mat-label>
+              <mat-select [(ngModel)]="manageaddressfields.country_id" required
+                (selectionChange)="handleGetRegionByCountry($event.value)">
+                <mat-option *ngFor="let c of this.countryInfo" value="{{ c.country_id }}">
+                  {{ c.country_name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-12 p-0">
+            <mat-form-field class="col-12 p-0">
+              <mat-label>State</mat-label>
+              <mat-select [(ngModel)]="manageaddressfields.zone_id" required>
+                <mat-option *ngFor="let z of this.regionInfo" value="{{ z.zone_id }}">{{ z.zone_name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-12 p-0">
+            <mat-form-field class="col-12 p-0">
+              <input matInput placeholder="Landmark" [(ngModel)]="manageaddressfields.landmark" />
+            </mat-form-field>
+          </div>
+          <div class="col-8 p-0">
+            <mat-radio-group aria-label="Select an option" [(ngModel)]="manageaddressfields.address_type">
+              <mat-radio-button value="home">Home</mat-radio-button>&nbsp;
+              <mat-radio-button value="office">Office</mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <div class="col-4 p-0">
+            <mat-checkbox class="example-margin" [(ngModel)]="manageaddressfields.default_address">Mark As
+              Default</mat-checkbox>
+          </div>
+        </div>
+        <div class="col-sm-12 pt-4 p-2 pb-3 text-right pr-5">
+          <button type="button" class="btn btn-warning update-btn" (click)="manageaddressForm()">
+            Submit</button>&nbsp;
+          <button type="button" class="btn btn-warning cancel-btn" (click)="cancelform()">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3 py-2 px-2">
+    <app-flash-page></app-flash-page>
+  </div>
+</div>
+<app-footer></app-footer>

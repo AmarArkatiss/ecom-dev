@@ -1,0 +1,89 @@
+<!-- <p-toast position="top-left" key="tl"></p-toast> -->
+<div class="col-sm-12 row p-0 m-0 login_image">
+    <div class="col-sm-0 col-md-7 col-lg-7"></div>
+    <div class="col-sm-12 col-md-4 col-lg-4 px-4 ">
+        <div class="loginPad forgotDiv">
+            <p class="signin">
+                <img alt="" class="loginFormIcon" src="/assets/images/image 1.png">
+            </p>
+            <div class="card-body px-0 pt-0">
+                <div class="col-sm-12 px-3">
+                </div>
+                <div class="col-sm-12 pt-3">
+                    <p class="signin">
+                    </p>
+                </div>
+                <div class="col-sm-12 pt-2 animate_div">
+                    <div *ngIf="forgotForm">
+                        <mat-form-field class="col-sm-12 p-0 font-12">
+                            <mat-label>Email</mat-label>
+                            <input matInput placeholder="Email" type="email"
+                                pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" [(ngModel)]="email"
+                                required autocomplete="off">
+                        </mat-form-field>
+                        <div class="col-sm-12 p-0">
+                            <button type="submit" class="col-sm-12 submit-btn p-0" (click)="myFunc()"
+                                mat-raised-button>
+                                <i class="fa fa-sign-in-alt mr-2"></i>Submit
+                            </button>
+                        </div>
+                        <div>
+                            <div class="col-sm-6 p-0">
+                                <p class="mb-0 margin24"><a class="backLogin" (click)="backtologin()">Back to Sign
+                                        In</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="otpForm">
+                        <mat-form-field class="col-sm-12 p-0 font-12">
+                            <mat-label>OTP</mat-label>
+                            <input matInput placeholder="Enter OTP" type="text" 
+                                pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" [(ngModel)]="otp"
+                                required autocomplete="off">
+                        </mat-form-field>
+
+                        <div class="col-sm-12 p-0">
+                            <button type="submit" class="col-sm-12 submit-btn p-0" (click)="myOTP()"
+                                mat-raised-button>
+                                <i class="fa fa-sign-in-alt mr-2"></i>Submit your OTP
+                            </button>
+                        </div>
+                        <div>
+                            <div class="col-sm-6 p-0">
+                                <p class="mb-0 margin24"><a class="backLogin" (click)="backtologin()">Back to Sign
+                                        In</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div  *ngIf="newpwdForm">
+                        <mat-form-field class="col-sm-12 p-0 font-12">
+                            <mat-label>New Password</mat-label>
+                            <input matInput placeholder="Enter new Password" type="password"
+                                pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" [(ngModel)]="newPswrd"
+                                required autocomplete="off">
+                        </mat-form-field>
+                        <mat-form-field class="col-sm-12 p-0 font-12">
+                            <mat-label>Confirm Password</mat-label>
+                            <input matInput placeholder="Confirm Password" type="confirmpassword"
+                                pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" [(ngModel)]="cnfrmPswrd"
+                                required autocomplete="off">
+                        </mat-form-field>
+
+                        <div class="col-sm-12 p-0">
+                            <button type="submit" class="col-sm-12 submit-btn p-0" (click)="changePassword()"
+                                mat-raised-button>
+                                <i class="fa fa-sign-in-alt mr-2"></i>Submit your OTP
+                            </button>
+                        </div>
+                        <div>
+                            <div class="col-sm-6 p-0">
+                                <p class="mb-0"><a class="font-16" (click)="backtologin()"> Save Password</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-1 "></div>
+</div>

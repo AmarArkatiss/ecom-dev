@@ -1,0 +1,611 @@
+<div
+  class="col-sm-12 row p-0 m-0 login_image"
+  style="border: 2px solid rgb(244 241 241)"
+>
+  <div class="col-sm-12 row m-0 row-bg">
+    <div class="col-sm-2">
+      <p class="signin">
+        <img
+          alt=""
+          class="loginFormIcon"
+          [src]="mainLogo"
+        />
+      </p>
+    </div>
+    <div class="col-sm-12 col-md-4 col-lg-4 margl2p">
+      <div
+        class="card-body form-section px-0 pt-0 pl-0 pr-0 pb-0 mt-4"
+        style="border: 2px solid rgb(244 241 241)"
+      >
+        <div class="col-sm-12 px-3">
+          <mat-progress-bar
+            mode="indeterminate"
+            color="#09f"
+            *ngIf="isLoading == true"
+          ></mat-progress-bar>
+        </div>
+
+        <div class="col-sm-12 pt-3">
+          <p class="titlelog" *ngIf="showloginform">Login In To Your Account</p>
+          <p class="titlelog" *ngIf="forgotFlag || otpFlag">
+            Forgot your password?
+          </p>
+          <p class="titlelog" *ngIf="newpwdForm">Reset Password</p>
+          <p class="signuptitlelog" *ngIf="forgotFlag || otpFlag || newpwdForm">
+            You can reset your password here.
+          </p>
+          <p class="titlelog2" *ngIf="showloginform">
+            Get Exclusive Deals, By Exploring the
+          </p>
+          <p class="titlelog" *ngIf="showsignupform">SIGN UP</p>
+          <p class="signuptitlelog" *ngIf="showsignupform">
+            {{orgName}} Provides all your needs at “ONE PLACE”
+          </p>
+          <span class="veterneo" *ngIf="showloginform">{{orgName}}</span>
+          <!-- <span class="colororange" *ngIf="showloginform">BOT</span
+          ><span class="colorusgreen" *ngIf="showloginform">COM</span> -->
+
+          <div
+            class="gmailClkDiv p-3 pointer"
+            *ngIf="showloginform"
+            (click)="gmaillogin()"
+          >
+            <img class="gImage" src="assets/svg/google.svg" />
+            <p class="gmailClkcls">Continue with Google</p>
+          </div>
+          <div>
+            <p class="orsignDiv" *ngIf="showloginform">OR</p>
+            <p class="orsignDiv" *ngIf="showloginform">
+              ------------- Sign in with Email -------------
+            </p>
+          </div>
+        </div>
+        <div class="pl-3 pr-3 pt-4 animate_div">
+          <form
+            [formGroup]="signupForm"
+            (ngSubmit)="signup()"
+            *ngIf="showsignupform"
+          >
+            <div
+              class="d-flex align-items-center justify-content-between gap-2"
+            >
+              <mat-form-field class="p-0 font-12 col-sm-6 mr-2">
+                <mat-label>First Name</mat-label>
+                <input
+                  matInput
+                  placeholder="First Name"
+                  formControlName="first_name"
+                  required
+                  autocomplete="off"
+                />
+              </mat-form-field>
+              <mat-form-field class="p-0 font-12 col-sm-6">
+                <mat-label>Last Name</mat-label>
+                <input
+                  matInput
+                  placeholder="Last Name"
+                  formControlName="last_name"
+                  required
+                  autocomplete="off"
+                />
+              </mat-form-field>
+            </div>
+
+            <div class="col-sm-12 p-0 font-12">
+              <mat-radio-group
+                aria-label="Select an option"
+                class="genderRadio"
+                formControlName="gender"
+              >
+                <mat-radio-button value="male"> Male </mat-radio-button>
+                <mat-radio-button value="female" class="ml-4">
+                  Female
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+
+            <div
+              class="d-flex align-items-center justify-content-between gap-2"
+            >
+              <mat-form-field class="p-0 font-12 col-sm-6 mr-2">
+                <mat-label>Email</mat-label>
+                <input
+                  matInput
+                  placeholder="Email"
+                  type="email"
+                  pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+                  formControlName="email"
+                  required
+                  autocomplete="off"
+                />
+              </mat-form-field>
+              <mat-form-field class="p-0 font-12 col-sm-6">
+                <mat-label>Mobile Number</mat-label>
+                <input
+                  matInput
+                  placeholder="Mobile Number"
+                  formControlName="mobile_number"
+                  required
+                  autocomplete="off"
+                />
+              </mat-form-field>
+            </div>
+
+            <div
+              class="d-flex align-items-center justify-content-between gap-2"
+            >
+              <mat-form-field class="p-0 font-12 col-sm-6 mr-2">
+                <mat-label>Password</mat-label>
+                <input
+                  matInput
+                  [type]="pswrdhide ? 'password' : 'text'"
+                  formControlName="password"
+                  required
+                  autocomplete="off"
+                  placeholder="Should be 8 Characters , one AlphaNumeric &  Special Characters "
+                />
+                <button
+                  type="button"
+                  mat-icon-button
+                  matSuffix
+                  (click)="pswrdhide = !pswrdhide"
+                  class="mb-2"
+                  [attr.aria-label]="'pswrdhide password'"
+                  [attr.aria-pressed]="pswrdhide"
+                >
+                  <mat-icon
+                    ><i
+                      [ngClass]="pswrdhide ? 'fas fa-eye-slash' : 'fas fa-eye'"
+                    ></i
+                  ></mat-icon>
+                </button>
+              </mat-form-field>
+              <mat-form-field class="p-0 font-12 col-sm-6">
+                <mat-label>Confirm Password</mat-label>
+                <input
+                  matInput
+                  [type]="cnfrmhide ? 'password' : 'text'"
+                  formControlName="confirm_password"
+                  required
+                  autocomplete="off"
+                  placeholder="Should be 8 Characters , one AlphaNumeric &  Special Characters "
+                />
+                <button
+                  type="button"
+                  mat-icon-button
+                  matSuffix
+                  (click)="cnfrmhide = !cnfrmhide"
+                  class="mb-2"
+                  [attr.aria-label]="'cnfrmhide password'"
+                  [attr.aria-pressed]="cnfrmhide"
+                >
+                  <mat-icon
+                    ><i
+                      [ngClass]="cnfrmhide ? 'fas fa-eye-slash' : 'fas fa-eye'"
+                    ></i
+                  ></mat-icon>
+                </button>
+              </mat-form-field>
+            </div>
+
+            <!-- <mat-form-field class="col-sm-12 p-0 font-12">
+              <mat-label>Email</mat-label>
+              <input
+                matInput
+                placeholder="Email"
+                type="email"
+                pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+                formControlName="email"
+                required
+                autocomplete="off"
+              />
+            </mat-form-field>
+            <mat-form-field class="col-sm-12 p-0 font-12">
+              <mat-label>Mobile Number</mat-label>
+              <input
+                matInput
+                placeholder="Mobile Number"
+                formControlName="mobile_number"
+                required
+                autocomplete="off"
+              />
+            </mat-form-field> -->
+
+            <div class="col-12 p-0">
+              <mat-form-field class="col-sm-12 p-0 font-12">
+                <textarea
+                  matInput
+                  placeholder="Address"
+                  formControlName="address"
+                ></textarea>
+              </mat-form-field>
+            </div>
+            <div
+              class="d-flex align-items-center justify-content-between gap-2"
+            >
+              <div class="col-6 p-0 mr-2">
+                <mat-form-field class="col-sm-12 p-0 font-12">
+                  <input
+                    matInput
+                    placeholder="City"
+                    formControlName="city"
+                    required
+                  />
+                </mat-form-field>
+              </div>
+              <div class="col-6 p-0">
+                <mat-form-field class="col-sm-12 p-0 font-12">
+                  <input
+                    matInput
+                    placeholder="PostCode"
+                    formControlName="postcode"
+                    required
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div
+              class="d-flex align-items-center justify-content-between gap-2"
+            >
+              <div class="col-6 p-0 mr-2">
+                <mat-form-field class="col-sm-12 p-0 font-12">
+                  <mat-label>Country</mat-label>
+                  <mat-select
+                    formControlName="country_id"
+                    required
+                    (selectionChange)="handleGetRegionByCountry($event.value)"
+                  >
+                    <mat-option
+                      *ngFor="let c of this.countryInfo"
+                      value="{{ c.country_id }}"
+                    >
+                      {{ c.country_name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-6 p-0">
+                <mat-form-field class="col-sm-12 p-0 font-12">
+                  <mat-label>State</mat-label>
+                  <mat-select formControlName="zone_id" required>
+                    <mat-option
+                      *ngFor="let z of this.regionInfo"
+                      value="{{ z.zone_id }}"
+                      >{{ z.zone_name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="col-sm-12 p-0">
+              <button
+                type="submit"
+                class="col-sm-12 submit-btn p-0 mt-1"
+                mat-raised-button
+              >
+                <i class="fa fa-sign-in-alt mr-2"></i>Register
+              </button>
+            </div>
+            <div class="row m-0 pt-3 pb-3">
+              <div class="col-sm-8 p-0" *ngIf="showsignupform">
+                <p class="signUpLinkBacktosignin">Already have a account ?</p>
+                <a
+                  class="signUpLinkBacktosignin2 pointer"
+                  (click)="showlogin()"
+                >
+                  Sign IN</a
+                >
+              </div>
+            </div>
+          </form>
+          <form
+            [formGroup]="loginForm"
+            (ngSubmit)="login()"
+            *ngIf="showloginform"
+          >
+            <mat-form-field class="col-sm-12 p-0 font-12">
+              <mat-label>Email Id</mat-label>
+              <input
+                matInput
+                formControlName="username"
+                required
+                autocomplete="off"
+              /> </mat-form-field
+            ><br /><br />
+            <mat-form-field class="col-sm-12 p-0 font-12">
+              <mat-label>Password</mat-label>
+              <input
+                matInput
+                [type]="hide ? 'password' : 'text'"
+                formControlName="password"
+                required
+                autocomplete="off"
+                placeholder="Should be 8 Characters , one AlphaNumeric &  Special Characters "
+              />
+              <button
+                type="button"
+                mat-icon-button
+                matSuffix
+                (click)="hide = !hide"
+                class="mb-2"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide"
+              >
+                <mat-icon
+                  ><i [ngClass]="hide ? 'fas fa-eye-slash' : 'fas fa-eye'"></i
+                ></mat-icon>
+              </button>
+            </mat-form-field>
+            <div class="row">
+              <div class="col-sm-4">
+                <input type="checkbox" class="remcheck" />
+                <p class="rememberCls">Remember Me</p>
+              </div>
+              <div class="col-sm-2"></div>
+              <div class="col-sm-6">
+                <a class="signUpLinkforgot pointer" (click)="forgotClick()"
+                  >Forgot Password</a
+                >
+              </div>
+            </div>
+            <div class="col-sm-12 p-0">
+              <button
+                type="submit"
+                class="col-sm-12 submit-btn p-0"
+                mat-raised-button
+              >
+                <i class="fa fa-sign-in-alt mr-2"></i>Login
+              </button>
+            </div>
+            <div class="row notregdiv pb-2">
+              <div class="col-sm-1 p-0"></div>
+              <div class="col-sm-5 p-0">
+                <p class="notregisLbl">Not Registered Yet?</p>
+                <p class="mb-0 font-12" *ngIf="settingFlag === '1'"></p>
+              </div>
+              <div class="col-sm-5 p-0">
+                <a class="signUpLinklbl pointer" (click)="showsignup()">
+                  Create an Account</a
+                >
+              </div>
+            </div>
+            <div class="row m-0"></div>
+          </form>
+          <form
+            [formGroup]="forgotForm"
+            (ngSubmit)="myFunc()"
+            *ngIf="forgotFlag"
+            class="mt-5"
+          >
+            <mat-form-field class="col-sm-12 p-0 font-12" appearance="outline">
+              <mat-label>Email Id</mat-label>
+              <input
+                matInput
+                placeholder="Email"
+                type="email"
+                pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+                formControlName="email"
+                required
+                autocomplete="off"
+              />
+            </mat-form-field>
+            <div class="col-sm-12 p-0 mb-3">
+              <button
+                type="submit"
+                class="col-sm-12 submit-btn p-0 m-0"
+                mat-raised-button
+              >
+                <i class="fa fa-sign-in-alt mr-2"></i>Send OTP
+              </button>
+              <p class="text-right logback pointer p-3" (click)="logBack()">
+                Back to Sign In
+              </p>
+            </div>
+            <div class="row"></div>
+          </form>
+          <form
+            [formGroup]="forgotForm"
+            (ngSubmit)="getOtp()"
+            *ngIf="otpFlag"
+            class="mt-5"
+          >
+            <mat-form-field class="col-sm-12 p-0 font-12" appearance="outline">
+              <mat-label>OTP</mat-label>
+              <input
+                matInput
+                placeholder="Enter Otp"
+                type="text"
+                formControlName="otp"
+                required
+                autocomplete="off"
+              />
+            </mat-form-field>
+            <div class="col-sm-12 p-0 mb-3">
+              <button
+                type="submit"
+                class="col-sm-12 submit-btn p-0 m-0"
+                mat-raised-button
+              >
+                <i class="fa fa-sign-in-alt mr-2"></i>Submit OTP
+              </button>
+            </div>
+            <div class="row"></div>
+          </form>
+          <form
+            [formGroup]="forgotForm"
+            (ngSubmit)="setNewPwd()"
+            *ngIf="newpwdForm"
+            class="mt-5"
+          >
+            <mat-form-field class="col-sm-12 p-0 font-12" appearance="outline">
+              <mat-label>New Password</mat-label>
+              <input
+                matInput
+                [type]="newPwdhide ? 'password' : 'text'"
+                formControlName="newPassword"
+                required
+                autocomplete="off"
+                placeholder="new password"
+              />
+              <button
+                type="button"
+                mat-icon-button
+                matSuffix
+                (click)="newPwdhide = !newPwdhide"
+                class="mb-2"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide"
+              >
+                <mat-icon
+                  ><i
+                    [ngClass]="newPwdhide ? 'fas fa-eye-slash' : 'fas fa-eye'"
+                  ></i
+                ></mat-icon>
+              </button>
+              <!-- <input matInput placeholder="new password" type="password"
+                              formControlName="newPassword" required autocomplete="off"> -->
+            </mat-form-field>
+            <mat-form-field class="col-sm-12 p-0 font-12" appearance="outline">
+              <mat-label>Confirm Password</mat-label>
+              <input
+                matInput
+                [type]="cnfrmhide ? 'password' : 'text'"
+                formControlName="confrmPassword"
+                required
+                autocomplete="off"
+                placeholder="confirm password"
+              />
+              <button
+                type="button"
+                mat-icon-button
+                matSuffix
+                (click)="cnfrmhide = !cnfrmhide"
+                class="mb-2"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide"
+              >
+                <mat-icon
+                  ><i
+                    [ngClass]="cnfrmhide ? 'fas fa-eye-slash' : 'fas fa-eye'"
+                  ></i
+                ></mat-icon>
+              </button>
+
+              <!-- <input matInput placeholder="confirm password" type="password"
+                              formControlName="confrmPassword" required autocomplete="off"> -->
+            </mat-form-field>
+            <div class="col-sm-12 p-0 mb-3">
+              <button
+                type="submit"
+                class="col-sm-12 submit-btn p-0 m-0"
+                mat-raised-button
+              >
+                <i class="fa fa-sign-in-alt mr-2"></i>Submit
+              </button>
+              <p class="text-right logback pointer p-3" (click)="logBack()">
+                Back to Sign In
+              </p>
+            </div>
+            <div class="row"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-5 col-lg-4 margl2p ml-5">
+      <img
+        *ngIf="showloginform"
+        alt="SingIn"
+        class="ml-2"
+        src="{{ imgUrl }}SignIn.svg"
+        height="83%"
+      />
+      <img
+        *ngIf="showsignupform"
+        alt="SingUp"
+        class="ml-2"
+        src="{{ imgUrl }}signUp.svg"
+        height="84%"
+      />
+
+      <!-- <carousel
+        *ngIf="showloginform"
+        class="carouselCss mt-2"
+        [images]="imagesUrl1"
+        cellWidth="100%"
+        height="90%"
+        [autoplay]="true"
+        [loop]="true"
+        [autoplayInterval]="5500"
+      >
+      </carousel> -->
+      <!-- <carousel
+        class="carouselCss mt-2"
+        [images]="imagesUrl2"
+        cellWidth="100%"
+        height="90%"
+        [autoplay]="true"
+        [loop]="true"
+        [autoplayInterval]="5500"
+        *ngIf="showsignupform"
+      >
+      </carousel> -->
+      <carousel
+        class="carouselCss mt-2"
+        [images]="imagesUrl3"
+        cellWidth="100%"
+        height="90%"
+        [autoplay]="true"
+        [loop]="true"
+        [autoplayInterval]="5500"
+        *ngIf="forgotFlag || otpFlag || newpwdForm"
+      >
+      </carousel>
+    </div>
+    <!-- <div class="col-sm-12 col-md-2 col-lg-2 px-2 ">
+        </div>
+        <div class="col-sm-1 "></div> -->
+  </div>
+</div>
+
+<!-- <ng-template #affiliationDetails>
+    <div class="row m-2">
+        <div class="col-sm-12 p-0">
+            <div class="card p-4">
+                <div class="row pl-3 pr-3 pb-3 ">
+                    <div class="col-sm-8 p-0 ">
+                        <h2 class="header">nquiry</h2>
+                    </div>
+                    <div class="col-sm-4 p-0 aff-text">
+
+                    </div>
+                </div>
+                <div class="row pl-3 pr-3 pb-3" style="text-align: center;">
+                    <div class="offset-2 col-sm-7 offset-3">
+                        <form [formGroup]="createform">
+                            <mat-form-field appearance="legacy">
+                                <mat-label>Name</mat-label>
+                                <input matInput placeholder="Enter Name" formControlName="name">
+                            </mat-form-field><br>
+                            <mat-form-field appearance="legacy">
+                                <mat-label> Phone Number</mat-label>
+                                <input matInput placeholder="Enter Phone Number" formControlName="num">
+                            </mat-form-field><br>
+                            <mat-form-field appearance="legacy">
+                                <mat-label>E-mail</mat-label>
+                                <input matInput placeholder="Enter E-mail" formControlName="mail">
+                            </mat-form-field><br>
+                            <mat-form-field appearance="legacy">
+                                <mat-label>Short Note</mat-label>
+                                <textarea matInput placeholder="Short Note" formControlName="note"></textarea>
+                            </mat-form-field>
+                            <button mat-flat-button color="primary" class="mt-3 submit-btn"
+                                (click)="submit()">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template> -->

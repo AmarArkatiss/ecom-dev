@@ -1,0 +1,406 @@
+@import "src/assets/styles/scss/variables";
+// @import "../../../assets/styles/scss/variables";
+
+.productname {
+  font-weight: 500;
+}
+
+.imgaligin {
+  text-align: center;
+}
+
+.heading {
+  font-weight: 500;
+  font-size: 17px;
+}
+
+/* ---- Timeline ---- */
+ol {
+  position: relative;
+  display: block;
+  margin: 50px;
+  height: 4px;
+  background: green;
+}
+
+/* ---- Timeline elements ---- */
+li {
+  position: relative;
+  display: inline-block;
+  width: 108px;
+  font: bold 14px arial;
+  height: 50px;
+}
+
+li .diplome {
+  position: absolute;
+  top: -26px;
+  left: 36%;
+  color: #000000;
+}
+
+li .diplomee {
+  position: absolute;
+  top: 12px;
+  left: 25%;
+  color: #000000;
+}
+
+li .point {
+  content: "";
+  position: absolute;
+  top: -8px;
+  display: block;
+  width: 0;
+  height: 0;
+  border-radius: 10px;
+  border: 10px solid green;
+}
+
+li .description {
+  display: none;
+  background-color: #454444;
+  padding: 10px;
+  margin-top: 20px;
+  position: relative;
+  font-weight: normal;
+  z-index: 1;
+  text-align: center;
+  width: 400px;
+  color: white;
+}
+
+/* ---- Hover effects ---- */
+li:hover {
+  cursor: pointer;
+  color: #48a4d2;
+}
+
+li:hover .description {
+  display: block;
+}
+
+.prodImage {
+  width: 100px;
+  height: 100px;
+}
+
+.otherItemImgCss {
+  width: 43%;
+}
+
+.productsPage {
+  background-color: white;
+  margin-top: 1rem;
+}
+
+// Progress Bar Style
+
+.circles {
+  height: 1.2em;
+  width: 1.2em;
+  border: 0.299em solid #ffa500;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.text-w {
+  font-weight: 500;
+}
+
+.active {
+  background-color: #ffa500;
+}
+
+.circle-desc-active {
+  font-weight: bold;
+}
+
+.bar-div {
+  text-align: center;
+}
+
+.bar {
+  width: 30%;
+  height: 0.3em;
+  margin-bottom: 0.469em;
+  border: 0.031em solid green;
+  color: green;
+  background-color: green;
+  display: inline-block;
+  text-align: center;
+  margin: "0 auto";
+}
+
+.retrn-btn {
+  margin-top: 24px;
+}
+
+.container {
+  min-width: 320px;
+  margin: "0px auto";
+  text-align: center;
+}
+
+.circle-desc {
+  position: absolute;
+  top: 1.2em;
+  font-size: 13px;
+  font-weight: 500;
+  width: auto;
+  max-width: 9.375em;
+  margin-left: -0.75em;
+}
+
+.circle-desc-date {
+  position: absolute;
+  top: 3em;
+  font-size: 11px;
+  font-weight: 500;
+  width: auto;
+  max-width: 9.375em;
+  margin-left: -0.75em;
+}
+
+.product-image {
+  height: 120px;
+  margin-bottom: 0.5rem;
+}
+
+#StripeBtn {
+  margin-top: 10%;
+}
+
+.stripeImg {
+  width: 59%;
+  height: 45%;
+  margin-top: -6px;
+  margin-left: 6%;
+}
+
+.paypalImg {
+  margin-top: -4%;
+  margin-left: 6%;
+  width: 120px;
+  height: 81%;
+}
+
+#visaBtn {
+  margin-top: 8%;
+}
+
+.codBtn {
+  font-size: 17px;
+  font-weight: 500;
+  font-family: "Lato";
+}
+
+.visaImg {
+  width: 36%;
+  height: 36%;
+  margin-top: 15px;
+  margin-left: 1px;
+}
+
+.form-label {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.masterImg {
+  width: 36%;
+  height: 36%;
+  margin-top: 15px;
+  margin-left: 1px;
+}
+
+.pay {
+  margin-left: 10%;
+  margin-right: 5%;
+}
+
+#paypalBtn {
+  margin-top: 10%;
+}
+
+#RazorpayBtn {
+  margin-top: 10%;
+}
+
+.Razor {
+  margin-top: -4%;
+  margin-left: 6%;
+  width: 120px;
+  height: 81%;
+}
+
+// ---------------------------------------------------
+.order-card {
+  box-shadow: 0px 1px 2px rgb(0 0 0 / 25%);
+}
+
+.heading-card {
+  height: 56px;
+  background: #ffffff;
+  box-shadow: 0px 1px 2px rgb(0 0 0 / 25%);
+}
+
+.card-head-p1 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 33px;
+  color: #2f294d;
+}
+
+.card-head-p2 {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 33px;
+  color: #2f294d;
+}
+
+.details-card {
+  height: 44px;
+  background: #fefefe;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+}
+
+.details-p1 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 42px;
+  color: #2f294d;
+}
+
+.details-p2 {
+  line-height: 42px;
+}
+
+.products-card {
+  height: 400px;
+  background: #fefefe;
+  border: 2px solid rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+}
+
+.seller-card {
+  background: #fefefe;
+  border: 2px solid rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+}
+
+.products-card-bottom {
+  border-bottom: 0px solid;
+}
+
+.card-footer {
+  background-color: white !important;
+  border-top: 0px !important;
+}
+
+.personal-info1 {
+  font-family: "Lato";
+  font-style: normal;
+  font-size: 18px;
+  line-height: 50px;
+  color: #333333;
+  padding-left: 17px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.order-date {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: #333333;
+}
+
+.fontWeight {
+  font-weight: 700;
+}
+
+.product-name {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  color: #2f294d;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.detailsDiv1 {
+  height: 472px;
+  overflow-y: scroll;
+}
+
+.width {
+  width: 100%;
+}
+
+.p-totalPrice {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 22px;
+  color: #2f294d;
+}
+
+.invoice {
+  width: 153px;
+  height: 36px;
+  background: $theme_color !important;
+  border-radius: 5px;
+  border-color: $theme_color !important;
+  color: white;
+}
+
+.cancel {
+  background: #ffffff;
+  border: 1px solid $theme_color !important;
+  color: $theme_color !important;
+  border-radius: 5px;
+}
+
+.cancel:hover {
+  background: $theme_color !important;
+  border-radius: 5px;
+  color: white;
+}
+
+.repay {
+  width: 93px;
+  background: $theme_color !important;
+  border-color: $theme_color !important;
+  border-radius: 5px;
+  color: white;
+}
+
+.card-row {
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-direction: row;
+  display: flex;
+}
+
+.itemData {
+  font-size: 21px;
+}
+
+.bot-warn {
+  color: #cf1111;
+}

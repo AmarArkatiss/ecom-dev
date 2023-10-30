@@ -1,0 +1,77 @@
+<app-primary-header></app-primary-header>
+<app-search-and-title></app-search-and-title>
+<app-menu></app-menu>
+<div class="row">
+    <div class="col-sm-3 relateddiv">
+        <div class="row m-0 card relatedProductsCart">
+            <h4 class="heading m-2 p-2 pl-3">Related Products</h4>
+        </div>
+        <div class="col-12 card p-0 m-0 row" *ngFor="let ads of this.returnImageArray">
+            <img src={{this.selectedImage}} alt="noimage" class="pointer imgcenterr">
+            <h6 class="Producttitle">{{this.productDetailsArray.product_name}}</h6>
+            <p id="Productname">{{this.productDetailsArray.symbol_left}}{{this.productDetailsArray.net_amount}}</p>
+        </div>
+    </div>
+    <div class="col-sm-5 rdiv">
+        <mat-vertical-stepper [linear]="isLinear" #stepper>
+            <mat-step>
+                <ng-template matStepLabel>Reason FOR RETURN </ng-template>
+                <div class="col-6 p-0">
+                    <mat-form-field class="col-12 p-0">
+                        <mat-label>Return Reason</mat-label>
+                        <mat-select (selectionChange)="handleReason($event.value)">
+                            <mat-option *ngFor="let k of this.reasonDatainfo"
+                                value="{{k.return_reason_id}}">{{k.return_reason_name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-6 p-0">
+                    <textarea name="message" class="textArea" [(ngModel)]="returnForm.cmonnts" value="cmtTxt" rows="3"
+                        cols="60" matInput placeholder="Comments"></textarea>
+                </div>
+            </mat-step>
+            <mat-step>
+
+                <ng-template matStepLabel>PICKUP ADDRESS </ng-template>
+                <div class="delAddrDiv">
+                    <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                        name="opList">
+                        <mat-radio-button *ngFor="let ad of this.addressDetailsArray; let idx=index"
+                            class="paymentOptionRadioBtn example-radio-button " (change)="selectedAddress(ad.addressId)"
+                            [value]="ad.addressId" name="opList">
+                            <h6 class="font-14 addTitle">Delivery Address {{idx+1}}
+                            </h6>
+                            <div class="row m-0 p-2 addressInfoDiv">
+                                <span class="col-12 font-14 mb-2"> {{ad.firstname}} {{ad.lastname}}</span>
+                                <p class="col-12 font-12"> {{logedPhone}}</p>
+                                <p class="col-12 font-12 mb-2"> {{ad.address1}} {{ad.city}}, {{ad.zone_name}},
+                                    {{ad.postcode}}, {{ad.countryName}}</p>
+                                <p class="col-12 font-12"> {{ad.address}}</p>
+                            </div>
+                            <hr class="mt-1 mb-1">
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <button type="button" class="btn btn btn-sm" id="returnid" (click)="handleReturnsclk()">Submit </button>
+            </mat-step>
+        </mat-vertical-stepper>
+    </div>
+
+    <div class="col-sm-3 relateddiv">
+        <div class="row m-0 card relatedProductsCart">
+            <h4 class="heading m-2 p-2 pl-3">Ordered Product</h4>
+        </div>
+
+        <div class="col-12 card p-0 m-0 row" *ngFor="let ads of this.returnImageArray">
+            <img src={{this.selectedImage}} alt="noimage" class="pointer imgcenterr">
+            <h6 class="Producttitle">{{this.productDetailsArray.product_name}}</h6>
+            <p id="Productname">{{this.productDetailsArray.symbol_left}}{{this.productDetailsArray.net_amount}}</p>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="container">
+    </div>
+</div>
+<app-footer></app-footer>

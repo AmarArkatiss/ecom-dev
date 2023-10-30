@@ -1,0 +1,28 @@
+.table th {
+    font-weight: 400;
+    font-size: 15px;
+    text-transform: none !important;
+}
+
+.d-td {
+    text-align: center;
+}
+
+.aff-text {
+    text-align: end;
+    font-size: 17px;
+    font-weight: 500;
+}
+
+table {
+    table-layout: fixed;
+    width: 100%;
+
+}
+
+table td {
+    word-wrap: break-word;
+    /* All browsers since IE 5.5+ */
+    overflow-wrap: break-word;
+    /* Renamed property in CSS3 draft spec */
+}

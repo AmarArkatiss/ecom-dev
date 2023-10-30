@@ -1,0 +1,772 @@
+@import "src/assets/styles/scss/variables";
+// @import "../../../assets/styles/scss/variables";
+
+.cart-container {
+  margin: 30px 5%;
+}
+
+.count-inlineflex {
+  display: inline-flex;
+  border: solid 2px #ccc;
+  border-radius: 9px;
+  margin-top: 8%;
+}
+
+.cart-ht {
+  height: 97vh;
+}
+
+input.qty {
+  border: 1px solid #e0dddd;
+  text-align: center;
+  width: 80px;
+}
+
+.qtyminus,
+.qtyplus {
+  width: 34px;
+  height: 34px;
+  background: transparent;
+  text-align: center;
+  font-size: 19px;
+  line-height: 34px;
+  color: #000;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.qtyminus {
+  line-height: 32px;
+}
+
+.qtyminus {
+  border-radius: 3px 0 0 3px;
+}
+
+.qtyplus {
+  border-radius: 0 3px 3px 0;
+  color: blue;
+}
+
+.cardview {
+  box-shadow: 0px 0px 1px 2px #f7f7f7;
+  border-radius: 8px;
+}
+
+.priceview {
+  box-shadow: 0px 0px 1px 2px #f7f7f7;
+  border-radius: 8px;
+  height: 46vh !important;
+}
+
+.cardview span {
+  font-size: 16px;
+  padding: 1%;
+}
+
+.cardview p {
+  font-size: 14px;
+}
+
+.item {
+  border-bottom: 1px solid #ededed;
+}
+
+h4.heading {
+  font-size: 16px;
+  font-family: poppins;
+  font-weight: 500;
+}
+
+.trash i {
+  float: right;
+  font-size: 15px;
+  color: red;
+  cursor: pointer;
+}
+
+.card {
+  border-radius: 9px;
+}
+
+.cartheight {
+  height: 240px;
+  overflow-y: auto;
+}
+
+.productheading {
+  font-family: poppins;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+
+}
+
+.specs {
+  color: #878787;
+}
+
+.subRow {
+  height: 23px;
+}
+
+.specsModel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  color: #878787;
+}
+
+.imgcenter {
+  display: block;
+}
+
+.sub-item {
+  padding-left: 32px;
+}
+
+.saveLater {
+  font-size: 13px;
+  color: #007bff;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.saveLater:hover {
+  background: #007bff;
+  text-align: center;
+  padding: 2px;
+  border-radius: 7px;
+  color: white;
+}
+
+.addCart:hover {
+  padding: 10px;
+  font-size: 11px;
+  font-family: 'Poppins';
+  letter-spacing: 0.02rem;
+  line-height: 18px;
+  color: #007bff;
+  background-color: #007bff1a;
+}
+
+.whishListAddedIcon {
+  color: red;
+}
+
+.newfolder {
+  padding: 7px 11px 10px 10px;
+  font-size: 14px;
+  font-family: 'Poppins';
+  letter-spacing: 0.02rem;
+  line-height: 18px;
+  color: #007bff;
+  border-radius: 8px;
+  background-color: #007bff1a;
+}
+
+.view-toggle-group.mat-button-toggle-standalone.mat-button-toggle-appearance-standard,
+.mat-button-toggle-group-appearance-standard {
+  background: #FFFFFF;
+  border: 1px solid #DBDDE0;
+  box-sizing: border-box;
+  border-radius: 8px !important;
+}
+
+.view-toggle-btn.mat-button-toggle-checked.mat-button-toggle-appearance-standard {
+  background: #007bff47;
+  border: 1px solid #DBDDE0;
+  box-sizing: border-box;
+  border-radius: 6px;
+}
+
+.view-toggle-btn.mat-button-toggle-appearance-standard {
+  background: #fff;
+  font-size: 16px;
+  margin: 2px;
+  height: 28px !important;
+  line-height: 21px !important;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.01em;
+  color: #505050 !important;
+  padding: 0 1px !important;
+}
+
+.saveMenuItem {
+  min-height: 220px;
+}
+
+.product-image {
+  height: 100px;
+  margin-bottom: 0.5rem;
+}
+
+.relatedProductsCart {
+  height: 240px;
+  overflow-y: scroll;
+  background: white;
+  border: 1px solid #dbdbdb;
+  border-radius: 9px;
+}
+
+.grid-product-card {
+  margin-bottom: 1rem;
+}
+
+.productName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.reviewAndRatingInfo {
+  font-weight: 500;
+  color: #878787;
+  font-size: 10px;
+  padding-left: 2px;
+  margin-left: 2px;
+}
+
+.special-priceCart {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 33px;
+  color: #000000;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  margin: 5px 0px;
+}
+
+.ratingStart {
+  font-size: 9px;
+}
+
+.prodImageRelated {
+  text-align: center;
+  cursor: pointer;
+}
+
+.btnQuotes {
+  margin-top: 1.4rem;
+}
+
+.taxesRow {
+  margin-top: 2rem;
+}
+
+.taxCardDiv {
+  margin-top: 1rem;
+  padding: 1rem;
+  height: 333px;
+  overflow-y: scroll;
+}
+
+.taxHeading {
+  border-bottom: 1px solid silver;
+  padding-bottom: 0.4rem;
+}
+
+.suggetionsDiv {
+  height: 333px;
+  overflow-y: scroll;
+  background: white;
+  border: 1px solid #dbdbdb;
+  border-radius: 9px;
+  margin-right: 0;
+  margin-left: 0;
+  margin-bottom: 0;
+  margin-top: 1rem;
+}
+
+.colorWhite {
+  color: white;
+}
+
+.cartEmptyText {
+  text-align: center;
+}
+
+.imgHeight {
+  width: 130px;
+  height: 150px;
+
+}
+
+.priceDetailsDiv {
+  height: 240px;
+}
+
+.addsImg {
+  width: 100%;
+}
+
+.couponsDiv {
+  margin-top: 3%;
+  margin-bottom: 3%;
+}
+
+.couponsListDiv {
+  margin: 1%;
+  height: 200px;
+  overflow-y: scroll;
+
+}
+
+.coupnsDiv {
+  height: 180px;
+  overflow-y: scroll;
+  margin: 0%;
+
+}
+
+.coupontitle {
+  margin-top: 2%;
+}
+
+.saved-Price {
+  color: #388e3c;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.cart-table {
+  margin-bottom: 0px !important;
+}
+
+.couponAmount {
+  margin-top: 13%;
+}
+
+.coupntxt {
+  font-size: 14px;
+}
+
+.cart-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  border-radius: 5px !important;
+  height: 220px;
+  background: #FFFFFF;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.cart-row {
+  height: 238px;
+}
+
+.num-product {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #2F294D;
+}
+
+.shpngCart {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 46px;
+  color: #2F294D;
+}
+
+.backshopng {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #2F294D;
+}
+
+.divscroll1 {
+  height: 468px;
+}
+
+.divscroll {
+  height: 468px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* Internet Explorer 10+ */
+}
+
+.divscroll::-webkit-scrollbar {
+  width: 3px;
+  height: 0;
+}
+
+.product-name {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  color: #2F294D;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.product-model {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: rgba(47, 41, 77, 0.7);
+}
+
+.off-price {
+  color: rgb(124 120 143 / 85%);
+  margin-left: 1%;
+  line-height: 1.7;
+
+  -webkit-text-decoration-line: line-through;
+  text-decoration-line: line-through;
+}
+
+.p-qty {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 22px;
+  color: rgba(47, 41, 77, 0.85);
+}
+
+
+.p-wish {
+  font-size: 14px;
+}
+
+.p-select {
+  background: #FFFFFF;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
+  width: 50px;
+  height: 24px;
+  padding: 3px;
+  border: hidden;
+}
+
+.sel {
+  box-shadow: 0px 2px 5px rgb(0 0 0 / 15%);
+}
+
+.curser {
+  cursor: pointer;
+}
+
+.p-hr {
+  width: 329px;
+  height: 0px;
+  margin-left: 0px;
+  margin-top: 3px;
+}
+
+.p-hr1 {
+  width: 329px;
+  height: 0px;
+  margin-left: 12px;
+  margin-top: 3px;
+}
+
+.coup-heading {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 29px;
+  color: #2F294D;
+}
+
+.card-header {
+  background: rgba(14, 96, 167, 0.08);
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-direction: row;
+  display: flex;
+}
+
+.card-btn {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 19px;
+  color: #4D4C5C;
+  text-decoration: underline;
+}
+
+.card-text {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 35px;
+  color: #2F294D;
+}
+
+.click-here {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 22px;
+  color: #0E60A7;
+}
+
+.card-text2 {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 19px;
+  color: #2F294D;
+}
+
+.card-text-price {
+  font-size: 15px;
+}
+
+.card-row {
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-direction: row;
+  display: flex;
+}
+
+.saveAmt {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: #2F294D;
+}
+
+.totalAmt {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  color: #2F294D;
+}
+
+.p-price {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  color: rgba(47, 41, 77, 0.75);
+}
+
+.checkout-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 24px;
+  gap: 4px;
+  width: 140px;
+  height: 46px;
+  background: $theme_color !important;
+  border-radius: 10px;
+}
+
+.card-footer {
+  background-color: white !important;
+}
+
+.divider {
+  margin-top: 0px !important;
+  margin-bottom: 0px;
+}
+
+::ng-deep .mat-dialog-container {
+  background: #FFFFFF !important;
+  border-radius: 25px !important;
+}
+
+.coup-input {
+  width: 328px;
+  height: 39px;
+  background: #FFFFFF;
+  border-radius: 8px;
+}
+
+.apply-coup-btn {
+  width: 140px;
+  height: 36px;
+  background: #FFFFFF;
+  border-radius: 5px;
+}
+
+.apply-coup-btn:hover {
+  background-color: #007bff !important;
+  color: white !important;
+}
+
+.coup-p {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 41px;
+  text-align: center;
+  color: #333333;
+}
+
+.coup-card-heading {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 29px;
+  color: #2F294D;
+}
+
+.fa-close {
+  font-size: 31px;
+  color: #9695a0;
+}
+
+.coup-code-btn {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  width: 109px;
+  height: 39px;
+  background-image: url('https://png.pngtree.com/background/20210711/original/pngtree-blue-violet-light-marble-chaotic-texture-background-picture-image_1136004.jpg') !important;
+  background-size: contain;
+  border: 1px solid rgba(30, 137, 228, 0.75);
+  border-radius: 15px;
+}
+
+.app-card {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: #1E89E4;
+}
+
+.coup-card-text {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: #2F294D;
+}
+
+.card-footer-text {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 30px;
+  color: rgba(51, 51, 51, 0.5);
+}
+
+.coup-card {
+  padding: 10px 16px;
+  line-height: 24px;
+}
+
+.count-inlineflex1 {
+  display: inline-flex;
+  border: solid 2px #ccc;
+  border-radius: 9px;
+  margin-top: 8%;
+}
+
+::ng-deep .mat-menu-panel {
+  min-width: 352px;
+  overflow-x: hidden;
+  max-height: calc(100vh - 48px);
+  border-radius: 4px;
+  outline: 0;
+  min-height: 253px;
+}
+
+.sub-head {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  color: #2F294D;
+}
+
+.sub-col {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 45px;
+  color: #2F294D;
+}
+
+.sub-price {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 45px;
+  color: #3D3D3D;
+}
+
+.SelectedHeartIco {
+  color: red;
+}
+
+.close-ico {
+  font-size: 18px !important;
+}
+
+.discountPrice {
+  color: green;
+  font-size: 15px;
+}
+
+.offPrice {
+  font-size: 14px;
+  line-height: 27px;
+}
+
+.blackclr {
+  color: #2F294D;
+}
+
+.inadequateQty {
+  border: 1px solid red;
+  color: red;
+  font-size: 14px;
+  padding: 3px;
+  height: 25px;
+  text-align: center;
+}

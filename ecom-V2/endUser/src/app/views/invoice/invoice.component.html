@@ -1,0 +1,195 @@
+<div class="container">
+  <div id="componentID">
+    <div class="row">
+      <div class="card" style="width: 100%; margin-top: 3vh">
+        <div class="card-header">
+          <div class="row" style="text-align: center">
+            <div class="col-12">
+              <h3>{{ this.customerArray.store_name }}</h3>
+              <p>{{tenantAddress.addressLine1}}</p>
+              <p>{{tenantAddress.addressLine2}}</p>
+              <p>
+                {{tenantAddress.addressLine3}}
+              </p>
+              <span class="text-right">GSTIN NO: {{ this.customerArray.gst_number }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="row m-3">
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th class="text-left" colspan="2">Order Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" style="width: 50%">
+                <p>
+                  <span class="frstName-txt">Customer Name : </span><span class="person-info">{{
+                    this.customerArray.customer_name
+                    }}</span>
+                </p>
+                <p>
+                  <span class="frstName-txt">Invoice No : </span><span class="person-info">{{
+                    this.customerArray.invoice_number
+                    }}</span>
+                </p>
+                <p>
+                  <span class="frstName-txt">Invoice Date : </span><span class="person-info">{{
+                    this.customerArray.invoice_date
+                    }}</span>
+                </p>
+              </td>
+              <td class="text-left" style="width: 50%">
+                <p>
+                  <span class="frstName-txt">Store Name : </span><span class="person-info">{{
+                    this.customerArray.store_name
+                    }}</span>
+                </p>
+                <p>
+                  <span class="frstName-txt">Payment Type : </span><span class="person-info">{{
+                    this.customerArray.payment_type
+                    }}</span>
+                </p>
+                <p>
+                  <span class="frstName-txt">Mobile : </span><span class="person-info">{{
+                    this.customerArray.mobile
+                    }}</span>
+                </p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="row m-3">
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th class="text-left" style="width: 50%; vertical-align: top">
+                Billing Address
+              </th>
+              <th class="text-left" style="width: 50%; vertical-align: top">
+                Shipping Address
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left">
+                <p class="frstName-txt">
+                  {{ productArray.Payment_address.name | titlecase }}
+                </p>
+                <p class="person-info">
+                  {{ productArray.Payment_address.payment_address_1 }},
+                </p>
+                <p class="person-info">
+                  {{ productArray.Payment_address.payment_state | titlecase }}
+                  {{ productArray.Payment_address.payment_postcode }},
+                  {{ productArray.Payment_address.payment_country }}
+                </p>
+              </td>
+              <td class="text-left">
+                <p class="frstName-txt">
+                  {{ productArray.Shipping_address.name | titlecase }}
+                </p>
+                <p class="person-info">
+                  {{ productArray.Shipping_address.shipping_address_1 }},
+                </p>
+                <p class="person-info">
+                  {{
+                  productArray.Shipping_address.shipping_state | titlecase
+                  }}
+                  {{ productArray.Shipping_address.shipping_postcode }},
+                  {{ productArray.Shipping_address.shipping_country }}
+                </p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="row m-3">
+        <table class="table table-bordered table-hover" style="margin-bottom: 5%">
+          <thead>
+            <tr>
+              <th rowspan="2" class="d-th">S.NO</th>
+              <th class="d-th" scope="col" rowspan="2" colspan="3">
+                Product Name
+              </th>
+              <th class="d-th" scope="col" rowspan="2">Shipment Type</th>
+              <th class="d-th text-center" scope="col" rowspan="2">
+                Unit Price
+              </th>
+              <th class="d-th" scope="col" rowspan="2">Quantity</th>
+              <th class="d-th text-center" scope="col" rowspan="2">Tax</th>
+              <th class="d-th text-center" scope="col" rowspan="2">
+                Total <br />(Incl Tax)
+              </th>
+              <th class="d-th text-center" scope="col" rowspan="2">
+                Total <br />(Excl Tax)
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of this.productSubArray; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td colspan="3">{{ product.product_name }}</td>
+              <td>{{ product.shipment_type }}</td>
+              <td class="text-right width">
+                {{ product.currency_indicator }}{{ product.unit_price }}
+              </td>
+              <td class="text-center">{{ product.quantity }}</td>
+              <td class="text-right tax-width">
+                {{ product.currency_indicator }}{{ product.tax_amount }}
+              </td>
+              <td class="text-right width">
+                {{ product.currency_indicator }}{{ product.total_price }}
+              </td>
+              <td class="text-right width">
+                {{ product.currency_indicator }}{{ product.total_price }}
+              </td>
+            </tr>
+            <tr>
+              <td [attr.colspan]="9">Total without tax</td>
+              <td class="text-right">
+                <span>{{ this.CurrencyShowStr }} </span><span>{{ this.productArray.Total }}</span>
+              </td>
+            </tr>
+            <tr *ngFor="let product of taxArray">
+              <td [attr.colspan]="9">Total Tax ({{ product.name }})</td>
+              <td class="text-right">
+                {{ this.CurrencyShowStr }} {{ product.tax_price }}
+              </td>
+            </tr>
+            <tr>
+              <td [attr.colspan]="9">Delivery Charges</td>
+              <td class="text-right">
+                <span>{{ this.CurrencyShowStr }} </span><span>{{ this.productArray.delivery_charges }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td [attr.colspan]="9">Total Amount</td>
+              <td class="text-right">
+                <span>{{ this.CurrencyShowStr }} </span><span>{{ this.productArray.Grand_total }}</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 text-center mt-4 mb-4">
+    <button class="btn btn-outline-info d-h5" [routerLink]="'/myorderdetails'" (click)="back()">
+      Back To Previous</button>&nbsp;
+    <button class="btn btn-primary d-h5 printCls" (click)="print()">
+      Print
+    </button>
+  </div>
+</div>

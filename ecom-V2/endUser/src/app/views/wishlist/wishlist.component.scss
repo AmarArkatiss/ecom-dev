@@ -1,0 +1,150 @@
+.rating-avg {
+    color: #ffffff;
+    font-size: 12px;
+    background-color: #388e3c;
+    border-radius: 5px;
+    cursor: pointer;
+    line-height: 26px;
+    padding: 2px 6px;
+}
+
+.rating-avg-text {
+    font-family: Poppins;
+    font-size: 12px;
+    font-weight: normal;
+    font-style: normal;
+}
+
+.rating-count {
+    font-family: Poppins;
+    font-size: 12px;
+    font-weight: 500;
+    font-style: normal;
+    color: #000000;
+    opacity: 0.5;
+    cursor: pointer;
+    line-height: 26px;
+}
+
+.org-price-tag {
+    font-family: Poppins;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: line-through;
+    color: #000000;
+    opacity: 0.8;
+    cursor: pointer
+}
+
+.sp-price-tag {
+    font-family: Poppins;
+    font-size: 20px;
+    font-weight: 600;
+    font-style: normal;
+    color: #000000;
+    cursor: pointer
+}
+
+.product-name {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 26px;
+    color: #2F294D;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+.productmodel {
+    font-family: Poppins;
+    font-size: 13px;
+    font-weight: 500;
+    font-style: normal;
+    color: #505050;
+    line-height: 26px;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+.pricing-row {
+    margin-top: 10px;
+}
+
+.minheight {
+    min-height: 343px;
+}
+
+.reviewAndRatingInfo {
+    font-weight: 500;
+    color: #878787;
+    font-size: 12px;
+    padding-left: 2px;
+}
+
+.startBadgeSize {
+    font-size: 10px;
+}
+
+.fontType {
+    font-family: poppins;
+}
+
+.profile-card {
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+    gap: 16px;
+    height: 207px;
+    background: #FEFEFE;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+}
+
+.detaldiv1 {
+    height: 472px;
+    overflow-y: scroll;
+}
+
+.card-footer {
+    background-color: white !important;
+    border-top: 0px !important;
+}
+.edit-btn {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 19px;
+    color: #0E60A7;
+    border-color: #0E60A7;
+}
+.edit-btn:hover{
+    color: white;
+    background-color: #0E60A7;
+}
+
+.folder-name{
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 17px;
+}
+.folder-form{
+    height: 57px;
+}
+
+h4.heading {
+    font-size: 16px;
+    font-family: 'Lato';
+    font-weight: 500;
+}

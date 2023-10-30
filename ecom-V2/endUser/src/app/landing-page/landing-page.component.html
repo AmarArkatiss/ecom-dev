@@ -1,0 +1,4291 @@
+<div class="totalPage" *ngIf="toggleEvent === false; else toggleEventTemplate">
+  <div class="row">
+    <!-- <div class="image-box">
+      <div class="carousel">
+        <carousel
+        class="img"
+        [images]="imagesUrl"
+        cellWidth="100%"
+        height="350"
+        [autoplay]="true"
+        [loop]="true"
+        autoplayInterval="5000"
+      >
+      </carousel>
+      </div>
+    </div> -->
+
+    <div class="container-fluid mt-2 p-1">
+      <!-- <p-carousel
+        [value]="imagesUrl"
+        [numVisible]="3"
+        [numScroll]="3"
+        [circular]="false"
+        [responsiveOptions]="responsiveOptions"
+      >
+        <ng-template let-product pTemplate="item">
+          <div class="product-item">
+            <div class="product-item-content">
+              <div class="p-mb-3">
+                <img src="{{ product }}" [alt]="" class="product-image" />
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-carousel> -->
+      
+      <carousel
+        class="carouselCss mt-2"
+        [images]="imagesUrl"
+        cellWidth="100%"
+        [autoplay]="true"
+        [loop]="true"
+        height="400"
+        autoplayInterval="10000"
+      >
+      </carousel>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <!-- Weekly Ads  -->
+
+    <!-- <div class="container-fluid">
+      <div class="row mt-3">
+        <div class="col-sm-8">
+          <h5 class="row-heading">Weekly Ads</h5>
+        </div>
+        <div class="col-sm-4 text-right pr-5">
+          <i
+            class="fa fa-arrow-left btn-slider-left-arrow"
+            aria-hidden="true"
+            (click)="scrollLeft()"
+          ></i
+          >&nbsp;
+          <i
+            class="fa fa-arrow-right btn-slider-left-arrow"
+            aria-hidden="true"
+            (click)="scrollRight()"
+          ></i
+          >&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+      </div>
+      <div class="row ml-5">
+        <div *ngIf="weekdealsAdss?.length > 0">
+          <div #widgetsContent class="d-flex">
+            <div
+              class="item-card mt-4 ml-5 p-0"
+              *ngFor="let img of weekdealsAdss; let imgx = index"
+            >
+              <span class="text-right">
+                <span
+                  *ngIf="img.wishlist_status === 1"
+                  [matMenuTriggerFor]="afterMenu"
+                >
+                  <img
+                    src="assets/svg/Wishlist.svg"
+                    alt="Wishlist"
+                    width="25px"
+                    height="25px"
+                    class="product-Wishlist"
+                  />
+                </span>
+                <mat-menu #afterMenu="matMenu" xPosition="before">
+                  <div
+                    mat-menu-item
+                    [disableRipple]="true"
+                    (click)="$event.stopPropagation()"
+                    class="saveMenuItem wishlistform"
+                  >
+                    <div class="row p-0">
+                      <div class="col-12 pt-2" *ngIf="foldervisible">
+                        <div class="col-12">
+                          <mat-form-field appearance="outline" class="font-10">
+                            <mat-label>Folder Name</mat-label>
+                            <input
+                              matInput
+                              placeholder="Enter Name"
+                              [(ngModel)]="folderName"
+                              name="foldername"
+                            />
+                          </mat-form-field>
+                        </div>
+                        <div class="col-12 row m-0">
+                          <div class="col-6 p-0">
+                            <p
+                              class="newfolder text-center"
+                              (click)="hidefolder()"
+                            >
+                              Back
+                            </p>
+                          </div>
+                          <div class="col-6 pr-3" (click)="addFolder()">
+                            <p class="newfolder text-center">Add</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 pt-2" *ngIf="formhide">
+                        <form>
+                          <div class="col-sm-12">
+                            <mat-form-field
+                              class="font-10"
+                              appearance="outline"
+                            >
+                              <mat-label>Folder</mat-label>
+                              <mat-select
+                                [(ngModel)]="folderList"
+                                name="folders"
+                              >
+                                <mat-option
+                                  *ngFor="let a of folders"
+                                  [value]="a.folder_id"
+                                >
+                                  {{ a.folder_name }}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-12 row m-0">
+                            <div class="col-6 p-0" (click)="showfolder()">
+                              <p class="newfolder text-center">New Folder</p>
+                            </div>
+                            <div
+                              class="col-6 pr-3"
+                              (click)="addtoWishlist(img, imgx, 'weekly')"
+                            >
+                              <p class="newfolder text-center">Add</p>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </mat-menu>
+
+                <span *ngIf="img.wishlist_status === 0">
+                  <img
+                    src="assets/svg/btn-whishlist-selected.svg"
+                    alt="Wishlist"
+                    width="25px"
+                    height="25px"
+                    class="product-Wishlist"
+                    (click)="
+                      removeWishlist(imgx, img.wishlist_status_id, 'weekly')
+                    "
+                  />
+                </span>
+              </span>
+
+              <div class="product-img d-flex justify-content-center">
+                <img
+                  src="{{ img.imageUrl }}"
+                  alt="watch-icon"
+                  height="200px"
+                  (click)="goToProductsView(img.product_id)"
+                />
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span
+                  class="product-offer"
+                  *ngIf="img.discount_price !== '0.00'"
+                >
+                  <span>Save</span>
+                  <span
+                    [ngClass]="{ disPrice1: img.discount_price.length > 5 }"
+                    *ngIf="img.price_type === 'F'"
+                  >
+                    {{ img.currency_indicator
+                    }}{{ img.discount_price | slice : 0 : 7 }}
+                  </span>
+                  <span
+                    [ngClass]="{ disPrice1: img.discount_price.length > 5 }"
+                    *ngIf="img.price_type === 'P'"
+                  >
+                    {{ img.discount_price | slice : 0 : 7 }}{{ img.symbol }}
+                  </span>
+                </span>
+                <span class="d-flex align-items-center star-rating">
+                  &nbsp; {{ img.average_rating }}&nbsp;
+                  <img src="assets/svg/star.svg" alt="star-logo" />&nbsp; |
+                  &nbsp; 5&nbsp;&nbsp;
+                </span>
+              </div>
+
+              <div class="d-flex flex-column product-content">
+                <div
+                  class="d-flex align-items-center justify-content-between pb-3"
+                  (click)="goToProductsView(img.product_id)"
+                >
+                  <span class="product-name" title="{{ img.name }}">{{
+                    img.name
+                  }}</span>
+                
+                </div>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="d-flex align-items-center">
+                    <span
+                      class="product-currency"
+                      *ngIf="img.discount_price !== '0.00'"
+                    >
+                      {{ img.currency_indicator }}{{ img.discount_off_price }}
+                    </span>
+                    <span
+                      class="product-currency"
+                      *ngIf="img.discount_price == '0.00'"
+                    >
+                      {{ img.currency_indicator }}{{ img.original_price }}
+                    </span>
+                    <span
+                      class="OfferPricewek1 ml-1"
+                      *ngIf="img.discount_price !== '0.00'"
+                    >
+                      {{ img.currency_indicator }}{{ img.original_price }}
+                    </span>
+                  </span>
+
+                  <button
+                    class="add-cart"
+                    (click)="WeeklyAddToCartClk(img.product_id, img.org_price)"
+                  >
+                    ADD TO CART
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <!-- [numVisible]="5"
+    [numScroll]="4" -->
+    <div class="mt-4 mb-5" *ngIf="weekdealsAdss?.length > 0">
+
+
+
+      <!-- <app-common-card [weekdealsAdss] = "weekdealsAdss"  [wishlistNone] = "wishlistNone"
+         [foldervisible] = "foldervisible" [folderName] = "folderName" [formhide] = "formhide" (addfolderEvent) ="addFolder($event)"
+         (hideFolderEvent) ="hidefolder()" [folderList] = "folderList" [folders] = "folders" (showfolderEvent) = "showfolder()" 
+         (addWishListEvent) = "addtoWishlist($event)" [wishlistAdd] = "wishlistAdd" (removeWishListEvent) = "removeWishlist($event)" 
+         (addToCartEvent) ="WeeklyAddToCartClk($event)" (goToProductEvent) = "goToProductsView($event)"
+         ></app-common-card> -->
+
+
+
+      <p-carousel
+        class="landing-carousel"
+        [value]="weekdealsAdss"
+        [circular]="false"
+        [numVisible]="5"
+        [numScroll]="4"
+        [showIndicators]="false"
+        [responsiveOptions]="responsiveOptions"
+      >
+        <ng-template pTemplate="header">
+          <h5 class="pl-4">Weekly Ads</h5>
+        </ng-template>
+        <ng-template let-img pTemplate="item" let-imgx = "index">
+          <div #widgetsContent class="d-flex">
+            <!-- *ngFor="let img of weekdealsAdss; let imgx = index" -->
+            <div
+              class="item-card mt-4 ml-4 p-0"
+            >
+              <span class="text-right">
+                <span
+                  *ngIf="img.wishlist_status === 1"
+                  [matMenuTriggerFor]="afterMenu"
+                >
+                  <!-- <i class="fa fa-heart heartIco product-Wishlist"></i> -->
+                  <img
+                    [src]="wishlistNone"
+                    alt="Wishlist"
+                    width="25px"
+                    height="25px"
+                    class="product-Wishlist"
+                  />
+                </span>
+                <mat-menu #afterMenu="matMenu" xPosition="before">
+                  <div
+                    mat-menu-item
+                    [disableRipple]="true"
+                    (click)="$event.stopPropagation()"
+                    class="saveMenuItem wishlistform"
+                  >
+                    <div class="row p-0">
+                      <div class="col-12 pt-2" *ngIf="foldervisible">
+                        <div class="col-12">
+                          <mat-form-field appearance="outline" class="font-10">
+                            <mat-label>Folder Name</mat-label>
+                            <input
+                              matInput
+                              placeholder="Enter Name"
+                              [(ngModel)]="folderName"
+                              name="foldername"
+                            />
+                          </mat-form-field>
+                        </div>
+                        <div class="col-12 row m-0">
+                          <div class="col-6 p-0">
+                            <p
+                              class="newfolder text-center"
+                              (click)="hidefolder()"
+                            >
+                              Back
+                            </p>
+                          </div>
+                          <div class="col-6 pr-3" (click)="addFolder()">
+                            <p class="newfolder text-center">Add</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 pt-2" *ngIf="formhide">
+                        <form>
+                          <div class="col-sm-12">
+                            <mat-form-field
+                              class="font-10"
+                              appearance="outline"
+                            >
+                              <mat-label>Folder</mat-label>
+                              <mat-select
+                                [(ngModel)]="folderList"
+                                name="folders"
+                              >
+                                <mat-option
+                                  *ngFor="let a of folders"
+                                  [value]="a.folder_id"
+                                >
+                                  {{ a.folder_name }}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-12 row m-0">
+                            <div class="col-6 p-0" (click)="showfolder()">
+                              <p class="newfolder text-center">New Folder</p>
+                            </div>
+                            <div
+                              class="col-6 pr-3"
+                              (click)="addtoWishlist(img, imgx, 'weekly')"
+                            >
+                              <p class="newfolder text-center">Add</p>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </mat-menu>
+
+                <span *ngIf="img.wishlist_status === 0">
+                  <!-- <i
+                    class="fa fa-heart SelectedHeartIco product-Wishlist"
+                    (click)="
+                      removeWishlist(imgx, img.wishlist_status_id, 'weekly')
+                    "
+                  ></i> -->
+
+                  <img
+                    [src]="wishlistAdd"
+                    alt="Wishlist"
+                    width="25px"
+                    height="25px"
+                    class="product-Wishlist"
+                    (click)="
+                      removeWishlist(imgx, img.wishlist_status_id, img, 'weekly')
+                    "
+                  />
+                </span>
+              </span>
+
+              <div class="product-img d-flex justify-content-center">
+                <img
+                  src="{{ img.imageUrl }}"
+                  alt="watch-icon"
+                  height="200px"
+                 
+                  (click)="goToProductsView(img.product_id)"
+                />
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span
+                  class="product-offer"
+                  *ngIf="img.discount_price !== '0.00'"
+                >
+                  <span>Save</span>
+                  <span
+                    [ngClass]="{ disPrice1: img.discount_price.length > 5 }"
+                    *ngIf="img.price_type === 'F'"
+                  >
+                    {{ img.currency_indicator
+                    }}{{ img.discount_price | slice : 0 : 7 }}
+                  </span>
+                  <span
+                    [ngClass]="{ disPrice1: img.discount_price.length > 5 }"
+                    *ngIf="img.price_type === 'P'"
+                  >
+                    {{ img.discount_price | slice : 0 : 7 }}{{ img.symbol }}
+                  </span>
+                </span>
+                <span class="d-flex align-items-center star-rating">
+                  &nbsp; {{ img.average_rating }}&nbsp;
+                  <img src="assets/svg/star.svg" alt="star-logo" />&nbsp; |
+                  &nbsp; 5&nbsp;&nbsp;
+                </span>
+              </div>
+
+              <div class="d-flex flex-column product-content">
+                <div
+                  class="d-flex align-items-center justify-content-between pb-3"
+                  (click)="goToProductsView(img.product_id)"
+                >
+                  <span class="product-name" title="{{ img.name }}">{{
+                    img.name
+                  }}</span>
+                </div>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="d-flex align-items-center">
+                    <span
+                      class="product-currency"
+                      *ngIf="img.discount_price !== '0.00'"
+                    >
+                      {{ img.currency_indicator }}{{ img.discount_off_price }}
+                    </span>
+                    <span
+                      class="product-currency"
+                      *ngIf="img.discount_price == '0.00'"
+                    >
+                      {{ img.currency_indicator }}{{ img.original_price }}
+                    </span>
+                    <span
+                      class="OfferPricewek1 ml-1"
+                      *ngIf="img.discount_price !== '0.00'"
+                    >
+                      {{ img.currency_indicator }}{{ img.original_price }}
+                    </span>
+                  </span>
+
+                  <button
+                    class="add-cart"
+                    (click)="WeeklyAddToCartClk(img.product_id, img.org_price)"
+                  >
+                    ADD TO CART
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-carousel>
+    </div>
+
+    <div class="row mt-3">
+      <div class="container-fluid p-0">
+        <img [src]="middleBanner1" height="400" class="img-banner" />
+      </div>
+    </div>
+
+    <!-- Best sellers -->
+
+    <!-- <div class="container-fluid">
+      <div class="row mt-3">
+        <div class="col-sm-8" *ngIf="relatedProductArray?.length > 0">
+          <h5 class="row-heading">Best Sellers</h5>
+        </div>
+        <div
+          class="col-sm-4 text-right pr-5"
+          *ngIf="relatedProductArray?.length > 0"
+        >
+          <i
+            class="fa fa-arrow-left btn-slider-left-arrow"
+            aria-hidden="true"
+            (click)="bestsellerscrollLeft()"
+          ></i
+          >&nbsp;
+          <i
+            class="fa fa-arrow-right btn-slider-left-arrow"
+            aria-hidden="true"
+            (click)="bestsellerscrollRight()"
+          ></i>
+        </div>
+      </div>
+      <div class="row ml-5">
+        <div class="m-0 img-slider" *ngIf="relatedProductArray?.length > 0">
+          <div #bestseller  >
+            <div
+              class="img-widget small-img1 wekCls"
+              *ngFor="let RelData of relatedProductArray; let imgx = index"
+            >
+              <span *ngIf="RelData.discount_price !== '0.00'">
+                <img src="assets/loginImgs/offerImg.png" class="off-img" />
+                <span class="off-text">
+                  <p>Save</p>
+                  <p
+                    [ngClass]="{ disPrice1: RelData.discount_price.length > 5 }"
+                    *ngIf="RelData.price_type === 'F'"
+                  >
+                    {{ RelData.currency_indicator
+                    }}{{ RelData.discount_price | slice : 0 : 7 }}
+                  </p>
+                  <p
+                    [ngClass]="{ disPrice1: RelData.discount_price.length > 5 }"
+                    *ngIf="RelData.price_type === 'P'"
+                  >
+                    {{ RelData.discount_price | slice : 0 : 7
+                    }}{{ RelData.symbol }}
+                  </p>
+                </span>
+              </span>
+              <span class="text-right">
+                <span
+                  *ngIf="RelData.wishlist_status === 1"
+                  [matMenuTriggerFor]="afterMenu"
+                  class="text-right"
+                >
+                  <i class="fa fa-heart heartIco"></i>
+                </span>
+                <span *ngIf="RelData.wishlist_status === 0">
+                  <i
+                    class="fa fa-heart SelectedHeartIco"
+                    (click)="
+                      removeWishlist(
+                        imgx,
+                        RelData.wishlist_status_id,
+                        'related'
+                      )
+                    "
+                  ></i>
+                </span>
+              </span>
+              <div
+                class="couponscodeimageDiv mt-0 pointer"
+                (click)="goToProductsView(RelData.product_id)"
+              >
+                <img
+                  src="{{ RelData.imageUrl }}"
+                  class="img-fluid pointer weeklyImgClsx"
+                />
+              </div>
+              <div
+                class="nameDiv pointer"
+                (click)="goToProductsView(RelData.product_id)"
+              >
+                <p class="OfferPrices" title="{{ RelData.name }}">
+                  {{ RelData.name }}
+                </p>
+              </div>
+              <div
+                class="priceDiv pointer"
+                (click)="goToProductsView(RelData.product_id)"
+              >
+                <div class="row">
+                  <div class="col-sm-6 p-0 pr-0">
+                    <p
+                      class="OfferPriceorgPrice1"
+                      *ngIf="RelData.discount_price !== '0.00'"
+                    >
+                      {{ RelData.currency_indicator
+                      }}{{ RelData.discount_off_price }}
+                    </p>
+                    <p
+                      class="OfferPriceorgPrice1"
+                      *ngIf="RelData.discount_price == '0.00'"
+                    >
+                      {{ RelData.currency_indicator }}{{ RelData.org_price }}
+                    </p>
+                  </div>
+                  <div class="col-sm-6 pl-0">
+                    <p
+                      class="OfferPricewek1"
+                      *ngIf="RelData.discount_price !== '0.00'"
+                    >
+                      {{ RelData.currency_indicator }}{{ RelData.org_price }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="cartBtndiv">
+                <div class="row">
+                  <div class="col-sm-6 p-0 pl-2">
+                    <ngb-rating
+                      class="warning font-20 ml-2 ngbRatingColor"
+                      [max]="5"
+                      [(rate)]="RelData.average_rating"
+                      [starTemplate]="t"
+                      [readonly]="true"
+                    ></ngb-rating>
+                    {{ RelData.average_rating }}
+                    <ng-template #t let-fill="fill">
+                      <span class="star" [class.full]="fill === 100">
+                        <span class="half" [style.width.%]="fill"
+                          ><em class="fa fa-star text-warning"></em></span
+                        ><em class="fa fa-star-o text-warning cursor"></em>
+                      </span>
+                    </ng-template>
+                  </div>
+                  <div class="col-sm-6 p-0 pl-2 pr-2">
+                    <button
+                      type="button"
+                      class="btn btn-outline-info btn-sm"
+                      (click)="
+                        AddToCartbestsellerClk(
+                          RelData.product_id,
+                          RelData.org_price
+                        )
+                      "
+                    >
+                      Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <mat-menu #afterMenu="matMenu" xPosition="before">
+                <div
+                  mat-menu-item
+                  [disableRipple]="true"
+                  (click)="$event.stopPropagation()"
+                  class="saveMenuItem wishlistform"
+                >
+                  <div class="row p-0">
+                    <div class="col-12 pt-2" *ngIf="foldervisible">
+                      <div class="col-12">
+                        <mat-form-field appearance="outline" class="font-10">
+                          <mat-label>Folder Name</mat-label>
+                          <input
+                            matInput
+                            placeholder="Enter Name"
+                            [(ngModel)]="folderName"
+                            name="foldername"
+                          />
+                        </mat-form-field>
+                      </div>
+                      <div class="col-12 row m-0">
+                        <div class="col-6 p-0">
+                          <p
+                            class="newfolder text-center"
+                            (click)="hidefolder()"
+                          >
+                            Back
+                          </p>
+                        </div>
+                        <div class="col-6 pr-3" (click)="addFolder()">
+                          <p class="newfolder text-center">Add</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 pt-2" *ngIf="formhide">
+                      <form>
+                        <div class="col-sm-12">
+                          <mat-form-field class="font-10" appearance="outline">
+                            <mat-label>Folder</mat-label>
+                            <mat-select [(ngModel)]="folderList" name="folders">
+                              <mat-option
+                                *ngFor="let a of folders"
+                                [value]="a.folder_id"
+                              >
+                                {{ a.folder_name }}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-12 row m-0">
+                          <div class="col-6 p-0" (click)="showfolder()">
+                            <p class="newfolder text-center">New Folder</p>
+                          </div>
+                          <div
+                            class="col-6 pr-3"
+                            (click)="addtoWishlist(RelData, imgx, 'related')"
+                          >
+                            <p class="newfolder text-center">Add</p>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </mat-menu>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <div class="mt-4 mb-5" *ngIf="relatedProductArray?.length > 0">
+      <p-carousel
+        class="landing-carousel"
+        [value]="relatedProductArray"
+        [numVisible]="5"
+        [numScroll]="4"
+        [showIndicators]="false"
+        [responsiveOptions]="responsiveOptions"
+      >
+        <ng-template pTemplate="header">
+          <h5 class="pl-4">Best Sellers</h5>
+        </ng-template>
+        <ng-template let-RelData pTemplate="item" let-imgx = "index">
+          <div #bestseller class="d-flex">
+            <!-- *ngFor="let RelData of relatedProductArray; let imgx = index" -->
+
+            <div
+              class="item-card mt-4 ml-4 p-0"
+            >
+              <span class="text-right">
+                <span
+                  *ngIf="RelData.wishlist_status === 1"
+                  [matMenuTriggerFor]="afterMenu"
+                >
+                  <!-- <i class="fa fa-heart heartIco product-Wishlist"></i> -->
+                  <img
+                    [src]="wishlistNone"
+                    alt="Wishlist"
+                    width="25px"
+                    height="25px"
+                    class="product-Wishlist"
+                  />
+                </span>
+                <mat-menu #afterMenu="matMenu" xPosition="before">
+                  <div
+                    mat-menu-item
+                    [disableRipple]="true"
+                    (click)="$event.stopPropagation()"
+                    class="saveMenuItem wishlistform"
+                  >
+                    <div class="row p-0">
+                      <div class="col-12 pt-2" *ngIf="foldervisible">
+                        <div class="col-12">
+                          <mat-form-field appearance="outline" class="font-10">
+                            <mat-label>Folder Name</mat-label>
+                            <input
+                              matInput
+                              placeholder="Enter Name"
+                              [(ngModel)]="folderName"
+                              name="foldername"
+                            />
+                          </mat-form-field>
+                        </div>
+                        <div class="col-12 row m-0">
+                          <div class="col-6 p-0">
+                            <p
+                              class="newfolder text-center"
+                              (click)="hidefolder()"
+                            >
+                              Back
+                            </p>
+                          </div>
+                          <div class="col-6 pr-3" (click)="addFolder()">
+                            <p class="newfolder text-center">Add</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 pt-2" *ngIf="formhide">
+                        <form>
+                          <div class="col-sm-12">
+                            <mat-form-field
+                              class="font-10"
+                              appearance="outline"
+                            >
+                              <mat-label>Folder</mat-label>
+                              <mat-select
+                                [(ngModel)]="folderList"
+                                name="folders"
+                              >
+                                <mat-option
+                                  *ngFor="let a of folders"
+                                  [value]="a.folder_id"
+                                >
+                                  {{ a.folder_name }}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-12 row m-0">
+                            <div class="col-6 p-0" (click)="showfolder()">
+                              <p class="newfolder text-center">New Folder</p>
+                            </div>
+                            <div
+                              class="col-6 pr-3"
+                              (click)="addtoWishlist(RelData, imgx, 'related')"
+                            >
+                              <p class="newfolder text-center">Add</p>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </mat-menu>
+
+                <span *ngIf="RelData.wishlist_status === 0">
+                  <!-- <i
+                    class="fa fa-heart SelectedHeartIco product-Wishlist"
+                    (click)="
+                      removeWishlist(imgx, img.wishlist_status_id, 'weekly')
+                    "
+                  ></i> -->
+
+                  <img
+                    [src]="wishlistAdd"
+                    alt="Wishlist"
+                    width="25px"
+                    height="25px"
+                    class="product-Wishlist"
+                    (click)="
+                      removeWishlist(
+                        imgx,
+                        RelData.wishlist_status_id, RelData,
+                        'related'
+                      )
+                    "
+                  />
+                </span>
+              </span>
+
+              <div class="product-img d-flex justify-content-center">
+                <img
+                  src="{{ RelData.imageUrl }}"
+                  alt="watch-icon"
+                  height="200px"
+                  (click)="goToProductsView(RelData.product_id)"
+                />
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span
+                  class="product-offer"
+                  *ngIf="RelData.discount_price !== '0.00'"
+                >
+                  <span>Save</span>
+                  <span
+                    [ngClass]="{ disPrice1: RelData.discount_price.length > 5 }"
+                    *ngIf="RelData.price_type === 'F'"
+                  >
+                    {{ RelData.currency_indicator
+                    }}{{ RelData.discount_price | slice : 0 : 7 }}
+                  </span>
+                  <span
+                    [ngClass]="{ disPrice1: RelData.discount_price.length > 5 }"
+                    *ngIf="RelData.price_type === 'P'"
+                  >
+                    {{ RelData.discount_price | slice : 0 : 7
+                    }}{{ RelData.symbol }}
+                  </span>
+                </span>
+                <span class="d-flex align-items-center star-rating">
+                  &nbsp; {{ RelData.average_rating }}&nbsp;
+                  <img src="assets/svg/star.svg" alt="star-logo" />&nbsp; |
+                  &nbsp; 5&nbsp;&nbsp;
+                </span>
+              </div>
+
+              <div class="d-flex flex-column product-content">
+                <div
+                  class="d-flex align-items-center justify-content-between pb-3"
+                  (click)="goToProductsView(RelData.product_id)"
+                >
+                  <span class="product-name" title="{{ RelData.name }}">{{
+                    RelData.name
+                  }}</span>
+                </div>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="d-flex align-items-center">
+                    <span
+                      class="product-currency"
+                      *ngIf="RelData.discount_price !== '0.00'"
+                    >
+                      {{ RelData.currency_indicator
+                      }}{{ RelData.discount_off_price }}
+                    </span>
+                    <span
+                      class="product-currency"
+                      *ngIf="RelData.discount_price == '0.00'"
+                    >
+                      {{ RelData.currency_indicator }}{{ RelData.org_price }}
+                    </span>
+                    <span
+                      class="OfferPricewek1 ml-1"
+                      *ngIf="RelData.discount_price !== '0.00'"
+                    >
+                      {{ RelData.currency_indicator }}{{ RelData.org_price }}
+                    </span>
+                  </span>
+
+                  <button
+                    class="add-cart"
+                    (click)="
+                      AddToCartbestsellerClk(
+                        RelData.product_id,
+                        RelData.org_price
+                      )
+                    "
+                  >
+                    ADD TO CART
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-carousel>
+    </div>
+
+    <!-- Exclusive categories -->
+
+    <!-- <div class="container-fluid">
+      <div class="row mt-4 mb-3">
+        <div class="col-sm-8">
+          <h5 class="row-heading">Veterneo Exclusive Categories</h5>
+        </div>
+        <div class="col-sm-4 text-right pr-5">
+          <i
+            class="fa fa-arrow-left btn-slider-left-arrow"
+            aria-hidden="true"
+            (click)="exclusivscrollLeft()"
+          ></i
+          >&nbsp;
+          <i
+            class="fa fa-arrow-right btn-slider-left-arrow"
+            aria-hidden="true"
+            (click)="exclusivscrollRight()"
+          ></i
+          >&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+      </div>
+      <div class="row ml-5">
+        <div
+          class="m-0 img-slider"
+          *ngIf="CategoryObject.categoryData.length > 0"
+        >
+          <div #exclusivContent   >
+            <div
+              class="coup-img-widget"
+              *ngFor="let cat of this.CategoryObject.categoryData"
+            >
+              <div class="card exclusiv-card">
+                <img
+                  class="exclusive-img img-banner"
+                  src="{{ cat.image }}"
+                  alt="Card image cap"
+                  height="175"
+                  width="500"
+                />
+                <div class="card-body">
+                  <h5 class="card-title exclusive-card-title">
+                    {{ cat.childName }}
+                  </h5>
+                  <p
+                    class="card-text exclusive-card-text"
+                    [innerHTML]="truncateHTML(cat.description)"
+                  ></p>
+                  <br />
+                </div>
+                <div class="card-footer">
+                  <div class="col-sm-12">
+                    <button class="btn exclusiv-btn" (click)="shopNow(cat)">
+                      Shop Now
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <!-- [numVisible]="5"
+    [numScroll]="4" -->
+    <div class="mt-4 mb-5" *ngIf="CategoryObject.categoryData.length > 0">
+      <p-carousel
+        class="landing-carousel"
+        [value]="CategoryObject.categoryData"
+        [circular]="false"
+        [numVisible]="5"
+        [numScroll]="4"
+        [showIndicators]="false"
+        [responsiveOptions]="responsiveOptions"
+      >
+        <ng-template pTemplate="header">
+          <h5 class="pl-4">{{orgName}} Exclusive Categories</h5>
+        </ng-template>
+        <ng-template let-cat pTemplate="item">
+          <div #exclusivContent   >
+            <!-- *ngFor="let cat of this.CategoryObject.categoryData" -->
+
+            <div
+              class="coup-img-widget"
+            >
+              <div class="card exclusiv-card">
+                <img
+                  class="exclusive-img img-banner"
+                  src="{{ cat.image }}"
+                  alt="Card image cap"
+                  height="175"
+                  width="500"
+                />
+                <div class="card-body">
+                  <h5 class="card-title exclusive-card-title">
+                    {{ cat.childName }}
+                  </h5>
+                  <p
+                    class="card-text exclusive-card-text"
+                    [innerHTML]="truncateHTML(cat.description)"
+                  ></p>
+                  <br />
+                  <!-- col-sm-2 m-4 <p class="card-text exclusive-card-text">{{cat.description}}</p><br> -->
+                  <!-- <a href="#" class="btn btn-primary">Shop Now</a> -->
+                </div>
+                <div class="card-footer">
+                  <div class="col-sm-12">
+                    <button class="btn exclusiv-btn" (click)="shopNow(cat)">
+                      Shop Now
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <!-- </div> -->
+            </div>
+          </div>
+        </ng-template>
+      </p-carousel>
+    </div>
+
+    <div class="row mt-3">
+      <div class="container-fluid p-0">
+        <img [src]="middleBanner2" height="400" class="img-banner" />
+      </div>
+    </div>
+
+    <!-- Suggestions data -->
+    <!-- <div class="container-fluid">
+      <div class="row mt-4">
+        <div class="col-sm-8">
+          <h5 class="row-heading">Suggestions</h5>
+        </div>
+        <div class="col-sm-4 text-right pr-5">
+          <i
+            class="fa fa-arrow-left btn-slider-left-arrow"
+            aria-hidden="true"
+            (click)="sugesscrollLeft()"
+          ></i
+          >&nbsp;
+          <i
+            class="fa fa-arrow-right btn-slider-left-arrow"
+            aria-hidden="true"
+            (click)="sugesscrollRight()"
+          ></i
+          >&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+      </div>
+      <div class="row ml-5">
+        <div *ngIf="sugessData?.length > 0">
+          <div #sugContent class="d-flex">
+            <div
+              class="item-card mt-4 ml-5 p-0"
+              *ngFor="let sugData of sugessData; let imgx = index"
+            >
+              <span class="text-right">
+                <span
+                  *ngIf="sugData.wishlist_status === 1"
+                  [matMenuTriggerFor]="afterMenu"
+                >
+                  <img
+                    src="assets/svg/Wishlist.svg"
+                    alt="Wishlist"
+                    width="25px"
+                    height="25px"
+                    class="product-Wishlist"
+                  />
+                </span>
+                <mat-menu #afterMenu="matMenu" xPosition="before">
+                  <div
+                    mat-menu-item
+                    [disableRipple]="true"
+                    (click)="$event.stopPropagation()"
+                    class="saveMenuItem wishlistform"
+                  >
+                    <div class="row p-0">
+                      <div class="col-12 pt-2" *ngIf="foldervisible">
+                        <div class="col-12">
+                          <mat-form-field appearance="outline" class="font-10">
+                            <mat-label>Folder Name</mat-label>
+                            <input
+                              matInput
+                              placeholder="Enter Name"
+                              [(ngModel)]="folderName"
+                              name="foldername"
+                            />
+                          </mat-form-field>
+                        </div>
+                        <div class="col-12 row m-0">
+                          <div class="col-6 p-0">
+                            <p
+                              class="newfolder text-center"
+                              (click)="hidefolder()"
+                            >
+                              Back
+                            </p>
+                          </div>
+                          <div class="col-6 pr-3" (click)="addFolder()">
+                            <p class="newfolder text-center">Add</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 pt-2" *ngIf="formhide">
+                        <form>
+                          <div class="col-sm-12">
+                            <mat-form-field
+                              class="font-10"
+                              appearance="outline"
+                            >
+                              <mat-label>Folder</mat-label>
+                              <mat-select
+                                [(ngModel)]="folderList"
+                                name="folders"
+                              >
+                                <mat-option
+                                  *ngFor="let a of folders"
+                                  [value]="a.folder_id"
+                                >
+                                  {{ a.folder_name }}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-12 row m-0">
+                            <div class="col-6 p-0" (click)="showfolder()">
+                              <p class="newfolder text-center">New Folder</p>
+                            </div>
+                            <div
+                              class="col-6 pr-3"
+                              (click)="
+                                addtoWishlist(sugData, imgx, 'suggestion')
+                              "
+                            >
+                              <p class="newfolder text-center">Add</p>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </mat-menu>
+
+                <span *ngIf="sugData.wishlist_status === 0">
+                  <img
+                    src="assets/svg/btn-whishlist-selected.svg"
+                    alt="Wishlist"
+                    width="25px"
+                    height="25px"
+                    class="product-Wishlist"
+                    (click)="
+                      removeWishlist(
+                        imgx,
+                        sugData.wishlist_status_id,
+                        'suggestion'
+                      )
+                    "
+                  />
+                </span>
+              </span>
+
+              <div class="product-img d-flex justify-content-center">
+                <img
+                  src="{{ sugData.imageUrl }}"
+                  alt="watch-icon"
+                  height="200px"
+                  (click)="goToProductsView(sugData.product_id)"
+                />
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span
+                  class="product-offer"
+                  *ngIf="sugData.discount_price !== '0.00'"
+                >
+                  <span>Save</span>
+                  <span
+                    [ngClass]="{ disPrice1: sugData.discount_price.length > 5 }"
+                    *ngIf="sugData.price_type === 'F'"
+                  >
+                    {{ sugData.currency_indicator
+                    }}{{ sugData.discount_price | slice : 0 : 7 }}
+                  </span>
+                  <span
+                    [ngClass]="{ disPrice1: sugData.discount_price.length > 5 }"
+                    *ngIf="sugData.price_type === 'P'"
+                  >
+                    {{ sugData.discount_price | slice : 0 : 7
+                    }}{{ sugData.symbol }}
+                  </span>
+                </span>
+                <span class="d-flex align-items-center star-rating">
+                  &nbsp; {{ sugData.average_rating }}&nbsp;
+                  <img src="assets/svg/star.svg" alt="star-logo" />&nbsp; |
+                  &nbsp; 5&nbsp;&nbsp;
+                </span>
+              </div>
+
+              <div class="d-flex flex-column product-content">
+                <div
+                  class="d-flex align-items-center justify-content-between pb-3"
+                  (click)="goToProductsView(sugData.product_id)"
+                >
+                  <span class="product-name" title="{{ sugData.name }}">{{
+                    sugData.name
+                  }}</span>
+                </div>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="d-flex align-items-center">
+                    <span
+                      class="product-currency"
+                      *ngIf="sugData.discount_price !== '0.00'"
+                    >
+                      {{ sugData.currency_indicator
+                      }}{{ sugData.discount_off_price }}
+                    </span>
+                    <span
+                      class="product-currency"
+                      *ngIf="sugData.discount_price == '0.00'"
+                    >
+                      {{ sugData.currency_indicator }}{{ sugData.org_price }}
+                    </span>
+                    <span
+                      class="OfferPricewek1 ml-1"
+                      *ngIf="sugData.discount_price !== '0.00'"
+                    >
+                      {{ sugData.currency_indicator }}{{ sugData.org_price }}
+                    </span>
+                  </span>
+
+                  <button
+                    class="add-cart"
+                    (click)="
+                      WeeklyAddToCartClk(sugData.product_id, sugData.org_price)
+                    "
+                  >
+                    ADD TO CART
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- [numVisible]="5"
+    [numScroll]="4" -->
+    <div class="mt-4 mb-5" *ngIf="sugessData?.length > 0">
+      <p-carousel
+        class="landing-carousel"
+        [value]="sugessData"
+        [showIndicators]="false"
+        [circular]="false"
+        [numVisible]="5"
+        [numScroll]="4"
+        [responsiveOptions]="responsiveOptions"
+      >
+        <ng-template pTemplate="header">
+          <h5 class="pl-4">Suggestions</h5>
+        </ng-template>
+        <ng-template let-sugData pTemplate="item" let-imgx="index">
+          <div #sugContent class="d-flex">
+            <!-- *ngFor="let sugData of sugessData; let imgx = index" -->
+
+            <div class="item-card mt-4 ml-4 p-0">
+              <span class="text-right">
+                <span
+                  *ngIf="sugData.wishlist_status === 1"
+                  [matMenuTriggerFor]="afterMenu"
+                >
+                  <!-- <i class="fa fa-heart heartIco product-Wishlist"></i>
+                   -->
+                  <img
+                    [src]="wishlistNone"
+                    alt="Wishlist"
+                    width="25px"
+                    height="25px"
+                    class="product-Wishlist"
+                  />
+                </span>
+                <mat-menu #afterMenu="matMenu" xPosition="before">
+                  <div
+                    mat-menu-item
+                    [disableRipple]="true"
+                    (click)="$event.stopPropagation()"
+                    class="saveMenuItem wishlistform"
+                  >
+                    <div class="row p-0">
+                      <div class="col-12 pt-2" *ngIf="foldervisible">
+                        <div class="col-12">
+                          <mat-form-field appearance="outline" class="font-10">
+                            <mat-label>Folder Name</mat-label>
+                            <input
+                              matInput
+                              placeholder="Enter Name"
+                              [(ngModel)]="folderName"
+                              name="foldername"
+                            />
+                          </mat-form-field>
+                        </div>
+                        <div class="col-12 row m-0">
+                          <div class="col-6 p-0">
+                            <p
+                              class="newfolder text-center"
+                              (click)="hidefolder()"
+                            >
+                              Back
+                            </p>
+                          </div>
+                          <div class="col-6 pr-3" (click)="addFolder()">
+                            <p class="newfolder text-center">Add</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 pt-2" *ngIf="formhide">
+                        <form>
+                          <div class="col-sm-12">
+                            <mat-form-field
+                              class="font-10"
+                              appearance="outline"
+                            >
+                              <mat-label>Folder</mat-label>
+                              <mat-select
+                                [(ngModel)]="folderList"
+                                name="folders"
+                              >
+                                <mat-option
+                                  *ngFor="let a of folders"
+                                  [value]="a.folder_id"
+                                >
+                                  {{ a.folder_name }}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-12 row m-0">
+                            <div class="col-6 p-0" (click)="showfolder()">
+                              <p class="newfolder text-center">New Folder</p>
+                            </div>
+                            <div
+                              class="col-6 pr-3"
+                              (click)="
+                                addtoWishlist(sugData, imgx, 'suggestion')
+                              "
+                            >
+                              <p class="newfolder text-center">Add</p>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </mat-menu>
+
+                <span *ngIf="sugData.wishlist_status === 0">
+                  <!-- <i
+                    class="fa fa-heart SelectedHeartIco product-Wishlist"
+                    (click)="
+                      removeWishlist(
+                        imgx,
+                        sugData.wishlist_status_id,
+                        'suggestion'
+                      )
+                    "
+                  ></i> -->
+                  <img
+                    [src]="wishlistAdd"
+                    alt="Wishlist"
+                    width="25px"
+                    height="25px"
+                    class="product-Wishlist"
+                    (click)="
+                      removeWishlist(
+                        imgx,
+                        sugData.wishlist_status_id, sugData,
+                        'suggestion'
+                      )
+                    "
+                  />
+                </span>
+              </span>
+
+              <div class="product-img d-flex justify-content-center">
+                <img
+                  src="{{ sugData.imageUrl }}"
+                  alt="watch-icon"
+                  height="200px"
+                  (click)="goToProductsView(sugData.product_id)"
+                />
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span
+                  class="product-offer"
+                  *ngIf="sugData.discount_price !== '0.00'"
+                >
+                  <span>Save</span>
+                  <span
+                    [ngClass]="{
+                      disPrice1: sugData.discount_price.length > 5
+                    }"
+                    *ngIf="sugData.price_type === 'F'"
+                  >
+                    {{ sugData.currency_indicator
+                    }}{{ sugData.discount_price | slice : 0 : 7 }}
+                  </span>
+                  <span
+                    [ngClass]="{
+                      disPrice1: sugData.discount_price.length > 5
+                    }"
+                    *ngIf="sugData.price_type === 'P'"
+                  >
+                    {{ sugData.discount_price | slice : 0 : 7
+                    }}{{ sugData.symbol }}
+                  </span>
+                </span>
+                <span class="d-flex align-items-center star-rating">
+                  &nbsp; {{ sugData.average_rating }}&nbsp;
+                  <img src="assets/svg/star.svg" alt="star-logo" />&nbsp; |
+                  &nbsp; 5&nbsp;&nbsp;
+                </span>
+              </div>
+
+              <div class="d-flex flex-column product-content">
+                <div
+                  class="d-flex align-items-center justify-content-between pb-3"
+                  (click)="goToProductsView(sugData.product_id)"
+                >
+                  <span class="product-name" title="{{ sugData.name }}">{{
+                    sugData.name
+                  }}</span>
+                </div>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="d-flex align-items-center">
+                    <span
+                      class="product-currency"
+                      *ngIf="sugData.discount_price !== '0.00'"
+                    >
+                      {{ sugData.currency_indicator
+                      }}{{ sugData.discount_off_price }}
+                    </span>
+                    <span
+                      class="product-currency"
+                      *ngIf="sugData.discount_price == '0.00'"
+                    >
+                      {{ sugData.currency_indicator }}{{ sugData.org_price }}
+                    </span>
+                    <span
+                      class="OfferPricewek1 ml-1"
+                      *ngIf="sugData.discount_price !== '0.00'"
+                    >
+                      {{ sugData.currency_indicator }}{{ sugData.org_price }}
+                    </span>
+                  </span>
+
+                  <button
+                    class="add-cart"
+                    (click)="
+                      WeeklyAddToCartClk(sugData.product_id, sugData.org_price)
+                    "
+                  >
+                    ADD TO CART
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-carousel>
+    </div>
+
+    <div class="row mt-3">
+      <div class="container-fluid p-0">
+        <img [src]="middleBanner3" height="400" class="img-banner" />
+      </div>
+    </div>
+
+    <!-- Coupons -->
+
+    <!-- <div class="container-fluid" #targetcoupons>
+      <div class="row mt-3 mb-3">
+        <div class="col-sm-8">
+          <h5 class="row-heading">Coupon Deals</h5>
+        </div>
+        <div class="col-sm-4 text-right">
+          <i
+            class="fa fa-arrow-left btn-slider-left-arrow"
+            aria-hidden="true"
+            (click)="CouponsContentscrollLeft()"
+          ></i
+          >&nbsp;
+          <i
+            class="fa fa-arrow-right btn-slider-left-arrow"
+            aria-hidden="true"
+            (click)="CouponsContentscrollRight()"
+          ></i>
+        </div>
+      </div>
+      <div class="row ml-5">
+        <div class="m-0 img-slider" *ngIf="coupondsdetailsArray?.length > 0">
+          <div #CouponsContent  >
+            <div
+              class="coup-img-widget"
+              *ngFor="let Coupnumber of coupdata; let imgx = index"
+            >
+              <div class="card coup-card">
+                <div class="card text-center offer-card">
+                  <p
+                    class="pl-3 pr-3 coup-offer-text"
+                    *ngIf="Coupnumber?.type === 'P'"
+                  >
+                    GET {{ Coupnumber?.discount }}
+                    {{ Coupnumber?.type_symbol }} OFF
+                  </p>
+                  <p
+                    class="pl-3 pr-3 coup-offer-text"
+                    *ngIf="Coupnumber?.type === 'F'"
+                  >
+                    GET {{ Coupnumber?.currency_indicator }}
+                    {{ Coupnumber?.discount }} OFF
+                  </p>
+                </div>
+                <img
+                  class="card-img-top exclusive-img pointer"
+                  src="{{ Coupnumber.imageUrl }}"
+                  alt="Card image cap"
+                  height="200"
+                  width="500"
+                  (click)="goToProductsView(Coupnumber.product_id)"
+                />
+                <div class="card-body pt-0 pb-0">
+                  <div
+                    class="coup-nameDiv pointer"
+                    (click)="goToProductsView(Coupnumber.product_id)"
+                  >
+                    <p class="offer-price pl-2" title="{{ Coupnumber.model }}">
+                      {{ Coupnumber.model }}
+                    </p>
+                  </div>
+                  <div
+                    class="priceDiv pointer"
+                    (click)="goToProductsView(sugData.product_id)"
+                  >
+                    <div class="row">
+                      <div class="col-sm-5 p-0 pr-0">
+                        <p
+                          class="OfferPriceorgPrice1"
+                          *ngIf="
+                            Coupnumber.discount_price == '0.00' ||
+                            Coupnumber.discount_price == undefinded ||
+                            Coupnumber.discount_price == null
+                          "
+                        >
+                          {{ Coupnumber.currency_indicator
+                          }}{{ Coupnumber.price }}
+                        </p>
+                        <p *ngIf="Coupnumber.discount_price !== '0.00'">
+                          <span class="OfferPriceorgPrice1">
+                            {{ Coupnumber.currency_indicator
+                            }}{{ Coupnumber.discount_off_price }}</span
+                          >
+                        </p>
+                      </div>
+
+                      <div class="col-sm-7 pl-0">
+                        <p
+                          class="pt-1"
+                          *ngIf="Coupnumber.discount_price !== '0.00'"
+                        >
+                          <span class="OfferPricecoup"
+                            >{{ Coupnumber.currency_indicator
+                            }}{{ Coupnumber.price }}</span
+                          >&nbsp;<span class="text-success coup-offer pr-2"
+                            >{{ Coupnumber.currency_indicator
+                            }}{{ Coupnumber.discount_price }} OFF</span
+                          >
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="priceDiv pointer"
+                    (click)="goToProductsView(Coupnumber.product_id)"
+                  >
+                    <div class="row">
+                      <div class="col-sm-6 p-0 pl-3 pt-1">
+                        <p class="text-muted pl-2">
+                          Code: {{ Coupnumber.coupon_code }}
+                        </p>
+                      </div>
+                      <div class="col-sm-6 p-0 pl-4 pr-4 pt-1 text-right">
+                        <i
+                          class="fa fa-star coup-rating"
+                          aria-hidden="true"
+                        ></i>
+                        &nbsp;{{ Coupnumber.average_rating }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mt-3 mb-3">
+                    <button
+                      type="button"
+                      class="btn btn-outline-info coup-btn btn-sm coup-btn-div"
+                      (click)="
+                        CliptoCart(
+                          Coupnumber.product_id,
+                          Coupnumber.price,
+                          Coupnumber.coupon_code
+                        )
+                      "
+                    >
+                      Redeem Coupon
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>  -->
+
+    <div class="mt-4 mb-5" *ngIf="coupdata?.length > 0">
+      <p-carousel
+        class="landing-carousel"
+        [value]="coupdata"
+        [numVisible]="5"
+        [numScroll]="4"
+        [showIndicators]="false"
+        [responsiveOptions]="responsiveOptions"
+      >
+        <ng-template pTemplate="header">
+          <h5 class="pl-4">Coupon Deals</h5>
+        </ng-template>
+        <ng-template let-Coupnumber pTemplate="item" let-imgx = "index">
+          <div #CouponsContent  >
+            <!-- *ngFor="let Coupnumber of coupdata; let imgx = index" -->
+            <div
+              class="coup-img-widget"
+            >
+              <div class="card coup-card">
+                <div class="card text-center offer-card">
+                  <p
+                    class="pl-3 pr-3 coup-offer-text"
+                    *ngIf="Coupnumber?.type === 'P'"
+                  >
+                    GET {{ Coupnumber?.discount }}
+                    {{ Coupnumber?.type_symbol }} OFF
+                  </p>
+                  <p
+                    class="pl-3 pr-3 coup-offer-text"
+                    *ngIf="Coupnumber?.type === 'F'"
+                  >
+                    GET {{ Coupnumber?.currency_indicator }}
+                    {{ Coupnumber?.discount }} OFF
+                  </p>
+                </div>
+                <img
+                  class="card-img-top exclusive-img pointer"
+                  src="{{ Coupnumber.imageUrl }}"
+                  (click)="goToProductsView(Coupnumber.product_id)"
+                  alt="Card image cap"
+                  height="200"
+                  width="500"
+                />
+                <div class="card-body pt-0 pb-0">
+                  <div
+                    class="coup-nameDiv pointer"
+                    (click)="goToProductsView(Coupnumber.product_id)"
+                  >
+                    <p class="offer-price pl-2" title="{{ Coupnumber.model }}">
+                      {{ Coupnumber.model }}
+                    </p>
+                  </div>
+
+                  <div
+                    class="priceDiv pointer"
+                    (click)="goToProductsView(sugData.product_id)"
+                  >
+                    <div class="row">
+                      <div class="col-sm-5 p-0 pr-0">
+                        <p
+                          class="OfferPriceorgPrice1"
+                          *ngIf="
+                            Coupnumber.discount_price == '0.00' ||
+                            Coupnumber.discount_price == undefinded ||
+                            Coupnumber.discount_price == null
+                          "
+                        >
+                          {{ Coupnumber.currency_indicator
+                          }}{{ Coupnumber.price }}
+                        </p>
+                        <p *ngIf="Coupnumber.discount_price !== '0.00'">
+                          <span class="OfferPriceorgPrice1">
+                            {{ Coupnumber.currency_indicator
+                            }}{{ Coupnumber.discount_off_price }}</span
+                          >
+                        </p>
+                      </div>
+
+                      <div class="col-sm-7 pl-0">
+                        <p
+                          class="pt-1"
+                          *ngIf="Coupnumber.discount_price !== '0.00'"
+                        >
+                          <span class="OfferPricecoup"
+                            >{{ Coupnumber.currency_indicator
+                            }}{{ Coupnumber.price }}</span
+                          >&nbsp;<span class="text-success coup-offer pr-2"
+                            >{{ Coupnumber.currency_indicator
+                            }}{{ Coupnumber.discount_price }} OFF</span
+                          >
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="priceDiv pointer"
+                    (click)="goToProductsView(Coupnumber.product_id)"
+                  >
+                    <div class="row">
+                      <div class="col-sm-6 p-0 pl-3 pt-1">
+                        <p class="text-muted pl-2">
+                          Code: {{ Coupnumber.coupon_code }}
+                        </p>
+                      </div>
+                      <div class="col-sm-6 p-0 pl-4 pr-4 pt-1 text-right">
+                        <i
+                          class="fa fa-star coup-rating"
+                          aria-hidden="true"
+                        ></i>
+                        &nbsp;{{ Coupnumber.average_rating }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mt-3 mb-3">
+                    <button
+                      type="button"
+                      class="btn btn-outline-info coup-btn btn-sm coup-btn-div"
+                      (click)="
+                        CliptoCart(
+                          Coupnumber.product_id,
+                          Coupnumber.price,
+                          Coupnumber.coupon_code
+                        )
+                      "
+                    >
+                      Redeem Coupon
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-carousel>
+    </div>
+
+    <!-- Shop by brands -->
+    <!-- <div class="col-sm-12 p-0 productsPage" *ngIf="this.brandsData.length > 0">
+      <div class="row mt-3">
+        <div class="col-sm-8 pl-4">
+          <h5 class="row-heading">Shop By Farming</h5>
+        </div>
+        <div class="col-sm-4 text-right pr-4">
+          <i
+            class="fa fa-arrow-left btn-slider-left-arrow"
+            aria-hidden="true"
+            (click)="brandScrollLeft()"
+          ></i
+          >&nbsp;
+          <i
+            class="fa fa-arrow-right btn-slider-left-arrow"
+            aria-hidden="true"
+            (click)="brandScrollRight()"
+          ></i
+          >&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+      </div>
+      <div class="row m-0 ml-5 img-slider">
+        <div #brandsContent  >
+          <div
+            class="brand-img-widget small-img1 brandCls"
+            *ngFor="let p of this.brandsData; let i = index"
+          >
+            <div
+              class="card p-0 grid-product-card d-flex align-items-stretch band-card"
+            >
+              <div class="card-body p-4">
+                <div class="col-sm-12 p-0 relatedProdImagAlign">
+                  <img
+                    [src]="p.imageUrl"
+                    class="product-image"
+                    (click)="getProductsFromBrand(p.manufacturer_id, p.name)"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <div class="mt-4 mb-5" *ngIf="brandsData.length > 0">
+      <p-carousel
+        class="landing-carousel"
+        [value]="brandsData"
+        [showIndicators]="false"
+        [circular]="false"
+        [numVisible]="5"
+        [numScroll]="4"
+        [responsiveOptions]="responsiveOptions"
+      >
+        <ng-template pTemplate="header">
+          <h5 class="pl-4">Shop By {{ brandsLabel }}</h5>
+        </ng-template>
+        <ng-template let-p pTemplate="item">
+          <div #brandsContent>
+            <div class="brand-img-widget small-img1 brandCls">
+              <div
+                class="card p-0 grid-product-card d-flex align-items-stretch band-card"
+              >
+                <div class="card-body p-4">
+                  <div class="col-sm-12 p-0 relatedProdImagAlign">
+                    <img
+                      [src]="p.imageUrl"
+                      class="product-image"
+                      (click)="getProductsFromBrand(p.manufacturer_id, p.name)"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-carousel>
+    </div>
+
+    <!-- <hr class="hrtagcls">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-1">
+            
+        </div>
+        <div class="col-sm-2">
+            <div>
+                <img  src="https://i5.peapod.com/c/NV/NVVNB.jpg" class="snackimg">
+            
+                <div>
+                    <p>Baby Care</p>
+                </div>
+            </div>
+            
+        </div>
+        <div class="col-sm-2">
+            <div>
+               
+                <img  src="https://i5.peapod.com/c/HT/HTJ5C.jpg" class="snackimg">
+            
+            </div>
+            <div>
+                <p>Snacks</p>
+                
+            </div>
+           
+        </div>
+        <div class="col-sm-2">
+            <div>
+                <img  src="https://i5.peapod.com/c/RM/RMGO2.png" class="snackimg">
+            </div>
+            <div>
+                <p>Beverages</p>
+
+            </div>
+            
+        </div>
+        <div class="col-sm-2">
+            <div>
+                <img  src="https://i5.peapod.com/c/CE/CE8X7.jpg" class="snackimg">
+            </div>
+            <div>
+
+            <p>Cleaning & Household</p>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div>
+                <img  src="https://i5.peapod.com/c/BR/BR9OM.jpg" class="snackimg">
+            </div>
+            <div>
+            <p>Home and Kitchen</p>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+</div> -->
+
+    <!-- <div class="container-fluid">
+                    <div class="Sidetitle">
+                        <h5>Bank Offers</h5>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-sm-3">
+                            <img ng-if="!useStaticImages"
+                                src="//www.bigbasket.com/media/customPage/b01eee88-e6bc-410e-993c-dedd012cf04b/0d1b3df5-5cab-43a1-ab77-64d23ccc082c/2365bc54-1700-4f28-8130-d9f65075d0e7/cp_aff_m_icici_360_060422.jpg"
+                                data-sizes="auto" sizes="273px">
+                        </div>
+                        <div class="col-sm-3">
+                            <img ng-if="!useStaticImages"
+                                src="https://www.bigbasket.com/media/customPage/b01eee88-e6bc-410e-993c-dedd012cf04b/0d1b3df5-5cab-43a1-ab77-64d23ccc082c/2365bc54-1700-4f28-8130-d9f65075d0e7/hp_aff_m_paytm_360_060422.jpg"
+                                data-sizes="auto" sizes="273px">
+
+                        </div>
+                        <div class="col-sm-3">
+                            <img ng-if="!useStaticImages"
+                                src=" https://www.bigbasket.com/media/customPage/b01eee88-e6bc-410e-993c-dedd012cf04b/0d1b3df5-5cab-43a1-ab77-64d23ccc082c/2365bc54-1700-4f28-8130-d9f65075d0e7/hp_aff_m_rbl_360_060422.jpg"
+                                data-sizes="auto" sizes="273px">
+
+                        </div>
+                        <div class="col-sm-3">
+                            <img ng-if="!useStaticImages"
+                                src="https://www.bigbasket.com/media/customPage/b01eee88-e6bc-410e-993c-dedd012cf04b/0d1b3df5-5cab-43a1-ab77-64d23ccc082c/2365bc54-1700-4f28-8130-d9f65075d0e7/hp_aff_m_dbs-400_360_060422.jpg"
+                                data-sizes="auto" sizes="273px">
+
+                        </div>
+
+
+
+                    </div>
+
+
+                </div> -->
+    <hr class="hrtagcls" />
+    <!-- <div class="container-fluid">
+                    <div class="Sidetitle">
+                        <h5>Flyers</h5>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <img class="flyImg" src="{{imgurl}}flyers005.jpg" data-sizes="auto" sizes="273px">
+                            <div>
+                                <button class="flyshareCls" (click)="shareee()">
+                                    Share
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <img class="flyImg" src="{{imgurl}}flyers005.jpg" data-sizes="auto" sizes="273px">
+                            <div>
+                                <button class="flyshareCls" (click)="shareee()">
+                                    Share
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <img class="flyImg" src="{{imgurl}}flyers005.jpg" data-sizes="auto" sizes="273px">
+                            <div>
+                                <button class="flyshareCls" (click)="shareee()">
+                                    Share
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <img class="flyImg" src="{{imgurl}}flyers005.jpg" data-sizes="auto" sizes="273px">
+                            <div>
+                                <button class="flyshareCls" (click)="shareee()">
+                                    Share
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+  </div>
+  <br />
+  <!-- 
+    <footer id="footer">
+        
+        <div class="row m-0">
+            <div class="col-sm-1">
+                <img src="{{imgurl}}cswg.png" class="bottomLogo">
+            </div>
+            <div class="col-sm-3">
+                <h5 class="h5ls">About</h5>
+                 <a><p>About Us</p></a>
+                <p>Private Brands</p>
+                <p>Store Departments</p>
+                <p>News & Media</p>
+                <p>Community</p>
+                <p>School Food Pantry</p>
+                <p>Guiding Stars</p>
+                <p>Security</p>
+            </div>
+            <div class="col-sm-3">
+                <h5 class="h5ls">Customer Support</h5>
+                <p>Contact Us</p>
+                <p>Help</p>
+                <p>Coupon Policy</p>
+                <p>Food Safety</p>
+                <p>Product Recalls</p>
+                <p>Refer-a-friend</p>
+                <p>COVID-19</p>
+                <p>Business Delivery</p>
+                <p>Freshness Guarantee</p>
+            </div>
+            <div class="col-sm-2">
+                <h5 class="h5ls">Make Money with Us</h5>
+                <p>Sell On Botcom</p>
+                <p>Advertise Your Products</p>
+                <p>Help Desk</p>
+                <p>Contact</p>
+                <p>Planing</p>
+                <p>Quote</p>
+              
+            </div>
+            <div class="col-sm-3">
+                <h5 class="h5ls">Strore Address & Location</h5>    
+                <div *ngIf="storeadd">
+                    <p>Address:-{{this.storeDetailsArray.address}}</p>
+                    <p>Support Mail:-{{this.storeDetailsArray.email}}</p>
+                    <p>Contact:-{{this.storeDetailsArray.telephone}}</p>
+                    <p>Country:-{{this.storeDetailsArray.country}}</p>
+                  
+                </div>
+                <p><span class="ml-2 pointer font-14 fw-200">
+               
+                    <i class="fa fa-share-alt  font-25 iconColor" aria-hidden="true" (click)="share()"></i> <span
+                        class="font-20 iconColor"> Share</span>
+                   
+                </span></p>
+            </div>
+            
+
+
+
+
+
+
+          
+           
+        </div>
+      
+      
+    </footer> -->
+</div>
+<ng-template #toggleEventTemplate>
+  <div class="totalPage">
+    <div class="row pt-4">
+      <div class="col-sm-12">
+        <mat-tab-group
+          mat-align-tabs="start"
+          class="headerTabBody ml-4"
+          (selectedTabChange)="onTabChanged($event)"
+        >
+          <mat-tab label="Weekly Ads">
+            <!-- <div class="row mb-3">
+              <div *ngIf="weekdealsAdss?.length > 0">
+                <div #widgetsContent class="d-flex">
+                  <div
+                    class="item-card mt-4 ml-5 p-0"
+                    *ngFor="let img of weekdealsAdss; let imgx = index"
+                  >
+                    <span class="text-right">
+                      <span
+                        *ngIf="img.wishlist_status === 1"
+                        [matMenuTriggerFor]="afterMenu"
+                      >
+                        <img
+                          src="assets/svg/Wishlist.svg"
+                          alt="Wishlist"
+                          width="25px"
+                          height="25px"
+                          class="product-Wishlist"
+                        />
+                      </span>
+                      <mat-menu #afterMenu="matMenu" xPosition="before">
+                        <div
+                          mat-menu-item
+                          [disableRipple]="true"
+                          (click)="$event.stopPropagation()"
+                          class="saveMenuItem wishlistform"
+                        >
+                          <div class="row p-0">
+                            <div class="col-12 pt-2" *ngIf="foldervisible">
+                              <div class="col-12">
+                                <mat-form-field
+                                  appearance="outline"
+                                  class="font-10"
+                                >
+                                  <mat-label>Folder Name</mat-label>
+                                  <input
+                                    matInput
+                                    placeholder="Enter Name"
+                                    [(ngModel)]="folderName"
+                                    name="foldername"
+                                  />
+                                </mat-form-field>
+                              </div>
+                              <div class="col-12 row m-0">
+                                <div class="col-6 p-0">
+                                  <p
+                                    class="newfolder text-center"
+                                    (click)="hidefolder()"
+                                  >
+                                    Back
+                                  </p>
+                                </div>
+                                <div class="col-6 pr-3" (click)="addFolder()">
+                                  <p class="newfolder text-center">Add</p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-sm-12 pt-2" *ngIf="formhide">
+                              <form>
+                                <div class="col-sm-12">
+                                  <mat-form-field
+                                    class="font-10"
+                                    appearance="outline"
+                                  >
+                                    <mat-label>Folder</mat-label>
+                                    <mat-select
+                                      [(ngModel)]="folderList"
+                                      name="folders"
+                                    >
+                                      <mat-option
+                                        *ngFor="let a of folders"
+                                        [value]="a.folder_id"
+                                      >
+                                        {{ a.folder_name }}
+                                      </mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                                </div>
+                                <div class="col-12 row m-0">
+                                  <div class="col-6 p-0" (click)="showfolder()">
+                                    <p class="newfolder text-center">
+                                      New Folder
+                                    </p>
+                                  </div>
+                                  <div
+                                    class="col-6 pr-3"
+                                    (click)="addtoWishlist(img, imgx, 'weekly')"
+                                  >
+                                    <p class="newfolder text-center">Add</p>
+                                  </div>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </mat-menu>
+
+                      <span *ngIf="img.wishlist_status === 0">
+                 
+                        <img
+                          src="assets/svg/btn-whishlist-selected.svg"
+                          alt="Wishlist"
+                          width="25px"
+                          height="25px"
+                          class="product-Wishlist"
+                          (click)="
+                            removeWishlist(
+                              imgx,
+                              img.wishlist_status_id,
+                              'weekly'
+                            )
+                          "
+                        />
+                      </span>
+                    </span>
+               
+                    <div class="product-img d-flex justify-content-center">
+                      <img
+                        src="{{ img.imageUrl }}"
+                        alt="watch-icon"
+                        height="200px"
+                        (click)="goToProductsView(img.product_id)"
+                      />
+                    </div>
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      <span
+                        class="product-offer"
+                        *ngIf="img.discount_price !== '0.00'"
+                      >
+                        <span>Save</span>
+                        <span
+                          [ngClass]="{
+                            disPrice1: img.discount_price.length > 5
+                          }"
+                          *ngIf="img.price_type === 'F'"
+                        >
+                          {{ img.currency_indicator
+                          }}{{ img.discount_price | slice : 0 : 7 }}
+                        </span>
+                        <span
+                          [ngClass]="{
+                            disPrice1: img.discount_price.length > 5
+                          }"
+                          *ngIf="img.price_type === 'P'"
+                        >
+                          {{ img.discount_price | slice : 0 : 7
+                          }}{{ img.symbol }}
+                        </span>
+                      </span>
+                      <span class="d-flex align-items-center star-rating">
+                        &nbsp; {{ img.average_rating }}&nbsp;
+                        <img src="assets/svg/star.svg" alt="star-logo" />&nbsp;
+                        | &nbsp; 5&nbsp;&nbsp;
+                      </span>
+                    </div>
+
+                    <div class="d-flex flex-column product-content">
+                      <div
+                        class="d-flex align-items-center justify-content-between pb-3"
+                        (click)="goToProductsView(img.product_id)"
+                      >
+                        <span class="product-name" title="{{ img.name }}">{{
+                          img.name
+                        }}</span>
+                      </div>
+                      <div
+                        class="d-flex align-items-center justify-content-between"
+                      >
+                        <span class="d-flex align-items-center">
+                          <span
+                            class="product-currency"
+                            *ngIf="img.discount_price !== '0.00'"
+                          >
+                            {{ img.currency_indicator
+                            }}{{ img.discount_off_price }}
+                          </span>
+                          <span
+                            class="product-currency"
+                            *ngIf="img.discount_price == '0.00'"
+                          >
+                            {{ img.currency_indicator }}{{ img.original_price }}
+                          </span>
+                          <span
+                            class="OfferPricewek1 ml-1"
+                            *ngIf="img.discount_price !== '0.00'"
+                          >
+                            {{ img.currency_indicator }}{{ img.original_price }}
+                          </span>
+                        </span>
+
+                        <button
+                          class="add-cart"
+                          (click)="
+                            WeeklyAddToCartClk(img.product_id, img.org_price)
+                          "
+                        >
+                          ADD TO CART
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+
+            <div class="mb-3" *ngIf="weekdealsAdss?.length > 0">
+              <p-carousel
+                class="landing-carousel"
+                [value]="weekdealsAdss"
+                [circular]="false"
+                [numVisible]="5"
+                [numScroll]="4"
+                [showIndicators]="false"
+                [responsiveOptions]="responsiveOptions"
+              >
+                <ng-template let-img pTemplate="item" let-imgx = "index">
+                  <div #widgetsContent class="d-flex">
+                    <!-- *ngFor="let img of weekdealsAdss; let imgx = index" -->
+                    <div
+                      class="item-card mt-4 ml-4 p-0"
+                    >
+                      <span class="text-right">
+                        <span
+                          *ngIf="img.wishlist_status === 1"
+                          [matMenuTriggerFor]="afterMenu"
+                        >
+                          <!-- <i class="fa fa-heart heartIco product-Wishlist"></i> -->
+                          <img
+                            [src]="wishlistNone"
+                            alt="Wishlist"
+                            width="25px"
+                            height="25px"
+                            class="product-Wishlist"
+                          />
+                        </span>
+                        <mat-menu #afterMenu="matMenu" xPosition="before">
+                          <div
+                            mat-menu-item
+                            [disableRipple]="true"
+                            (click)="$event.stopPropagation()"
+                            class="saveMenuItem wishlistform"
+                          >
+                            <div class="row p-0">
+                              <div class="col-12 pt-2" *ngIf="foldervisible">
+                                <div class="col-12">
+                                  <mat-form-field
+                                    appearance="outline"
+                                    class="font-10"
+                                  >
+                                    <mat-label>Folder Name</mat-label>
+                                    <input
+                                      matInput
+                                      placeholder="Enter Name"
+                                      [(ngModel)]="folderName"
+                                      name="foldername"
+                                    />
+                                  </mat-form-field>
+                                </div>
+                                <div class="col-12 row m-0">
+                                  <div class="col-6 p-0">
+                                    <p
+                                      class="newfolder text-center"
+                                      (click)="hidefolder()"
+                                    >
+                                      Back
+                                    </p>
+                                  </div>
+                                  <div class="col-6 pr-3" (click)="addFolder()">
+                                    <p class="newfolder text-center">Add</p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-sm-12 pt-2" *ngIf="formhide">
+                                <form>
+                                  <div class="col-sm-12">
+                                    <mat-form-field
+                                      class="font-10"
+                                      appearance="outline"
+                                    >
+                                      <mat-label>Folder</mat-label>
+                                      <mat-select
+                                        [(ngModel)]="folderList"
+                                        name="folders"
+                                      >
+                                        <mat-option
+                                          *ngFor="let a of folders"
+                                          [value]="a.folder_id"
+                                        >
+                                          {{ a.folder_name }}
+                                        </mat-option>
+                                      </mat-select>
+                                    </mat-form-field>
+                                  </div>
+                                  <div class="col-12 row m-0">
+                                    <div
+                                      class="col-6 p-0"
+                                      (click)="showfolder()"
+                                    >
+                                      <p class="newfolder text-center">
+                                        New Folder
+                                      </p>
+                                    </div>
+                                    <div
+                                      class="col-6 pr-3"
+                                      (click)="
+                                        addtoWishlist(img, imgx, 'weekly')
+                                      "
+                                    >
+                                      <p class="newfolder text-center">Add</p>
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </mat-menu>
+
+                        <span *ngIf="img.wishlist_status === 0">
+                          <!-- <i
+                            class="fa fa-heart SelectedHeartIco product-Wishlist"
+                            (click)="
+                              removeWishlist(imgx, img.wishlist_status_id, 'weekly')
+                            "
+                          ></i> -->
+
+                          <img
+                            [src]="wishlistAdd"
+                            alt="Wishlist"
+                            width="25px"
+                            height="25px"
+                            class="product-Wishlist"
+                            (click)="
+                              removeWishlist(
+                                imgx,
+                                img.wishlist_status_id,img,
+                                'weekly'
+                              )
+                            "
+                          />
+                        </span>
+                      </span>
+
+                      <div class="product-img d-flex justify-content-center">
+                        <img
+                          src="{{ img.imageUrl }}"
+                          alt="watch-icon"
+                          height="200px"
+                          (click)="goToProductsView(img.product_id)"
+                        />
+                      </div>
+                      <div
+                        class="d-flex justify-content-between align-items-center"
+                      >
+                        <span
+                          class="product-offer"
+                          *ngIf="img.discount_price !== '0.00'"
+                        >
+                          <span>Save</span>
+                          <span
+                            [ngClass]="{
+                              disPrice1: img.discount_price.length > 5
+                            }"
+                            *ngIf="img.price_type === 'F'"
+                          >
+                            {{ img.currency_indicator
+                            }}{{ img.discount_price | slice : 0 : 7 }}
+                          </span>
+                          <span
+                            [ngClass]="{
+                              disPrice1: img.discount_price.length > 5
+                            }"
+                            *ngIf="img.price_type === 'P'"
+                          >
+                            {{ img.discount_price | slice : 0 : 7
+                            }}{{ img.symbol }}
+                          </span>
+                        </span>
+                        <span class="d-flex align-items-center star-rating">
+                          &nbsp; {{ img.average_rating }}&nbsp;
+                          <img
+                            src="assets/svg/star.svg"
+                            alt="star-logo"
+                          />&nbsp; | &nbsp; 5&nbsp;&nbsp;
+                        </span>
+                      </div>
+
+                      <div class="d-flex flex-column product-content">
+                        <div
+                          class="d-flex align-items-center justify-content-between pb-3"
+                          (click)="goToProductsView(img.product_id)"
+                        >
+                          <span class="product-name" title="{{ img.name }}">{{
+                            img.name
+                          }}</span>
+                        </div>
+                        <div
+                          class="d-flex align-items-center justify-content-between"
+                        >
+                          <span class="d-flex align-items-center">
+                            <span
+                              class="product-currency"
+                              *ngIf="img.discount_price !== '0.00'"
+                            >
+                              {{ img.currency_indicator
+                              }}{{ img.discount_off_price }}
+                            </span>
+                            <span
+                              class="product-currency"
+                              *ngIf="img.discount_price == '0.00'"
+                            >
+                              {{ img.currency_indicator
+                              }}{{ img.original_price }}
+                            </span>
+                            <span
+                              class="OfferPricewek1 ml-1"
+                              *ngIf="img.discount_price !== '0.00'"
+                            >
+                              {{ img.currency_indicator
+                              }}{{ img.original_price }}
+                            </span>
+                          </span>
+
+                          <button
+                            class="add-cart"
+                            (click)="
+                              WeeklyAddToCartClk(img.product_id, img.org_price)
+                            "
+                          >
+                            ADD TO CART
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </p-carousel>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Best Sellers" *ngIf="relatedProductArray?.length > 0">
+            <!-- <div class="row mt-4">
+              <div
+                class="m-0 ml-5 img-slider"
+                *ngIf="relatedProductArray?.length > 0"
+              >
+          
+                <div #bestseller  >
+                  <div
+                    class="img-widget small-img1 wekCls"
+                    *ngFor="
+                      let RelData of relatedProductArray;
+                      let imgx = index
+                    "
+                  >
+                
+
+                    <span *ngIf="RelData.discount_price !== '0.00'">
+                      <img
+                        src="assets/loginImgs/offerImg.png"
+                        class="off-img"
+                      />
+                      <span class="off-text">
+                        <p>Save</p>
+                        <p
+                          [ngClass]="{
+                            disPrice1: RelData.discount_price.length > 5
+                          }"
+                          *ngIf="RelData.price_type === 'F'"
+                        >
+                          {{ RelData.currency_indicator
+                          }}{{ RelData.discount_price | slice : 0 : 7 }}
+                        </p>
+                        <p
+                          [ngClass]="{
+                            disPrice1: RelData.discount_price.length > 5
+                          }"
+                          *ngIf="RelData.price_type === 'P'"
+                        >
+                          {{ RelData.discount_price | slice : 0 : 7
+                          }}{{ RelData.symbol }}
+                        </p>
+                      </span>
+                    </span>
+                
+
+                    <span class="text-right">
+                      <span
+                        *ngIf="RelData.wishlist_status === 1"
+                        [matMenuTriggerFor]="afterMenu"
+                        class="text-right"
+                      >
+                        <i class="fa fa-heart heartIco"></i>
+                      </span>
+                      <span *ngIf="RelData.wishlist_status === 0">
+                        <i
+                          class="fa fa-heart SelectedHeartIco"
+                          (click)="
+                            removeWishlist(
+                              imgx,
+                              RelData.wishlist_status_id,
+                              'related'
+                            )
+                          "
+                        ></i>
+                      </span>
+                    </span>
+               
+
+                    <div
+                      class="couponscodeimageDiv mt-0 pointer"
+                      (click)="goToProductsView(RelData.product_id)"
+                    >
+                      <img
+                        src="{{ RelData.imageUrl }}"
+                        class="img-fluid pointer weeklyImgClsx"
+                      />
+                    </div>
+                    <div
+                      class="nameDiv pointer"
+                      (click)="goToProductsView(RelData.product_id)"
+                    >
+                      <p class="OfferPrices" title="{{ RelData.name }}">
+                        {{ RelData.name }}
+                      </p>
+                    </div>
+                    <div
+                      class="priceDiv pointer"
+                      (click)="goToProductsView(RelData.product_id)"
+                    >
+                      <div class="row">
+                        <div class="col-sm-6 p-0 pr-0">
+                          <p
+                            class="OfferPriceorgPrice1"
+                            *ngIf="RelData.discount_price !== '0.00'"
+                          >
+                            {{ RelData.currency_indicator
+                            }}{{ RelData.discount_off_price }}
+                          </p>
+                          <p
+                            class="OfferPriceorgPrice1"
+                            *ngIf="RelData.discount_price == '0.00'"
+                          >
+                            {{ RelData.currency_indicator
+                            }}{{ RelData.org_price }}
+                          </p>
+                         
+                        </div>
+                        <div class="col-sm-6 pl-0">
+                          <p
+                            class="OfferPricewek1"
+                            *ngIf="RelData.discount_price !== '0.00'"
+                          >
+                            {{ RelData.currency_indicator
+                            }}{{ RelData.org_price }}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="cartBtndiv">
+                      <div class="row">
+                        <div class="col-sm-6 p-0 pl-2">
+                          <ngb-rating
+                            class="warning font-20 ml-2 ngbRatingColor"
+                            [max]="5"
+                            [(rate)]="RelData.average_rating"
+                            [starTemplate]="t"
+                            [readonly]="true"
+                          ></ngb-rating>
+                          {{ RelData.average_rating }}
+                          <ng-template #t let-fill="fill">
+                            <span class="star" [class.full]="fill === 100">
+                              <span class="half" [style.width.%]="fill"
+                                ><em class="fa fa-star text-warning"></em></span
+                              ><em
+                                class="fa fa-star-o text-warning cursor"
+                              ></em>
+                            </span>
+                          </ng-template>
+                        </div>
+                        <div class="col-sm-6 p-0 pl-2 pr-2">
+                          <button
+                            type="button"
+                            class="btn btn-outline-info btn-sm"
+                            (click)="
+                              AddToCartbestsellerClk(
+                                RelData.product_id,
+                                RelData.org_price
+                              )
+                            "
+                          >
+                            Add to Cart
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <mat-menu #afterMenu="matMenu" xPosition="before">
+                      <div
+                        mat-menu-item
+                        [disableRipple]="true"
+                        (click)="$event.stopPropagation()"
+                        class="saveMenuItem wishlistform"
+                      >
+                        <div class="row p-0">
+                          <div class="col-12 pt-2" *ngIf="foldervisible">
+                            <div class="col-12">
+                              <mat-form-field
+                                appearance="outline"
+                                class="font-10"
+                              >
+                                <mat-label>Folder Name</mat-label>
+                                <input
+                                  matInput
+                                  placeholder="Enter Name"
+                                  [(ngModel)]="folderName"
+                                  name="foldername"
+                                />
+                              </mat-form-field>
+                            </div>
+                            <div class="col-12 row m-0">
+                              <div class="col-6 p-0">
+                                <p
+                                  class="newfolder text-center"
+                                  (click)="hidefolder()"
+                                >
+                                  Back
+                                </p>
+                              </div>
+                              <div class="col-6 pr-3" (click)="addFolder()">
+                                <p class="newfolder text-center">Add</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-12 pt-2" *ngIf="formhide">
+                            <form>
+                              <div class="col-sm-12">
+                                <mat-form-field
+                                  class="font-10"
+                                  appearance="outline"
+                                >
+                                  <mat-label>Folder</mat-label>
+                                  <mat-select
+                                    [(ngModel)]="folderList"
+                                    name="folders"
+                                  >
+                                    <mat-option
+                                      *ngFor="let a of folders"
+                                      [value]="a.folder_id"
+                                    >
+                                      {{ a.folder_name }}
+                                    </mat-option>
+                                  </mat-select>
+                                </mat-form-field>
+                              </div>
+                              <div class="col-12 row m-0">
+                                <div class="col-6 p-0" (click)="showfolder()">
+                                  <p class="newfolder text-center">
+                                    New Folder
+                                  </p>
+                                </div>
+                                <div
+                                  class="col-6 pr-3"
+                                  (click)="
+                                    addtoWishlist(RelData, imgx, 'related')
+                                  "
+                                >
+                                  <p class="newfolder text-center">Add</p>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </mat-menu>
+          
+                  </div>
+                </div>
+         
+              </div>
+            </div> -->
+
+            <div class="mb-3" *ngIf="relatedProductArray?.length > 0">
+              <p-carousel
+                class="landing-carousel"
+                [value]="relatedProductArray"
+                [numVisible]="5"
+                [numScroll]="4"
+                [showIndicators]="false"
+                [responsiveOptions]="responsiveOptions"
+              >
+                <ng-template let-RelData pTemplate="item"  let-imgx = "index">
+                  <div #bestseller class="d-flex">
+                    <!-- *ngFor="
+                    let RelData of relatedProductArray;
+                    let imgx = index
+                  " -->
+                    <div
+                      class="item-card mt-4 ml-4 p-0"
+                    >
+                      <span class="text-right">
+                        <span
+                          *ngIf="RelData.wishlist_status === 1"
+                          [matMenuTriggerFor]="afterMenu"
+                        >
+                          <!-- <i class="fa fa-heart heartIco product-Wishlist"></i> -->
+                          <img
+                            [src]="wishlistNone"
+                            alt="Wishlist"
+                            width="25px"
+                            height="25px"
+                            class="product-Wishlist"
+                          />
+                        </span>
+                        <mat-menu #afterMenu="matMenu" xPosition="before">
+                          <div
+                            mat-menu-item
+                            [disableRipple]="true"
+                            (click)="$event.stopPropagation()"
+                            class="saveMenuItem wishlistform"
+                          >
+                            <div class="row p-0">
+                              <div class="col-12 pt-2" *ngIf="foldervisible">
+                                <div class="col-12">
+                                  <mat-form-field
+                                    appearance="outline"
+                                    class="font-10"
+                                  >
+                                    <mat-label>Folder Name</mat-label>
+                                    <input
+                                      matInput
+                                      placeholder="Enter Name"
+                                      [(ngModel)]="folderName"
+                                      name="foldername"
+                                    />
+                                  </mat-form-field>
+                                </div>
+                                <div class="col-12 row m-0">
+                                  <div class="col-6 p-0">
+                                    <p
+                                      class="newfolder text-center"
+                                      (click)="hidefolder()"
+                                    >
+                                      Back
+                                    </p>
+                                  </div>
+                                  <div class="col-6 pr-3" (click)="addFolder()">
+                                    <p class="newfolder text-center">Add</p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-sm-12 pt-2" *ngIf="formhide">
+                                <form>
+                                  <div class="col-sm-12">
+                                    <mat-form-field
+                                      class="font-10"
+                                      appearance="outline"
+                                    >
+                                      <mat-label>Folder</mat-label>
+                                      <mat-select
+                                        [(ngModel)]="folderList"
+                                        name="folders"
+                                      >
+                                        <mat-option
+                                          *ngFor="let a of folders"
+                                          [value]="a.folder_id"
+                                        >
+                                          {{ a.folder_name }}
+                                        </mat-option>
+                                      </mat-select>
+                                    </mat-form-field>
+                                  </div>
+                                  <div class="col-12 row m-0">
+                                    <div
+                                      class="col-6 p-0"
+                                      (click)="showfolder()"
+                                    >
+                                      <p class="newfolder text-center">
+                                        New Folder
+                                      </p>
+                                    </div>
+                                    <div
+                                      class="col-6 pr-3"
+                                      (click)="
+                                        addtoWishlist(RelData, imgx, 'related')
+                                      "
+                                    >
+                                      <p class="newfolder text-center">Add</p>
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </mat-menu>
+
+                        <span *ngIf="RelData.wishlist_status === 0">
+                          <!-- <i
+                            class="fa fa-heart SelectedHeartIco product-Wishlist"
+                            (click)="
+                              removeWishlist(imgx, img.wishlist_status_id, 'weekly')
+                            "
+                          ></i> -->
+
+                          <img
+                            [src]="wishlistAdd"
+                            alt="Wishlist"
+                            width="25px"
+                            height="25px"
+                            class="product-Wishlist"
+                            (click)="
+                              removeWishlist(
+                                imgx,
+                                RelData.wishlist_status_id,RelData,
+                                'related'
+                              )
+                            "
+                          />
+                        </span>
+                      </span>
+
+                      <div class="product-img d-flex justify-content-center">
+                        <img
+                          src="{{ RelData.imageUrl }}"
+                          alt="watch-icon"
+                          height="200px"
+                          (click)="goToProductsView(RelData.product_id)"
+                        />
+                      </div>
+                      <div
+                        class="d-flex justify-content-between align-items-center"
+                      >
+                        <span
+                          class="product-offer"
+                          *ngIf="RelData.discount_price !== '0.00'"
+                        >
+                          <span>Save</span>
+                          <span
+                            [ngClass]="{
+                              disPrice1: RelData.discount_price.length > 5
+                            }"
+                            *ngIf="RelData.price_type === 'F'"
+                          >
+                            {{ RelData.currency_indicator
+                            }}{{ RelData.discount_price | slice : 0 : 7 }}
+                          </span>
+                          <span
+                            [ngClass]="{
+                              disPrice1: RelData.discount_price.length > 5
+                            }"
+                            *ngIf="RelData.price_type === 'P'"
+                          >
+                            {{ RelData.discount_price | slice : 0 : 7
+                            }}{{ RelData.symbol }}
+                          </span>
+                        </span>
+                        <span class="d-flex align-items-center star-rating">
+                          &nbsp; {{ RelData.average_rating }}&nbsp;
+                          <img
+                            src="assets/svg/star.svg"
+                            alt="star-logo"
+                          />&nbsp; | &nbsp; 5&nbsp;&nbsp;
+                        </span>
+                      </div>
+
+                      <div class="d-flex flex-column product-content">
+                        <div
+                          class="d-flex align-items-center justify-content-between pb-3"
+                          (click)="goToProductsView(RelData.product_id)"
+                        >
+                          <span
+                            class="product-name"
+                            title="{{ RelData.name }}"
+                            >{{ RelData.name }}</span
+                          >
+                        </div>
+                        <div
+                          class="d-flex align-items-center justify-content-between"
+                        >
+                          <span class="d-flex align-items-center">
+                            <span
+                              class="product-currency"
+                              *ngIf="RelData.discount_price !== '0.00'"
+                            >
+                              {{ RelData.currency_indicator
+                              }}{{ RelData.discount_off_price }}
+                            </span>
+                            <span
+                              class="product-currency"
+                              *ngIf="RelData.discount_price == '0.00'"
+                            >
+                              {{ RelData.currency_indicator
+                              }}{{ RelData.org_price }}
+                            </span>
+                            <span
+                              class="OfferPricewek1 ml-1"
+                              *ngIf="RelData.discount_price !== '0.00'"
+                            >
+                              {{ RelData.currency_indicator
+                              }}{{ RelData.org_price }}
+                            </span>
+                          </span>
+
+                          <button
+                            class="add-cart"
+                            (click)="
+                              AddToCartbestsellerClk(
+                                RelData.product_id,
+                                RelData.org_price
+                              )
+                            "
+                          >
+                            ADD TO CART
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </p-carousel>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Coupons" *ngIf="coupdata?.length > 0">
+            <!-- <div class="row mt-4">
+              <div
+                class="m-0 ml-5 img-slider"
+                *ngIf="coupondsdetailsArray?.length > 0"
+              >
+                <div #CouponsContent  >
+                  <div
+                    class="coup-img-widget"
+                    *ngFor="let Coupnumber of coupdata; let imgx = index"
+                  >
+                    <div class="card coup-card">
+                      <div class="card text-center offer-card">
+                        <p
+                          class="pl-3 pr-3 coup-offer-text"
+                          *ngIf="Coupnumber?.type === 'P'"
+                        >
+                          GET {{ Coupnumber?.discount }}
+                          {{ Coupnumber?.type_symbol }} OFF
+                        </p>
+                        <p
+                          class="pl-3 pr-3 coup-offer-text"
+                          *ngIf="Coupnumber?.type === 'F'"
+                        >
+                          GET {{ Coupnumber?.currency_indicator }}
+                          {{ Coupnumber?.discount }} OFF
+                        </p>
+                      </div>
+                      <img
+                        class="card-img-top exclusive-img pointer"
+                        src="{{ Coupnumber.imageUrl }}"
+                        (click)="goToProductsView(Coupnumber.product_id)"
+                        alt="Card image cap"
+                        height="200"
+                        width="500"
+                      />
+                      <div class="card-body pt-0 pb-0">
+                        <div
+                          class="coup-nameDiv pointer"
+                          (click)="goToProductsView(Coupnumber.product_id)"
+                        >
+                          <p
+                            class="offer-price pl-2"
+                            title="{{ Coupnumber.model }}"
+                          >
+                            {{ Coupnumber.model }}
+                          </p>
+                        </div>
+
+                        <div
+                          class="priceDiv pointer"
+                          (click)="goToProductsView(sugData.product_id)"
+                        >
+                          <div class="row">
+                            <div class="col-sm-5 p-0 pr-0">
+
+                              <p
+                                class="OfferPriceorgPrice1"
+                                *ngIf="
+                                  Coupnumber.discount_price == '0.00' ||
+                                  Coupnumber.discount_price == undefinded ||
+                                  Coupnumber.discount_price == null
+                                "
+                              >
+                                {{ Coupnumber.currency_indicator
+                                }}{{ Coupnumber.price }}
+                              </p>
+                              <p *ngIf="Coupnumber.discount_price !== '0.00'">
+                                <span class="OfferPriceorgPrice1">
+                                  {{ Coupnumber.currency_indicator
+                                  }}{{ Coupnumber.discount_off_price }}</span
+                                >
+                              </p>
+                            </div>
+
+                            <div class="col-sm-7 pl-0">
+                              <p
+                                class="pt-1"
+                                *ngIf="Coupnumber.discount_price !== '0.00'"
+                              >
+                                <span class="OfferPricecoup"
+                                  >{{ Coupnumber.currency_indicator
+                                  }}{{ Coupnumber.price }}</span
+                                >&nbsp;<span
+                                  class="text-success coup-offer pr-2"
+                                  >{{ Coupnumber.currency_indicator
+                                  }}{{ Coupnumber.discount_price }} OFF</span
+                                >
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div
+                          class="priceDiv pointer"
+                          (click)="goToProductsView(Coupnumber.product_id)"
+                        >
+                          <div class="row">
+                            <div class="col-sm-6 p-0 pl-3 pt-1">
+                              <p class="text-muted pl-2">
+                                Code: {{ Coupnumber.coupon_code }}
+                              </p>
+                            </div>
+                            <div class="col-sm-6 p-0 pl-4 pr-4 pt-1 text-right">
+                              <i
+                                class="fa fa-star coup-rating"
+                                aria-hidden="true"
+                              ></i>
+                              &nbsp;{{ Coupnumber.average_rating }}
+                            </div>
+                          </div>
+                        </div>
+                        <div class="mt-3 mb-3">
+                          <button
+                            type="button"
+                            class="btn btn-outline-info coup-btn btn-sm coup-btn-div"
+                            (click)="
+                              CliptoCart(
+                                Coupnumber.product_id,
+                                Coupnumber.price,
+                                Coupnumber.coupon_code
+                              )
+                            "
+                          >
+                            Redeem Coupon
+                          </button>
+                        </div>
+
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+
+            <div class="mb-3" *ngIf="coupdata?.length > 0">
+              <p-carousel
+                class="landing-carousel"
+                [value]="coupdata"
+                [numVisible]="5"
+                [numScroll]="4"
+                [showIndicators]="false"
+                [responsiveOptions]="responsiveOptions"
+              >
+                <ng-template let-Coupnumber pTemplate="item" let-imgx = "index">
+                  <div #CouponsContent  >
+                    <!-- *ngFor="let Coupnumber of coupdata; let imgx = index" -->
+                    <div
+                      class="coup-img-widget"
+                    >
+                      <div class="card coup-card">
+                        <div class="card text-center offer-card">
+                          <p
+                            class="pl-3 pr-3 coup-offer-text"
+                            *ngIf="Coupnumber?.type === 'P'"
+                          >
+                            GET {{ Coupnumber?.discount }}
+                            {{ Coupnumber?.type_symbol }} OFF
+                          </p>
+                          <p
+                            class="pl-3 pr-3 coup-offer-text"
+                            *ngIf="Coupnumber?.type === 'F'"
+                          >
+                            GET {{ Coupnumber?.currency_indicator }}
+                            {{ Coupnumber?.discount }} OFF
+                          </p>
+                        </div>
+                        <img
+                          class="card-img-top exclusive-img pointer"
+                          src="{{ Coupnumber.imageUrl }}"
+                          (click)="goToProductsView(Coupnumber.product_id)"
+                          alt="Card image cap"
+                          height="200"
+                          width="500"
+                        />
+                        <div class="card-body pt-0 pb-0">
+                          <div
+                            class="coup-nameDiv pointer"
+                            (click)="goToProductsView(Coupnumber.product_id)"
+                          >
+                            <p
+                              class="offer-price pl-2"
+                              title="{{ Coupnumber.model }}"
+                            >
+                              {{ Coupnumber.model }}
+                            </p>
+                          </div>
+
+                          <div
+                            class="priceDiv pointer"
+                            (click)="goToProductsView(sugData.product_id)"
+                          >
+                            <div class="row">
+                              <div class="col-sm-5 p-0 pr-0">
+                                <p
+                                  class="OfferPriceorgPrice1"
+                                  *ngIf="
+                                    Coupnumber.discount_price == '0.00' ||
+                                    Coupnumber.discount_price == undefinded ||
+                                    Coupnumber.discount_price == null
+                                  "
+                                >
+                                  {{ Coupnumber.currency_indicator
+                                  }}{{ Coupnumber.price }}
+                                </p>
+                                <p *ngIf="Coupnumber.discount_price !== '0.00'">
+                                  <span class="OfferPriceorgPrice1">
+                                    {{ Coupnumber.currency_indicator
+                                    }}{{ Coupnumber.discount_off_price }}</span
+                                  >
+                                </p>
+                              </div>
+
+                              <div class="col-sm-7 pl-0">
+                                <p
+                                  class="pt-1"
+                                  *ngIf="Coupnumber.discount_price !== '0.00'"
+                                >
+                                  <span class="OfferPricecoup"
+                                    >{{ Coupnumber.currency_indicator
+                                    }}{{ Coupnumber.price }}</span
+                                  >&nbsp;<span
+                                    class="text-success coup-offer pr-2"
+                                    >{{ Coupnumber.currency_indicator
+                                    }}{{ Coupnumber.discount_price }} OFF</span
+                                  >
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div
+                            class="priceDiv pointer"
+                            (click)="goToProductsView(Coupnumber.product_id)"
+                          >
+                            <div class="row">
+                              <div class="col-sm-6 p-0 pl-3 pt-1">
+                                <p class="text-muted pl-2">
+                                  Code: {{ Coupnumber.coupon_code }}
+                                </p>
+                              </div>
+                              <div
+                                class="col-sm-6 p-0 pl-4 pr-4 pt-1 text-right"
+                              >
+                                <i
+                                  class="fa fa-star coup-rating"
+                                  aria-hidden="true"
+                                ></i>
+                                &nbsp;{{ Coupnumber.average_rating }}
+                              </div>
+                            </div>
+                          </div>
+                          <div class="mt-3 mb-3">
+                            <button
+                              type="button"
+                              class="btn btn-outline-info coup-btn btn-sm coup-btn-div"
+                              (click)="
+                                CliptoCart(
+                                  Coupnumber.product_id,
+                                  Coupnumber.price,
+                                  Coupnumber.coupon_code
+                                )
+                              "
+                            >
+                              Redeem Coupon
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </p-carousel>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Suggestions">
+            <!-- <div class="row mb-3">
+             
+              <div *ngIf="sugessData?.length > 0">
+                <div #sugContent class="d-flex">
+                  <div
+                    class="item-card mt-4 ml-5 p-0"
+                    *ngFor="let sugData of sugessData; let imgx = index"
+                  >
+                    <span class="text-right">
+                      <span
+                        *ngIf="sugData.wishlist_status === 1"
+                        [matMenuTriggerFor]="afterMenu"
+                      >
+                        <img
+                          src="assets/svg/Wishlist.svg"
+                          alt="Wishlist"
+                          width="25px"
+                          height="25px"
+                          class="product-Wishlist"
+                        />
+                      </span>
+                      <mat-menu #afterMenu="matMenu" xPosition="before">
+                        <div
+                          mat-menu-item
+                          [disableRipple]="true"
+                          (click)="$event.stopPropagation()"
+                          class="saveMenuItem wishlistform"
+                        >
+                          <div class="row p-0">
+                            <div class="col-12 pt-2" *ngIf="foldervisible">
+                              <div class="col-12">
+                                <mat-form-field
+                                  appearance="outline"
+                                  class="font-10"
+                                >
+                                  <mat-label>Folder Name</mat-label>
+                                  <input
+                                    matInput
+                                    placeholder="Enter Name"
+                                    [(ngModel)]="folderName"
+                                    name="foldername"
+                                  />
+                                </mat-form-field>
+                              </div>
+                              <div class="col-12 row m-0">
+                                <div class="col-6 p-0">
+                                  <p
+                                    class="newfolder text-center"
+                                    (click)="hidefolder()"
+                                  >
+                                    Back
+                                  </p>
+                                </div>
+                                <div class="col-6 pr-3" (click)="addFolder()">
+                                  <p class="newfolder text-center">Add</p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-sm-12 pt-2" *ngIf="formhide">
+                              <form>
+                                <div class="col-sm-12">
+                                  <mat-form-field
+                                    class="font-10"
+                                    appearance="outline"
+                                  >
+                                    <mat-label>Folder</mat-label>
+                                    <mat-select
+                                      [(ngModel)]="folderList"
+                                      name="folders"
+                                    >
+                                      <mat-option
+                                        *ngFor="let a of folders"
+                                        [value]="a.folder_id"
+                                      >
+                                        {{ a.folder_name }}
+                                      </mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                                </div>
+                                <div class="col-12 row m-0">
+                                  <div class="col-6 p-0" (click)="showfolder()">
+                                    <p class="newfolder text-center">
+                                      New Folder
+                                    </p>
+                                  </div>
+                                  <div
+                                    class="col-6 pr-3"
+                                    (click)="
+                                      addtoWishlist(sugData, imgx, 'suggestion')
+                                    "
+                                  >
+                                    <p class="newfolder text-center">Add</p>
+                                  </div>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </mat-menu>
+
+                      <span *ngIf="sugData.wishlist_status === 0">
+                        <img
+                          src="assets/svg/btn-whishlist-selected.svg"
+                          alt="Wishlist"
+                          width="25px"
+                          height="25px"
+                          class="product-Wishlist"
+                          (click)="
+                            removeWishlist(
+                              imgx,
+                              sugData.wishlist_status_id,
+                              'suggestion'
+                            )
+                          "
+                        />
+                      </span>
+                    </span>
+
+                    <div class="product-img d-flex justify-content-center">
+                      <img
+                        src="{{ sugData.imageUrl }}"
+                        alt="watch-icon"
+                        height="200px"
+                        (click)="goToProductsView(sugData.product_id)"
+                      />
+                    </div>
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      <span
+                        class="product-offer"
+                        *ngIf="sugData.discount_price !== '0.00'"
+                      >
+                        <span>Save</span>
+                        <span
+                          [ngClass]="{
+                            disPrice1: sugData.discount_price.length > 5
+                          }"
+                          *ngIf="sugData.price_type === 'F'"
+                        >
+                          {{ sugData.currency_indicator
+                          }}{{ sugData.discount_price | slice : 0 : 7 }}
+                        </span>
+                        <span
+                          [ngClass]="{
+                            disPrice1: sugData.discount_price.length > 5
+                          }"
+                          *ngIf="sugData.price_type === 'P'"
+                        >
+                          {{ sugData.discount_price | slice : 0 : 7
+                          }}{{ sugData.symbol }}
+                        </span>
+                      </span>
+                      <span class="d-flex align-items-center star-rating">
+                        &nbsp; {{ sugData.average_rating }}&nbsp;
+                        <img src="assets/svg/star.svg" alt="star-logo" />&nbsp;
+                        | &nbsp; 5&nbsp;&nbsp;
+                      </span>
+                    </div>
+
+                    <div class="d-flex flex-column product-content">
+                      <div
+                        class="d-flex align-items-center justify-content-between pb-3"
+                        (click)="goToProductsView(sugData.product_id)"
+                      >
+                        <span class="product-name" title="{{ sugData.name }}">{{
+                          sugData.name
+                        }}</span>
+                      </div>
+                      <div
+                        class="d-flex align-items-center justify-content-between"
+                      >
+                        <span class="d-flex align-items-center">
+                          <span
+                            class="product-currency"
+                            *ngIf="sugData.discount_price !== '0.00'"
+                          >
+                            {{ sugData.currency_indicator
+                            }}{{ sugData.discount_off_price }}
+                          </span>
+                          <span
+                            class="product-currency"
+                            *ngIf="sugData.discount_price == '0.00'"
+                          >
+                            {{ sugData.currency_indicator
+                            }}{{ sugData.org_price }}
+                          </span>
+                          <span
+                            class="OfferPricewek1 ml-1"
+                            *ngIf="sugData.discount_price !== '0.00'"
+                          >
+                            {{ sugData.currency_indicator
+                            }}{{ sugData.org_price }}
+                          </span>
+                        </span>
+
+                        <button
+                          class="add-cart"
+                          (click)="
+                            WeeklyAddToCartClk(
+                              sugData.product_id,
+                              sugData.org_price
+                            )
+                          "
+                        >
+                          ADD TO CART
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+
+            <div class="mb-3" *ngIf="sugessData?.length > 0">
+              <p-carousel
+                class="landing-carousel"
+                [value]="sugessData"
+                [showIndicators]="false"
+                [circular]="false"
+                [numVisible]="5"
+                [numScroll]="4"
+                [responsiveOptions]="responsiveOptions"
+              >
+                <ng-template let-sugData pTemplate="item" let-imgx = "index">
+                  <div #sugContent class="d-flex">
+                    <!-- *ngFor="let sugData of sugessData; let imgx = index" -->
+
+                    <div
+                      class="item-card mt-4 ml-4 p-0"
+                    >
+                      <span class="text-right">
+                        <span
+                          *ngIf="sugData.wishlist_status === 1"
+                          [matMenuTriggerFor]="afterMenu"
+                        >
+                          <!-- <i class="fa fa-heart heartIco product-Wishlist"></i>
+                         -->
+                          <img
+                            [src]="wishlistNone"
+                            alt="Wishlist"
+                            width="25px"
+                            height="25px"
+                            class="product-Wishlist"
+                          />
+                        </span>
+                        <mat-menu #afterMenu="matMenu" xPosition="before">
+                          <div
+                            mat-menu-item
+                            [disableRipple]="true"
+                            (click)="$event.stopPropagation()"
+                            class="saveMenuItem wishlistform"
+                          >
+                            <div class="row p-0">
+                              <div class="col-12 pt-2" *ngIf="foldervisible">
+                                <div class="col-12">
+                                  <mat-form-field
+                                    appearance="outline"
+                                    class="font-10"
+                                  >
+                                    <mat-label>Folder Name</mat-label>
+                                    <input
+                                      matInput
+                                      placeholder="Enter Name"
+                                      [(ngModel)]="folderName"
+                                      name="foldername"
+                                    />
+                                  </mat-form-field>
+                                </div>
+                                <div class="col-12 row m-0">
+                                  <div class="col-6 p-0">
+                                    <p
+                                      class="newfolder text-center"
+                                      (click)="hidefolder()"
+                                    >
+                                      Back
+                                    </p>
+                                  </div>
+                                  <div class="col-6 pr-3" (click)="addFolder()">
+                                    <p class="newfolder text-center">Add</p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-sm-12 pt-2" *ngIf="formhide">
+                                <form>
+                                  <div class="col-sm-12">
+                                    <mat-form-field
+                                      class="font-10"
+                                      appearance="outline"
+                                    >
+                                      <mat-label>Folder</mat-label>
+                                      <mat-select
+                                        [(ngModel)]="folderList"
+                                        name="folders"
+                                      >
+                                        <mat-option
+                                          *ngFor="let a of folders"
+                                          [value]="a.folder_id"
+                                        >
+                                          {{ a.folder_name }}
+                                        </mat-option>
+                                      </mat-select>
+                                    </mat-form-field>
+                                  </div>
+                                  <div class="col-12 row m-0">
+                                    <div
+                                      class="col-6 p-0"
+                                      (click)="showfolder()"
+                                    >
+                                      <p class="newfolder text-center">
+                                        New Folder
+                                      </p>
+                                    </div>
+                                    <div
+                                      class="col-6 pr-3"
+                                      (click)="
+                                        addtoWishlist(
+                                          sugData,
+                                          imgx,
+                                          'suggestion'
+                                        )
+                                      "
+                                    >
+                                      <p class="newfolder text-center">Add</p>
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </mat-menu>
+
+                        <span *ngIf="sugData.wishlist_status === 0">
+                          <!-- <i
+                          class="fa fa-heart SelectedHeartIco product-Wishlist"
+                          (click)="
+                            removeWishlist(
+                              imgx,
+                              sugData.wishlist_status_id,
+                              'suggestion'
+                            )
+                          "
+                        ></i> -->
+                          <img
+                            [src]="wishlistAdd"
+                            alt="Wishlist"
+                            width="25px"
+                            height="25px"
+                            class="product-Wishlist"
+                            (click)="
+                              removeWishlist(
+                                imgx,
+                                sugData.wishlist_status_id,sugData,
+                                'suggestion'
+                              )
+                            "
+                          />
+                        </span>
+                      </span>
+
+                      <div class="product-img d-flex justify-content-center">
+                        <img
+                          src="{{ sugData.imageUrl }}"
+                          alt="watch-icon"
+                          height="200px"
+                          (click)="goToProductsView(sugData.product_id)"
+                        />
+                      </div>
+                      <div
+                        class="d-flex justify-content-between align-items-center"
+                      >
+                        <span
+                          class="product-offer"
+                          *ngIf="sugData.discount_price !== '0.00'"
+                        >
+                          <span>Save</span>
+                          <span
+                            [ngClass]="{
+                              disPrice1: sugData.discount_price.length > 5
+                            }"
+                            *ngIf="sugData.price_type === 'F'"
+                          >
+                            {{ sugData.currency_indicator
+                            }}{{ sugData.discount_price | slice : 0 : 7 }}
+                          </span>
+                          <span
+                            [ngClass]="{
+                              disPrice1: sugData.discount_price.length > 5
+                            }"
+                            *ngIf="sugData.price_type === 'P'"
+                          >
+                            {{ sugData.discount_price | slice : 0 : 7
+                            }}{{ sugData.symbol }}
+                          </span>
+                        </span>
+                        <span class="d-flex align-items-center star-rating">
+                          &nbsp; {{ sugData.average_rating }}&nbsp;
+                          <img
+                            src="assets/svg/star.svg"
+                            alt="star-logo"
+                          />&nbsp; | &nbsp; 5&nbsp;&nbsp;
+                        </span>
+                      </div>
+
+                      <div class="d-flex flex-column product-content">
+                        <div
+                          class="d-flex align-items-center justify-content-between pb-3"
+                          (click)="goToProductsView(sugData.product_id)"
+                        >
+                          <span
+                            class="product-name"
+                            title="{{ sugData.name }}"
+                            >{{ sugData.name }}</span
+                          >
+                        </div>
+                        <div
+                          class="d-flex align-items-center justify-content-between"
+                        >
+                          <span class="d-flex align-items-center">
+                            <span
+                              class="product-currency"
+                              *ngIf="sugData.discount_price !== '0.00'"
+                            >
+                              {{ sugData.currency_indicator
+                              }}{{ sugData.discount_off_price }}
+                            </span>
+                            <span
+                              class="product-currency"
+                              *ngIf="sugData.discount_price == '0.00'"
+                            >
+                              {{ sugData.currency_indicator
+                              }}{{ sugData.org_price }}
+                            </span>
+                            <span
+                              class="OfferPricewek1 ml-1"
+                              *ngIf="sugData.discount_price !== '0.00'"
+                            >
+                              {{ sugData.currency_indicator
+                              }}{{ sugData.org_price }}
+                            </span>
+                          </span>
+
+                          <button
+                            class="add-cart"
+                            (click)="
+                              WeeklyAddToCartClk(
+                                sugData.product_id,
+                                sugData.org_price
+                              )
+                            "
+                          >
+                            ADD TO CART
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </p-carousel>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+
+      <!-- <div class="col-sm-1 p-0 pt-3">
+        <span *ngIf="activeTab === 'Weekly Ads'">
+          <i
+            class="fa fa-arrow-left btn-slider-left-arrow"
+            aria-hidden="true"
+            (click)="scrollLeft()"
+          ></i
+          >&nbsp;
+          <i
+            class="fa fa-arrow-right btn-slider-left-arrow"
+            aria-hidden="true"
+            (click)="scrollRight()"
+          ></i
+          >&nbsp;&nbsp;&nbsp;&nbsp;
+        </span>
+        <span *ngIf="activeTab === 'Best Sellers'">
+          <i
+            class="fa fa-arrow-left btn-slider-left-arrow"
+            aria-hidden="true"
+            (click)="bestsellerscrollLeft()"
+          ></i
+          >&nbsp;
+          <i
+            class="fa fa-arrow-right btn-slider-left-arrow"
+            aria-hidden="true"
+            (click)="bestsellerscrollRight()"
+          ></i
+          >&nbsp;&nbsp;&nbsp;&nbsp;
+        </span>
+        <span *ngIf="activeTab === 'Coupons'">
+          <i
+            class="fa fa-arrow-left btn-slider-left-arrow"
+            aria-hidden="true"
+            (click)="CouponsContentscrollLeft()"
+          ></i
+          >&nbsp;
+          <i
+            class="fa fa-arrow-right btn-slider-left-arrow"
+            aria-hidden="true"
+            (click)="CouponsContentscrollRight()"
+          ></i
+          >&nbsp;&nbsp;&nbsp;&nbsp;
+        </span>
+        <span *ngIf="activeTab === 'Suggestions'">
+          <i
+            class="fa fa-arrow-left btn-slider-left-arrow"
+            aria-hidden="true"
+            (click)="sugesscrollLeft()"
+          ></i
+          >&nbsp;
+          <i
+            class="fa fa-arrow-right btn-slider-left-arrow"
+            aria-hidden="true"
+            (click)="sugesscrollRight()"
+          ></i
+          >&nbsp;&nbsp;&nbsp;&nbsp;
+        </span>
+      </div> -->
+    </div>
+  </div>
+</ng-template>
+
+<app-footer></app-footer>
+<ng-template let-bottomSheetRef="bottomSheetRef" #shareDetails>
+  <div class="row m-2">
+    <div class="col-sm-12 p-5 d-col">
+      <div class="row">
+        <strong>{{orgName}}</strong>
+      </div>
+      <div class="row">
+        <div class="col-sm-10 p-0">
+          <p>
+            Here's the link <a>{{ url }}</a>
+          </p>
+        </div>
+        <div class="col-sm-2">
+          <i
+            class="fa fa-clone d-ico"
+            aria-hidden="true"
+            (click)="copyText(url)"
+          ></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!-- BOT INTEGRATION -->
+<div>
+  <div class="bgWhite">
+    <div class="row col-sm-12 p-0 m-0 bgWhite">
+      <!-- <input type="checkbox" id="check" (click)="openwindw($event)">
+        <button mat-fab  for="check"
+        class="menu-button bot-btn bot"
+        [class.mat-elevation-z2]="!isOver"
+        [class.mat-elevation-z8]="isOver"
+        (mouseover)="isOver = true"
+        (mouseleave)="isOver = false">
+        <img src="assets/Intellobot-icon.png" class="bot-img">
+    </button> -->
+
+      <input type="checkbox" id="check" (click)="openwindw($event)" />
+      <label
+        class="chat-btn pointer"
+        for="check"
+        [ngStyle]="{ 'background-color': iconBgColor, border: iconBorder }"
+        *ngIf="this.logedSeeionId !== null"
+        matTooltip="Chat with BOT"
+      >
+        <!-- <i class="fal fa-comment-alt-smile"></i> -->
+        <img src="assets/Intellobot-icon.png" class="bot-img" />
+        <!-- <img src="{{imgurl}}chaticon.png" class="pointer" style="height: 60px;" *ngIf="showcsbot"> -->
+      </label>
+      <div class="wrapper" id="visiblechat" style="z-index: 2">
+        <div class="col-sm-12 p-0 p-0" *ngIf="isvisible">
+          <div class="col-sm-12 bot-bg-white chat-header" *ngIf="showperson2">
+            <p class="mb-0 pt-3 text-center bot-p">
+              <!-- <img [src]="imgurl + 'int3030.png'" class=" mb-3 mt-1"> -->
+              <span>
+                <span class="bot-title bot-blue pl-2 mb-3">{{orgName}} </span>
+                <!-- <span class="bot-title bot-blue ">Bot</span> -->
+              </span>
+              <i
+                class="fal fa-times pointer float-right fa-lg bot-warn"
+                (click)="closewindow()"
+              ></i>
+              <!-- <i class="fal fa-external-link-square fa-md  float-right pointer mr-3 bot-blue" routerLink="/pages/main" ></i> -->
+            </p>
+          </div>
+
+          <!-- <div class="d-flex flex-row justify-content-between p-1  adiv text-white primary-bg" style="border-radius: 15px 15px 0px 0px;" *ngIf="showperson"> 
+                  <i class="fas fa-user-circle font-24 p-1"></i>
+                  <span class="pt-2">{{chatnamedisplay | titlecase}}</span>
+                  
+                  <label class="pt-2"> 
+                    <i class="fal fa-expand text-white font-16 pr-3 pointer" routerLink="/pages/main" ></i>
+                    <label for="check"><i class="fas fa-times pr-2 font-16 pointer" (click)="closewindow();"></i> </label>
+                    </label> 
+                    
+                </div> -->
+
+          <div class="row onlineuser m-0 p-0" *ngIf="showperson">
+            <div class="col-6 p-1">
+              <!-- <div class="row">
+                      <div class="col-3">
+                        <i class="fas fa-user-circle font-25 p-1 text-infoo"></i>
+  
+                      </div>
+                      <div class="col-9 pr-5 p-0">
+                        <h4 class="p-1 text-infoo poppins">{{chatnamedisplay | titlecase}}</h4>
+                        <small class="bot-warn" *ngIf="isTyping">typing...</small>
+                      </div>
+                    </div> -->
+
+              <div class="row m-0">
+                <div class="col-3 p-0">
+                  <i class="fas fa-user-circle font-25 p-1 text-infoo"></i>
+                </div>
+                <div class="col-9 pr-2 p-0">
+                  <div class="row m-0 pt-1">
+                    <p class="text-infoo poppins mb-0 bot-p">
+                      {{ chatnamedisplay | titlecase }}
+                    </p>
+                  </div>
+
+                  <div class="row m-0">
+                    <small class="bot-warn" *ngIf="isTyping">Typing...</small>
+                  </div>
+
+                  <!-- <span *ngIf="isTyping">typing...</span> -->
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col-5 pt-2 p-0"> -->
+            <!-- <img src="{{iconUrl}}rc2222.png" *ngIf="chatnamedisplay === 'amit'"  class=" mr-2 ml-2 mb-2 mt-1">
+                    <span>
+                      <i class="fal fa-comment-alt-lines text-infoo pl-3 pr-2 font-16" *ngIf="chatnamedisplay === 'amit'" (click)="switchtoRC(openMessage)"></i>
+                   
+                    </span>
+                    <i class="fal fa-phone-alt text-infoo pl-3  font-16" *ngIf="chatnamedisplay === 'amit'" (click)="switchtoRC(openCall)"></i> -->
+            <!-- </div> -->
+            <div class="col-6 p-1 pt-3">
+              <span class="p-1">
+                <i
+                  class="fal fa-times-circle float-right font-16 pointer pr-2"
+                  title="close"
+                  (click)="showBotChat()"
+                ></i>
+                <i
+                  class="fa fa-ellipsis-v text-infoo float-right font-16 pr-3"
+                  aria-hidden="true"
+                  [matMenuTriggerFor]="userinfo"
+                ></i>
+              </span>
+              <mat-menu #userinfo="matMenu" xPosition="before">
+                <span mat-menu-item class="font-12 text-mute hvr">Info</span>
+                <span mat-menu-item class="font-12 text-mute hvr">Export</span>
+                <!-- <span mat-menu-item class="font-12 text-mute hvr">Delete chat</span>  -->
+                <!-- <span mat-menu-item class="font-12 text-mute hvr" (click)="stopTimer()">Delete chat</span>  -->
+              </mat-menu>
+            </div>
+          </div>
+          <ng-template #openCall>
+            <iframe
+              width="300"
+              height="500"
+              allow="microphone"
+              src="https://ringcentral.github.io/ringcentral-embeddable/app.html"
+            >
+            </iframe>
+          </ng-template>
+
+          <!-- <div class="row onlineuser m-0 p-0" *ngIf="showperson">
+                  <div class="col-2 p-1">
+                    <i class="fas fa-user-circle font-24 p-1 primary"></i>
+                  </div>
+                  <div class="col-8">
+                 
+                  <h4 class="p-1 primary">{{chatnamedisplay | titlecase}}</h4>
+                  </div>
+                  <div class="col-2 p-1">
+                    <span class="p-1">
+                      <i class="fa fa-ellipsis-v primary float-right font-16 p-2" aria-hidden="true" [matMenuTriggerFor]="userinfo"></i>
+                      </span>
+                      <mat-menu #userinfo="matMenu" xPosition="before">
+                        <span mat-menu-item class="font-12 text-mute hvr">Info</span> 
+                        <span mat-menu-item class="font-12 text-mute hvr">Export</span> 
+                        <span mat-menu-item class="font-12 text-mute hvr">Delete chat</span> 
+      
+                         
+                       </mat-menu>
+                  </div>
+                 </div> -->
+          <div
+            class="card chatcard"
+            id="cardval"
+            #scrollMe
+            [scrollTop]="scrollMe.scrollHeight"
+          >
+            <div class="" *ngIf="showperson">
+              <div class="">
+                <div
+                  *ngFor="
+                    let a of peerResponse;
+                    trackBy: trackByArtNo;
+                    let idx = index
+                  "
+                >
+                  <div
+                    class="media media-chat input"
+                    *ngIf="userName === a.sender_name"
+                  >
+                    <p class="textFirst2 pointer bot-p">
+                      {{ loginuserName.charAt(0) | titlecase }}
+                    </p>
+
+                    <div class="media-body m-0">
+                      <span class="bot-input" *ngIf="a.body !== undefined"
+                        >{{ a.body }}
+                        &nbsp;&nbsp;
+                        <sub class="subtime">
+                          <small
+                            class="bot-input-time"
+                            *ngIf="a.peer_time !== undefined"
+                          >
+                            {{ a.peer_time | date : "shortTime" }}
+                          </small>
+                        </sub>
+
+                        <mat-icon
+                          class="text-white font-13 iconmat pl-2"
+                          *ngIf="a.peer_flag === 0"
+                        >
+                          check
+                        </mat-icon>
+                        <mat-icon
+                          class="text-white font-13 iconmat pl-2"
+                          *ngIf="a.peer_flag === 1"
+                        >
+                          done_all
+                        </mat-icon>
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    class="media media-chat output"
+                    *ngIf="userName !== a.sender_name"
+                  >
+                    <!-- <i class="fal fa-robot font-20 text-info pt-2"></i> -->
+                    <p class="textFirst2 bot-p">
+                      {{ userNameLtr.charAt(0) | titlecase }}
+                    </p>
+                    <div class="media-body m-0">
+                      <span class="bot-response" *ngIf="a.body !== undefined"
+                        >{{ a.body }} &nbsp;
+                        <sub class="subtime">
+                          <small
+                            class="bot-input-time"
+                            *ngIf="a.peer_time !== undefined"
+                          >
+                            {{ a.peer_time | date : "shortTime" }}
+                          </small>
+                        </sub>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <!-- <p class="bot-response">{{personMsg}}
+                        &nbsp;<sub ><small class="bot-input-time" >
+                        {{timestamp}}</small></sub>
+                      </p> -->
+              </div>
+            </div>
+
+            <div class="media media-chat output" *ngIf="showperson2">
+              <img
+                src="{{ imgurl }}int3030.png"
+                class="img-fluid1"
+                [ngStyle]="{ height: imgHeight }"
+              />
+              <!-- <i class="fal fa-robot font-20 primary pt-2"></i> -->
+              <div class="media-body m-0">
+                <p class="bot-response bot-p" *ngFor="let a of botMsg">
+                  {{ a }} &nbsp;<sub
+                    ><small class="bot-input-time">
+                      {{ timestamp | date : "shortTime" }}</small
+                    ></sub
+                  >
+                </p>
+              </div>
+            </div>
+            <div *ngIf="showperson2">
+              <!-- <h4 class="line" *ngIf="agentChatMsg !== undefined && agentChatMsg !== ''">
+                      <span class="lne">{{this.agentChatMsg | titlecase}}  joined chat </span>
+                     </h4> -->
+              <div *ngFor="let a of chatResponse; trackBy: trackByArtNo">
+                <div
+                  class="media media-chat input p-0 pt-1"
+                  *ngIf="a.inputData !== undefined && a.inputData !== ''"
+                >
+                  <!-- <i class="fal fa-user-circle primary font-20 pt-2"></i> -->
+                  <p class="textFirst2 pointer bot-p">
+                    {{ loginuserName.charAt(0) | titlecase }}
+                  </p>
+                  <div class="media-body m-0">
+                    <p class="bot-input bot-p">
+                      {{ a.inputData }} &nbsp;&nbsp;<sub
+                        ><small class="bot-input-time">
+                          {{ a.inptimestamp | date : "shortTime" }}</small
+                        ></sub
+                      >
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="media media-chat output row m-0"
+                  *ngIf="a.outputData !== undefined && a.outputData !== ''"
+                >
+                  <img
+                    src="{{ imgurl }}int3030.png"
+                    class="img-fluid1"
+                    [ngStyle]="{ height: imgHeight }"
+                    *ngIf="a.outputData !== undefined && a.outputData !== ''"
+                  />
+                  <div class="media-body m-0 row p-0">
+                    <p class="bot-response" *ngIf="a.promptVal !== undefined">
+                      {{ a.promptVal }} &nbsp;<sub
+                        ><small class="bot-input-time">
+                          {{ a.outtimestamp | date : "shortTime" }}
+                        </small></sub
+                      >
+                    </p>
+
+                    <p
+                      class="bot-response bot-p"
+                      *ngFor="let resp of a.outputData"
+                    >
+                      {{ resp }} &nbsp;<sub
+                        ><small class="bot-input-time">
+                          {{ a.outtimestamp | date : "shortTime" }}</small
+                        ></sub
+                      >
+                    </p>
+                  </div>
+                  <div
+                    class="row col-sm-12 m-0 p-0"
+                    *ngIf="a.layout !== undefined"
+                  >
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-10 pl-4 pr-0 brd pt-1">
+                      <div class="row m-0 p-0 pb-1">
+                        <button
+                          mat-raised-button
+                          class="primary m-1 btn btn-sm pointer brdbtn"
+                          (click)="app_data_get(b)"
+                          *ngFor="let b of a.layout"
+                        >
+                          {{ b | titlecase }}
+                        </button>
+                      </div>
+                    </div>
+                    <div class="col-sm-1"></div>
+                  </div>
+                  <!-- <div class="row col-sm-12 m-0 p-0" *ngIf = "a.peerchat !== undefined">
+                          <div class="col-sm-1">
+  
+                          </div>
+                          <div class="col-sm-10 pl-4 pr-0 pt-1 brd">
+                            <div class="row m-0 p-0 pb-1">
+                              <button mat-raised-button class="text-info m-1 btn btn-sm brdbtn fw-400" (click)="peerChat(b);"
+                                *ngFor="let b of a.peerchat">{{b.key | titlecase}}</button>
+                            </div>
+                          </div>
+                          <div class="col-sm-1">
+  
+                          </div>
+                        </div> -->
+                  <!-- <div class="row col-sm-12 m-0 p-0" *ngIf = "a.ratings !== undefined">
+                          <div class="col-sm-1">
+  
+                          </div>
+                          <div class="col-sm-10 pl-4 pr-0 pt-1 brd">
+                            <div class="row m-0 p-0 pb-1">
+                              <button mat-raised-button class="text-info m-1 btn btn-sm  fw-400 brdbtn" (click)="ratingUserChat(b);"
+                                *ngFor="let b of a.ratings">{{b.rating | titlecase}}</button>
+                            </div>
+                          </div>
+                          <div class="col-sm-1">
+  
+                          </div>
+                        </div> -->
+                  <div
+                    class="row col-sm-12 m-0 p-0"
+                    *ngIf="a.qstn !== undefined"
+                  >
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-10 pl-4 pr-0 brd pt-1">
+                      <div class="row m-0 p-0 pb-1">
+                        <button
+                          mat-raised-button
+                          class="primary m-1 pointer brdbtn"
+                          (click)="app_data_get(b)"
+                          *ngFor="let b of a.yn"
+                        >
+                          {{ b | titlecase }}
+                        </button>
+                      </div>
+                    </div>
+                    <div class="col-sm-1"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="showperson2">
+              <div
+                class="media media-chat output pt-2 pb-2"
+                *ngIf="showspinner == true"
+                style="position: relative"
+              >
+                <!-- <i class="fal fa-robot font-20 primary pt-2"></i> -->
+                <img
+                  src="{{ imgurl }}int3030.png"
+                  class="img-fluid1"
+                  [ngStyle]="{ height: imgHeight }"
+                />
+                <div class="media-body m-0 pb-3">
+                  <!-- <p class="bot-response" style="height:50px;"> -->
+                  <!-- <span class="cust1">Typing</span> -->
+
+                  <ngx-spinner
+                    class="cust1"
+                    bdColor="#ffffff00"
+                    size="small"
+                    color="#09f"
+                    type="ball-pulse-sync"
+                    [fullScreen]="false"
+                  >
+                  </ngx-spinner>
+
+                  <!-- </p> -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-12 p-0">
+            <div class="row publishers m-0">
+              <input
+                class="publishers-input pl-3 footerinput"
+                type="text"
+                *ngIf="enterbox"
+                placeholder="Type message and press ENTER"
+                [(ngModel)]="inputmsg"
+                (keyup.enter)="Chatclick()"
+              />
+              <mat-icon
+                class="primary font-20 pl-1 pointer gradient float-right ml-auto"
+                [matMenuTriggerFor]="options"
+              >
+                apps
+              </mat-icon>
+
+              <a
+                class="publishers-btn pb-1"
+                data-abc="true"
+                (click)="Chatclick()"
+                style="color: #00e396"
+              >
+                <i
+                  class="fad fa-paper-plane pb-1"
+                  [ngStyle]="{ color: bgColor }"
+                  title="send message"
+                ></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<mat-menu #options="matMenu" xPosition="after">
+  <span
+    mat-menu-item
+    routerLinkActive="active"
+    (click)="resetChat()"
+    class="text-mute hvr"
+  >
+    <mat-icon class="text-infoo font-20" title="reset chat">
+      restart_alt
+    </mat-icon>
+    Reset Chat
+  </span>
+  <span
+    mat-menu-item
+    routerLinkActive="active"
+    (click)="undoChat()"
+    class="text-mute hvr"
+  >
+    <mat-icon class="text-infoo font-20" title="undo chat"> undo </mat-icon>
+    Undo
+  </span>
+</mat-menu>

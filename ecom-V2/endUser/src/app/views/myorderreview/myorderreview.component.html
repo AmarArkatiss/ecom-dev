@@ -1,0 +1,87 @@
+<app-primary-header></app-primary-header>
+<app-search-and-title></app-search-and-title>
+<app-menu></app-menu>
+<div class="container-fluid p-0 mt-4">
+    <div class="row p-0 m-0">
+        <div class="col-sm-3">
+            <h4 class="heading m-2 p-2 pl-3">Ratings & Reviews</h4>
+        </div>
+        <div class="col-sm-4">
+        </div>
+        <div class="col-sm-4 productViewDiv">
+            <div class="card p-0 grid-product-card d-flex align-items-stretch">
+                <div class="card-body pb-0 pt-2 pr-2 pl-2 ">
+                    <div class="row" (click)="goToProductView(this.productDetails.productId)">
+                        <div class="col-sm-8">
+                            <span>{{this.productDetails.name}}</span>
+                        </div>
+                        <div class="col-sm-4">
+                            <img [src]="this.productDetails.image" class="prodName" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row p-0 m-0">
+        <div class="col-sm-3 pr-0">
+            <div class="row m-0 relatedProductsCart">
+                <div class="col-sm-12">
+                    <div class="card p-0 grid-product-card d-flex align-items-stretch">
+                        <div class="card-body pb-0 pt-2 pr-2 pl-2 ">
+                            <div class="goodReviewHeading">
+                                <h6>What makes a good review</h6>
+                            </div>
+                            <div class="goodReviewHeading">
+                                <h6>Have you used this product?</h6>
+                                <span class="reviewUseText">Your review should be about your experience with the
+                                    product.</span>
+                            </div>
+                            <div class="goodReviewHeading">
+                                <h6>Why review a product?</h6>
+                                <span class="reviewUseText">Your valuable feedback will help fellow shoppers
+                                    decide!</span>
+                            </div>
+                            <div class="goodReviewHeading">
+                                <h6>How to review a product?</h6>
+                                <span class="reviewUseText">Your review should include facts. An honest opinion is
+                                    always appreciated. If you have an issue with the product or service please contact
+                                    us from the help centre.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-9 pl-0">
+            <div class="col-sm-12">
+                <div class="card p-0 grid-product-card d-flex align-items-stretch">
+                    <div class="card-body p-0">
+                        <div class="ratingDiv">
+                            <h5 class="pl-3 pt-2">Rate this product</h5>
+                            <div class="col-12 p-1">
+                                <ngb-rating class="warning font-20 ml-2 ratingStars" [max]="5" [(rate)]="currentRate"
+                                    [readonly]="false"></ngb-rating>
+                            </div>
+                        </div>
+                        <div class="row m-0 p-1">
+                            <h5 class="pl-2 pt-2">Review this product</h5>
+                            <mat-form-field class="col-12 p-1">
+                                <mat-label>Title </mat-label>
+                                <input matInput [(ngModel)]="title">
+                            </mat-form-field>
+                            <mat-form-field class="col-12 pl-0">
+                                <mat-label>Description</mat-label>
+                                <textarea matInput [(ngModel)]="customerreviewtext"></textarea>
+                            </mat-form-field>
+                            <div class="col-12 p-1">
+                                <button type="button" class="btn red_btn mb-2 float-right"
+                                    (click)="handleSubmitReview()">Submit </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

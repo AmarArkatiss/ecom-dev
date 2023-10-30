@@ -1,0 +1,115 @@
+<div class="row mt-3 ml-5 mr-5">
+    <div class="col-sm-2 py-2 px-2">
+        <app-account></app-account>
+    </div>
+    <div class="col-sm-7 px-2 py-2">
+        <ngx-spinner class="spinnerCss">
+            <p class="spinnerText">Loading....</p>
+        </ngx-spinner>
+        <div class="row card m-0 p-row">
+            <div class="col-lg-7 col-sm-7 p-0">
+                <p class="personal-info">
+                    My Wishlist
+                </p>
+            </div>
+            <div class="col-lg-5 col-sm-5 pt-2 text-right">
+                <mat-form-field class="font-10 float-right pt-2" appearance="outline">
+                    <mat-label>Folders</mat-label>
+                    <mat-select [(ngModel)]="folderList" name="folders">
+                        <mat-option *ngFor="let a of folders" [value]="a.folder_id"
+                            (click)="getPersonWishlist(a.folder_id, a.folder_name)">
+                            <div class="row m-0">
+                                <div class="col-sm-6 p-0">{{a.folder_name}}</div>
+                                <div class="col-sm-6 p-0 text-right">
+                                    <i class="fa fa-pencil color-blue" aria-hidden="true"
+                                        (click)="editFolder(a)"></i>&nbsp;&nbsp;
+                                    <i class="fa fa-trash-o color-red" aria-hidden="true" (click)="folderDelete(a)"></i>
+                                </div>
+                            </div>
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-sm-12 p-0 detaldiv1">
+            <div class="card p-0 " *ngIf="folders.length === 0">
+                <div class="col-sm-6 offset-sm-3 mt-3 mb-3">
+                    <img src="{{imgurl}}noImag.png" alt="" class="img-fluid d-block pl-2 pr-0 cartEmptyText">
+                    <h4 class="heading m-2 p-2 text-center">Your folder list is empty</h4>
+                </div>
+            </div>
+            <div class="card p-0" *ngIf="folders.length > 0">
+                <div class="col-sm-12 mt-3 pl-4 folder-name">
+                    {{this.folderName |titlecase}}
+                </div>
+                <div class="col-sm-6 offset-sm-3 mt-3 mb-3" *ngIf="noItemImage">
+                    <img src="{{imgurl}}noImag.png" alt="" class="img-fluid d-block pl-2 pr-0 cartEmptyText">
+                    <h4 class="heading m-2 p-2 text-center">No products in your folder</h4>
+                </div>
+                <div class="card m-3 profile-card" *ngFor="let w of this.wishData.wishlists;let i = index">
+                    <div class="card-body">
+                        <div class="row m-0">
+                            <div class="col-sm-2 p-0">
+                                <img [src]="w.image" (click)="goToProductsView(w.prodId)" alt="Product Image"
+                                    height="100" width="100" class="pointer">
+                            </div>
+                            <div class="col-sm-10">
+                                <p [title]="w.productName " class="product-name pointer">{{w.productName}}</p>
+                                <p class="">
+                                    <span class="special-price"
+                                        *ngIf="w.discountPrice !== 0 && w.discountPrice !== undefined && w.discountPrice !== null">{{w?.currencyIndicator}}&nbsp;{{w?.offPrice}}</span>
+                                    <span class="special-price"
+                                        *ngIf="w.discountPrice === 0 || w.discountPrice === undefined || w.discountPrice === null">{{w?.currencyIndicator}}&nbsp;{{w?.price}}</span>
+                                    <span class="regular-price"
+                                        *ngIf="w.discountPrice !== 0 && w.discountPrice !== undefined && w.discountPrice !== null">
+                                        {{w?.currencyIndicator}}&nbsp;{{w?.price}}</span>
+                                    <span class="product-off-price"
+                                        *ngIf="w.discountPrice !== 0 && w.discountPrice !== undefinded && w.discountPrice !== null">
+                                        {{w?.currencyIndicator}}&nbsp;{{w?.discountPrice}} off
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="mb-0 mr-3 ml-3">
+                    <div class="card-footer">
+                        <div class="col-sm-12 text-right">
+                            <button type="button" class="btn delete-btn" (click)="deleteWishlist(w,i)">Remove</button>
+                            &nbsp;
+                            <button type="button" class="btn btn-outline-info edit-btn"
+                                (click)="addToCart(w.prodId, w.price)">ADD TO CART</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-template #folderDetails>
+        <div class="row">
+            <div class="col-sm-6">
+                <h3 class="coup-card-heading">Edit Folder</h3>
+            </div>
+            <div class="col-sm-6 text-right">
+                <i class="fa fa-times fa-close curser" aria-hidden="true" (click)="dialog.closeAll();"></i>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-8">
+                <mat-form-field appearance="outline" class="folder-form">
+                    <mat-label>Folder Name</mat-label>
+                    <input matInput placeholder="Enter Name" [(ngModel)]="folderName" name="foldername">
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+                <button type="button" class="btn btn-outline-primary apply-coup-btn mt-3"
+                    (click)="Update()">Submit</button>
+            </div>
+        </div>
+    </ng-template>
+
+    <div class="col-sm-3  py-2 px-2">
+        <app-flash-page></app-flash-page>
+    </div>
+</div>
+<app-footer></app-footer>

@@ -1,0 +1,32 @@
+@import "src/assets/styles/scss/variables";
+
+.forgotDiv {
+  margin-top: 25%;
+  margin-bottom: 100%;
+}
+.loginFormIcon {
+  width: 250px;
+}
+.signin {
+  font-size: 18px;
+  font-family: Poppins;
+  font-weight: 500;
+  font-style: normal;
+  color: $theme_color !important;
+  margin: 0px;
+}
+.submit-btn {
+  background-color: $theme_color !important;
+  color: white;
+}
+.backLogin {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  color: #333333;
+}
+.margin24 {
+  margin-top: 24px;
+}

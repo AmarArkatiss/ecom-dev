@@ -1,0 +1,53 @@
+<div class="col-sm-12 card p-0">
+    <div class="row m-0  pt-2 pb-2">
+        <div class="col-12 d-flex text-center">
+            <p class="userName-text">{{frstName |titlecase}} {{lastName |titlecase}}</p>
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-12 card p-0">
+    <div class="col-sm-12 p-3 menu-option">
+        <p class="header-name menu-option" [routerLink]="'/profile'" routerLinkActive="active">
+            <i class="fa fa-user-circle-o  mr-1" aria-hidden="true"></i>
+            &nbsp;<span> Personal Info</span>
+        </p>
+    </div>
+    <div class="col-sm-12 p-3 menu-option">
+        <p class="header-name menu-option" [routerLink]="'/myorders'" routerLinkActive="active">
+            <i class="fa fa-cubes  mr-1" aria-hidden="true"></i>
+            <span class="pl-1">Orders & Returns</span>
+        </p>
+    </div>
+    <div class="col-sm-12 p-3 menu-option">
+        <p class="header-name menu-option" [routerLink]="'/wishlist'" routerLinkActive="active">
+            <i class="fa fa-heart-o mr-1" aria-hidden="true"></i>
+            &nbsp;<span>Wish List</span>
+        </p>
+    </div>
+    <div class="col-sm-12 p-3 menu-option">
+        <p class="header-name menu-option" [routerLink]="'/manageaddresses'" routerLinkActive="active">
+            <i class="fa fa-map-marker  mr-1" aria-hidden="true"></i>
+            &nbsp;<span>Manage Address</span>
+        </p>
+    </div>
+    <div class="col-sm-12 p-3 menu-option">
+        <p class="header-name menu-option" [routerLink]="'/savelater'" routerLinkActive="active">
+            <i class="fa fa-credit-card-alt mr-1" aria-hidden="true"></i>
+            &nbsp;<span>Coupons</span>
+        </p>
+    </div>
+    <div class="col-sm-12 p-3 menu-option">
+        <p class="header-name menu-option" [routerLink]="'/MyVocherDetails'" routerLinkActive="active">
+            <i class="fa fa-gift  mr-1" aria-hidden="true"></i>
+            &nbsp;<span>Gift Cards</span>
+        </p>
+    </div>
+
+    <div class="col-sm-12 p-3 menu-option">
+        <p class="header-name menu-option" [routerLink]="'/affiliate'" routerLinkActive="active">
+            <i class="fas fa-tags mr-1" aria-hidden="true"></i>
+            &nbsp;<span>Affiliations</span>
+        </p>
+    </div>
+</div>

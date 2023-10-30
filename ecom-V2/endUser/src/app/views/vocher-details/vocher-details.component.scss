@@ -1,0 +1,10 @@
+.ordersDiv{
+    margin-top: 2%;
+}
+.ordersDiv:nth-child(even) {
+    background-color: #e8fcfc;
+  }
+
+.ordersDiv:nth-child(odd) {
+    background-color: #e9f5e1c9;
+  }

@@ -1,0 +1,9 @@
+{
+    "data":[{
+        "fname":"John",
+        "lname":"Smith",
+        "gender":"male",
+        "email":"john.smith@arkatiss.com",
+        "mobile":"9999999999"
+    }]
+}

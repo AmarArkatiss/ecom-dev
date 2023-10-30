@@ -1,0 +1,435 @@
+.products-results-card {
+  border-radius: 8px;
+  box-shadow: 2px #cdcdcd !important;
+  max-height: 550px;
+  overflow-y: scroll;
+}
+
+.products-results-card:hover {
+  overflow-y: scroll;
+}
+
+.filtercard {
+  height: calc(100vh - 137px);
+  overflow-y: scroll;
+}
+
+.filtercard:hover {
+  overflow-y: scroll;
+}
+
+.grid-product-card {
+  border: none !important;
+  margin-top: 5px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.grid-product-card:hover {
+  box-shadow: 2px 2px 5px 2px #cdcdcd !important;
+}
+
+.product-header {
+  font-size: 22px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  color: #505050;
+  padding-top: 10px;
+}
+
+.product-image {
+  height: 100%;
+  width: 100%;
+}
+
+.productName {
+  margin-top: 12px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  color: #19191d;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.priceTag {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.ngbRatingColor {
+  padding-left: 0px;
+  margin-left: 0px;
+  color: #f3ac29;
+}
+
+.pmo {
+  padding: 0px;
+  margin-left: 0px;
+}
+
+.product-divider {
+  background-color: #000 !important;
+  opacity: 0.2 !important;
+  height: 1px !important;
+}
+
+.addCart {
+  width: 24px;
+  height: 22px;
+  padding: 5px;
+  font-size: 18px;
+  font-family: "Poppins";
+  letter-spacing: 0.02rem;
+  line-height: 56px;
+  color: #cecece;
+  border-radius: 8px;
+  margin: 0px;
+}
+
+.newfolder {
+  padding: 7px 11px 10px 10px;
+  font-size: 14px;
+  font-family: "Poppins";
+  letter-spacing: 0.02rem;
+  line-height: 18px;
+  color: #007bff;
+  border-radius: 8px;
+  background-color: #007bff1a;
+}
+
+.view-toggle-group.mat-button-toggle-standalone.mat-button-toggle-appearance-standard,
+.mat-button-toggle-group-appearance-standard {
+  background: #ffffff;
+  border: 1px solid #dbdde0;
+  box-sizing: border-box;
+  border-radius: 8px !important;
+}
+
+.view-toggle-btn.mat-button-toggle-checked.mat-button-toggle-appearance-standard {
+  background: #007bff47;
+  border: 1px solid #dbdde0;
+  box-sizing: border-box;
+  border-radius: 6px;
+}
+
+.view-toggle-btn.mat-button-toggle-appearance-standard {
+  background: #fff;
+  font-size: 16px;
+  margin: 2px;
+  height: 28px !important;
+  line-height: 21px !important;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.01em;
+  color: #505050 !important;
+  padding: 0 1px !important;
+}
+
+.view-toggle-group.mat-button-toggle-group-appearance-standard .mat-button-toggle+.mat-button-toggle {
+  border-left: none !important;
+}
+
+/*List view styles Amar starts*/
+.rating-avg {
+  color: #ffffff;
+  font-size: 12px;
+  background-color: #388e3c;
+  border-radius: 5px;
+  cursor: pointer;
+  line-height: 26px;
+  padding: 2px 6px;
+}
+
+.rating-avg-text {
+  font-family: Poppins;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+}
+
+.rating-count {
+  font-family: Poppins;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  color: #000000;
+  opacity: 0.5;
+  cursor: pointer;
+  line-height: 26px;
+}
+
+.productNameListView {
+  font-size: 16px;
+  font-family: Poppins;
+  font-weight: bold;
+  font-style: normal;
+  line-height: 20px;
+  height: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  margin: 0px;
+}
+
+.list-product-card {
+  border-bottom: 1px solid #d2d2d2 !important;
+  margin-top: 5px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 0px;
+}
+
+.list-product-card:hover {
+  box-shadow: 2px 2px 5px 2px #cdcdcd !important;
+}
+
+.listViewDescription {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  font-size: 12px;
+  font-family: "Poppins";
+  line-height: 19px;
+  -webkit-box-orient: vertical;
+  text-align: justify;
+  margin-top: 9px;
+}
+
+.priceDivListView {
+  text-align: center;
+}
+
+.ratingReviewInListView {
+  color: #908a8a;
+  font-size: 14px;
+}
+
+.saveMenuItem {
+  min-height: 220px;
+}
+
+.password {
+  text-decoration: none;
+}
+
+.imgcenter {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 42%;
+}
+
+/*List view styles Amar ends*/
+
+.productsPage {
+  height: calc(100vh - 100px);
+  overflow: scroll;
+}
+
+mat-panel-title.mat-expansion-panel-header-title {
+  font-family: "Poppins" !important;
+  font-size: 12px;
+}
+
+.whishListAddedIcon {
+  color: #ef6c00; // red;
+}
+
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+  background-color: #ff7f27 !important;
+}
+
+.reviewAndRatingInfo {
+  font-weight: 500;
+  color: #878787;
+  font-size: 13px;
+  padding-left: 2px;
+  margin-left: 3px;
+  margin-top: 4px;
+}
+
+.startBadgeSize {
+  font-size: 10px;
+  margin: 1px;
+  padding: 3px 6px 3px 6px;
+}
+
+.searchResultCard {
+  border-radius: 8px;
+  box-shadow: 2px #cdcdcd !important;
+  max-height: 550px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background: white;
+  height: 100%;
+}
+
+.addsTitle {
+  background: #b7a129;
+  color: white;
+  text-align: center;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.adsDescription {
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.afterFirstDiv {
+  margin-top: 1rem;
+}
+
+.addsImgwidth {
+  width: 100%;
+}
+
+.prodImage {
+  margin-top: 4px;
+  width: 130px;
+  height: 150px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.whiteColor {
+  color: white;
+}
+
+.proCard {
+  background-color: #ffffff;
+  border: 1px solid #fff;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.25);
+  margin-top: 10px;
+}
+
+.ClkViewBtn {
+  font-family: "Rubik";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  align-items: center;
+  text-align: center;
+  text-transform: uppercase;
+  color: #0e60a7;
+  border: 1px solid #0e60a7;
+  padding: 7px 1px 8px 1px;
+  margin-left: 0px;
+}
+
+.saveTag {
+  width: 75px;
+  margin-left: -34px;
+}
+
+.off-text {
+  margin-left: -64px;
+  margin-top: 9%;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.0125em;
+  text-transform: uppercase;
+  color: #333333;
+  vertical-align: middle;
+  display: inline-block;
+  text-overflow: ellipsis;
+}
+
+.mp0 {
+  padding: 0px;
+  margin: 0px;
+}
+
+.mp0les {
+  padding: 0px;
+  margin: 0px;
+  margin-top: -14px;
+}
+
+.wishBtn {
+  align-items: center;
+  width: 44px;
+  height: 44px;
+
+  color: #cecece;
+}
+
+.whitebg {
+  background-color: #fff;
+}
+
+.btn-outline-info {
+  font-family: "Rubik";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.0125em;
+  text-transform: uppercase;
+  border-color: #0e60a7;
+  color: #0e60a7;
+}
+
+.btn-outline-info:hover {
+  background-color: #0e60a7;
+  color: white;
+}
+
+.off-img {
+  width: 107px;
+  z-index: 10000;
+  margin-left: -42px;
+  margin-top: -7px;
+  display: inline-block;
+}
+
+.disPrice1 {
+  margin-left: -7px !important;
+}
+
+.off-text3 {
+  margin-left: -71px;
+  display: inline-block;
+  font-family: "Lato";
+  font-style: normal;
+  font-size: 12px;
+  line-height: 16px;
+  color: white;
+  letter-spacing: 0.0125em;
+  text-transform: uppercase;
+}
+
+.mat-checkbox.mat-accent {
+  .mat-checkbox-inner-container {
+    margin: 2px 8px auto 0 !important;
+  }
+}
+
+.check-Price {
+  list-style: none;
+}

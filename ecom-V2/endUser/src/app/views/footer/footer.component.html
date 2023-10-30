@@ -1,0 +1,133 @@
+<footer id="footer">
+  <div class="row m-0">
+    <div class="col-sm-3" *ngFor="let section of tenantFooterData.data">
+      <h5 class="footer-heading">{{section.title}}</h5>
+      <div>
+        <p *ngFor="let item of section.subtitle">
+          <ng-container *ngIf="section.title === 'About' && orgName === 'Veterneo'">
+            <a class="footer-links" [href]="getHrefLink(item)">{{ item }}</a>
+          </ng-container>
+          <span *ngIf="section.title !== 'About' || orgName !== 'Veterneo'" class="footer-links">{{ item }}</span>
+        </p>
+      </div>
+    </div>
+    <ng-template>
+      <div class="col-sm-3">
+        <h5 class="footer-heading">ABOUT</h5>
+        <div class="d-flex flex-column">
+          <a class="footer-links" href="https://www.veterneo.com/" target="_blank">
+            Home
+          </a>
+          <a class="footer-links" href="https://www.veterneo.com/contact/" target="_blank">Contact Us</a>
+          <a class="footer-links" href="https://www.veterneo.com/about/" target="_blank">About Us</a>
+          <a class="footer-links" href="https://www.veterneo.com/business-enquiry/" target="_blank">Bussiness
+            Equirey</a>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <h5 class="footer-heading">NUTRITION & SUPPLEMENTS</h5>
+        <p class="footer-links">Calisupp</p>
+        <p class="footer-links">Multisupp</p>
+        <p class="footer-links">Liversupp</p>
+        <p class="footer-links">Gronic</p>
+        <p class="footer-links">N-Mix Forte</p>
+      </div>
+      <div class="col-sm-3">
+        <h5 class="footer-heading">DEWORMERS & ANTIBIOTICS</h5>
+        <p class="footer-links">N-Triclamet</p>
+        <p class="footer-links">Ciflo-TZ</p>
+        <p class="footer-links">Vetazit</p>
+        <p class="footer-links">Enrobex</p>
+        <p class="footer-links">En-Clear</p>
+        <p class="footer-links">Sheegra</p>
+      </div>
+      <div class="col-sm-3">
+        <h5 class="footer-heading">Address & Location</h5>
+        <div *ngIf="storeDetailsArray.length > 0 && storeId !== 'all'">
+          <p class="footer-links">
+            <span>{{ this.storeDetailsArray[0].address }}</span>&nbsp;<span>{{ this.storeDetailsArray[0].address_city
+              }}</span>
+          </p>
+          <p class="footer-links">
+            <span>{{ this.storeDetailsArray[0].location }}</span>&nbsp;<span>{{ this.storeDetailsArray[0].geocode
+              }}</span>
+          </p>
+          <p class="footer-links">
+            {{ this.storeDetailsArray[0].country }}
+          </p>
+          <p class="footer-links">{{ this.storeDetailsArray[0].email }}</p>
+          <p class="footer-links">{{ this.storeDetailsArray[0].telephone }}</p>
+        </div>
+        <div *ngIf="storeDetailsArray.length === 0 || storeId === 'all'">
+          <p class="footer-links">{{tenantAddress.phoneNum}}</p>
+          <p class="footer-links">{{tenantAddress.address4}}</p>
+          <p class="footer-links">
+            <span>{{tenantAddress.address5}}</span>
+          </p>
+          <p class="footer-links">{{tenantAddress.address6}}</p>
+          <p class="footer-links">{{tenantAddress.email}}</p>
+          <!-- <p>{{this.storeDetailsArray[0].telephone}}</p> -->
+        </div>
+      </div>
+    </ng-template>
+  </div>
+  <hr />
+  <div class="row d-flex justify-content-center align-items-center mt-5">
+    <div class="col-lg-4 col-md-4 col-sm-5">
+      <span *ngIf="storeId == null || storeId === 'all'">
+        <img [src]="mainLogo" alt="" class="pointer logo-img" [routerLink]="'/home'" />
+      </span>
+      <span class="pointer" *ngIf="
+          storeId !== 'all' &&
+          (logo == null || logo == undefined || logo === '')
+        " [routerLink]="'/home'">
+        <h1 class="logo-font">{{ storeName }}</h1>
+      </span>
+      <span class="pointer" *ngIf="  storeId !== 'all' && storeId !== '0' &&
+        ( logo !== null && logo !== undefined && logo !== '')">
+        <img [src]="logo" alt="" class="pointer main-img" [routerLink]="'/home'" />
+      </span>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-3">
+      <p class="text-center footer-text">
+        © 2023 {{orgName | titlecase}}. All Rights Reserved.
+      </p>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4">
+      <div class="example-button-container text-center">
+        <button mat-mini-fab color="primary" class="bg-fb">
+          <i class="fa fa-facebook" aria-hidden="true"></i></button>&nbsp;&nbsp;
+        <button mat-mini-fab color="primary" class="bg-ln">
+          <i class="fa fa-linkedin" aria-hidden="true"></i>
+        </button>
+        &nbsp;&nbsp;
+        <button mat-mini-fab color="primary" class="bg-google" matTooltip="Share this site with your friends">
+          <i class="fa fa-share-alt font-18" aria-hidden="true" (click)="share()"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<ng-template let-bottomSheetRef="bottomSheetRef" #shareDetails>
+  <div class="row m-2">
+    <div class="col-sm-12 text-right">
+      <i class="fa fa-times fa-close pointer" aria-hidden="true" (click)="bottomSheet.dismiss()"></i>
+    </div>
+    <div class="col-sm-12 p-5 d-col">
+      <div class="row">
+        <strong>{{orgName}}</strong>
+      </div>
+      <div class="row">
+        <div class="col-sm-10 p-0">
+          <p>
+            Here's the link <a>{{ url }}</a>
+          </p>
+        </div>
+        <div class="col-sm-2">
+          <i class="fa fa-clone d-ico" aria-hidden="true" (click)="copyText(url)"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

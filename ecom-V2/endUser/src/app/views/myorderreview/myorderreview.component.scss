@@ -1,0 +1,44 @@
+.ratingDiv {
+  border-bottom: 1px solid #b8b8b8;
+}
+
+.goodReviewHeading {
+  padding: 1rem;
+  border-bottom: 1px solid #cecece;
+}
+
+span.reviewUseText {
+  font-size: 0.8rem;
+  text-align: justify;
+}
+
+.productViewDiv {
+  margin-left: 5.6rem;
+  cursor: pointer;
+}
+
+.star {
+  font-size: 1.5rem;
+  color: #b0c4de;
+}
+
+.filled {
+  color: #1e90ff;
+}
+
+.bad {
+  color: #deb0b0;
+}
+
+.filled.bad {
+  color: #ff1e1e;
+}
+
+.prodName {
+  width: 71%;
+}
+
+.ratingStars {
+  font-size: 1.5rem;
+  color: #f3ac29;
+}

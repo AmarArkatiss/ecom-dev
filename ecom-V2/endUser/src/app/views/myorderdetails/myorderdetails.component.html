@@ -1,0 +1,436 @@
+<div class="row mt-3 ml-5 mr-5">
+  <ngx-spinner class="spinnerCss">
+    <p class="spinnerText">Loading....</p>
+  </ngx-spinner>
+  <div class="col-lg-8 col-md-8 col-sm-12 pl-0">
+    <div class="card m-3">
+      <div class="card-header bg-white order-card">
+        <div class="row m-0">
+          <div class="col-sm-6 p-0">
+            <p class="card-head-p1 pl-3">Order No: {{ orderId }}</p>
+          </div>
+          <div class="col-sm-6 p-0 text-right">
+            <p class="card-head-p2 pointer" [routerLink]="'/myorders'">
+              Back To Previous
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="col-sm-12 p-0">
+          <div class="card details-card">
+            <div class="row m-0">
+              <div class="col-sm-8">
+                <p class="details-p1">Product Details</p>
+              </div>
+              <div class="col-sm-4 text-right">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 p-0 mt-3">
+          <div class="card products-card">
+            <div class="card-header bg-white products-card-bottom">
+              <div class="row m-0">
+                <div class="col-sm-7 p-0">
+                  <p class="order-date">Ordered On: {{ orderDate }}</p>
+                </div>
+                <div class="col-sm-5 text-right p-0">
+                </div>
+              </div>
+            </div>
+            <div class="detailsDiv1">
+              <div class="card-body">
+                <div class="row m-0" *ngFor="
+                    let product of this.ordAddress.otherItemsDetails;
+                    let i = index
+                  ">
+                  <div class="col-sm-2 p-0">
+                    <img src="{{ product.image }}" (click)="goToProductsView(product.productId)" height="100"
+                      width="100" />
+                  </div>
+                  <div class="col-sm-10 p-0">
+                    <p>Item - {{ i + 1 }}</p>
+                    <p class="product-name">{{ product?.productName }}</p>
+                    <p>{{ product?.currencyIndicator }} {{ product?.price }}</p>
+                    <p class="order-status">
+                      <span [ngClass]="{
+                          process:
+                            product?.itemStatus !== 'Order Cancelled' &&
+                            product?.itemStatus !== 'Draft',
+                          cancelOrder:
+                            product?.itemStatus === 'Order Cancelled',
+                          draft: product?.itemStatus === 'Draft'
+                        }"></span>
+                      <span *ngIf="product?.itemStatus !== 'Order Cancelled'">{{
+                        product?.itemStatus
+                        }}</span>
+                      <span *ngIf="product?.itemStatus === 'Order Cancelled'">{{ product?.itemStatus }} On
+                        {{ product?.cancelledDate }}</span>
+                    </p>
+                  </div>
+                  <hr class="mr-3 ml-3 width" *ngIf="this.ordAddress.otherItemsDetails.length - 1 !== i" />
+                </div>
+              </div>
+            </div>
+            <hr class="mr-3 ml-3" />
+            <div class="card-footer footer-height bg-white">
+              <div class="row m-0 footer-card-row">
+                <div class="col-sm-6">
+                  <p class="p-totalPrice">
+                    <span>Total Order Price: </span><span class="fontWeight">{{ currencyIndicator }} {{ totalAmnt
+                      }}</span>
+                  </p>
+                </div>
+                <div *ngIf="
+                    (paymentStatus == 'Pending' && itemStatus == 'Draft') ||
+                    (paymentStatus == 'Pending' &&
+                      itemStatus == 'Partially Cancelled')
+                  " class="col-sm-6 text-right">
+                  <button type="button" class="btn btn-outline-warning btn-sm cancel"
+                    (click)="viewCancel(cancelPopup, 'cancel')">
+                    Cancel Order</button>&nbsp;
+                  <button type="button" class="btn btn-warning btn-sm repay"
+                    (click)="repayClick(paymentPopup, orderId)">
+                    Pay
+                  </button>
+                </div>
+                <div *ngIf="
+                    (paymentStatus !== 'Pending' &&
+                      itemStatus == 'Order Processing') ||
+                    (paymentStatus !== 'Pending' &&
+                      itemStatus == 'Partially Cancelled')
+                  " class="col-sm-6 text-right">
+                  <button type="button" class="btn btn-outline-warning cancel btn-sm"
+                    (click)="viewCancel(cancelPopup, 'cancel')">
+                    Cancel Order</button>&nbsp;
+                  <button type="button" class="btn btn-warning repay btn-sm"
+                    (click)="viewReorder(reorderPopup, 'reOrder')">
+                    Reorder
+                  </button>
+                </div>
+                <div *ngIf="itemStatus == 'Delivered'" class="col-sm-6 text-right">
+                  <button type="button" class="btn btn-outline-warning cancel btn-sm" id="returnid"
+                    (click)="handleReturn(orderId)">
+                    Return</button>&nbsp;
+                  <button type="button" class="btn btn-warning repay btn-sm"
+                    (click)="viewReorder(reorderPopup, 'reOrder')">
+                    Reorder
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 p-0 mt-3">
+          <div class="card details-card">
+            <div class="row m-0">
+              <div class="col-sm-8">
+                <p class="details-p1">Seller Information</p>
+              </div>
+              <div class="col-sm-4 text-right">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 p-0 mt-3">
+          <div class="card p-0 seller-card">
+            <div class="card-body">
+              <div class="col-sm-12" *ngIf="sellerInformation.length > 0">
+                <p class="frstName-txt">{{ storeName | titlecase }}</p>
+                <p class="person-info">
+                  {{ sellerInformation[0].address_line1 }}
+                  {{ sellerInformation[0].address_city | titlecase }},
+                </p>
+                <p class="person-info">
+                  {{ sellerInformation[0].state | titlecase }}
+                  {{ sellerInformation[0].geocode }},
+                  {{ sellerInformation[0].country }}
+                </p>
+                <p class="person-info">
+                  Phone: {{ sellerInformation[0].telephone }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 p-0 mt-3 text-right">
+          <button type="button" class="btn btn-warning invoice btn-sm" *ngIf="
+              (itemStatus == 'Partially Cancelled' &&
+                paymentStatus !== 'Pending') ||
+              itemStatus == 'Order Processing' ||
+              itemStatus == 'Delivered'
+            " (click)="invoiceClick()">
+            <a target="_blank">Download Invoice</a>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4 col-md-4 col-sm-12 mt-3 p-0">
+    <div class="col-sm-12 p-0">
+      <mat-accordion>
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" class="expandHeight">
+          <mat-expansion-panel-header>
+            <mat-panel-title> Shipping Status </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="col-sm-12">
+            <span *ngFor="let item of orderStatus; let i = index">
+              <span class="circle-desc" [class.circle-desc-active]="item">{{ item.item_status }}
+              </span>
+              <span class="circle-desc-date" [class.circle-desc-active]="item">
+                {{ item?.created_on.split(" ")[0] | date : "EEE" }},
+                {{ item?.created_on.split(" ")[0] | date }}
+              </span>
+              <span class="circles" [class.active]="item"></span>
+              <span class="bar" *ngIf="i != orderStatus.length - 1"></span>
+            </span>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+    <br />
+    <div class="col-sm-12 p-0">
+      <div class="row card m-0 p-row">
+        <div class="col-lg-12 col-sm-12">
+          <p class="personal-info1">Shipping Address</p>
+        </div>
+      </div>
+
+      <div class="col-sm-12 p-0">
+        <div class="card p-0">
+          <div class="card-body">
+            <div class="col-sm-12" *ngFor="let details of this.ordAddress.data">
+              <p class="frstName-txt">{{ details.shippingName | titlecase }}</p>
+              <p class="person-info">
+                {{ details.shippingAddress1 }}
+                {{ details.shippingCity | titlecase }},
+              </p>
+              <p class="person-info">
+                {{ details.shippingZone | titlecase }}
+                {{ details.shippingPostcode }}, {{ details.shippingCountry }}
+              </p>
+              <p class="person-info">Phone: {{ details.mobile }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Payment PopUp -->
+<ng-template #paymentPopup>
+  <div class="row m-2">
+    <div class="col-sm-12 p-0">
+      <p class="card-head-p1">Payment Options</p>
+    </div>
+  </div>
+  <hr />
+  <div class="row m-2 ml-4 mt-4">
+    <div class="col-sm-3 p-0">
+      <input type="radio" name="payment" id="RazorpayBtn" (click)="handlePayments('razor')" /><img
+        src="{{ imgurl }}razorpaywebnew.svg" alt="" class="Razor img-fluid" />
+    </div>
+
+    <div class="col-sm-4 p-0">
+      <input type="radio" name="payment" id="visaBtn" (click)="handlePayments('cod')" />
+      <span class="codBtn pl-2">Cash On Delivery</span>
+    </div>
+  </div>
+  <div class="col-sm-12 text-right mt-4">
+    <button type="button" class="btn btn-outline-warning btn-sm cancel" (click)="dialog.closeAll()">
+      CANCEL</button>&nbsp;
+    <button type="button" class="btn btn-warning btn-sm repay" *ngIf="paypalFlag" (click)="paypalClk(paypalPopup)">
+      PROCEED
+    </button>
+    <button type="button" class="btn btn-warning btn-sm repay" *ngIf="stripeFlag" (click)="stripeClk(stripePop)">
+      PROCEED
+    </button>
+    <button type="button" class="btn btn-warning btn-sm repay" *ngIf="razorFlag" (click)="rClick()">
+      PROCEED
+    </button>
+    <button type="button" class="btn btn-warning btn-sm repay" *ngIf="codFlag" (click)="codClick()">
+      PROCEED
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #paypalPopup>
+  <div class="row m-2">
+    <div class="col-sm-12 p-0">
+      <p class="card-head-p1">Card Info</p>
+    </div>
+  </div>
+  <hr />
+  <div class="row m-2 ml-4 mt-4">
+    <div class="col-sm-8">
+      <div class="row">
+        <div class="col-sm-6">
+          <label for="cname" class="cardLbl">Name on Card</label>
+        </div>
+        <div class="col-sm-6">
+          <input type="text" id="cname" name="cardname" placeholder="Enter Card Name" />
+        </div>
+        <br />
+        <div class="col-sm-6">
+          <label for="ccnum" class="cardLbl">Credit card number</label>
+        </div>
+        <div class="col-sm-6">
+          <input type="text" id="ccnum" name="cardnumber" placeholder="Enter Card Number" />
+        </div>
+        <br />
+        <div class="col-sm-6">
+          <label for="expmonths" class="cardLbl">Exp Month </label>
+        </div>
+        <div class="col-sm-6">
+          <input type="text" id="expyear" name="expyear" placeholder="Enter expire Date on Card" />
+        </div>
+        <br />
+        <div class="col-sm-6">
+          <label for="cvv" class="cardLbl">CVV</label>
+        </div>
+        <div class="col-sm-6">
+          <input type="text" id="cvv" name="cvv" placeholder="Enter CVV" />
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12 mt-4 ml-2 p-0">
+      <button type="button" class="btn btn-outline-warning btn-sm cancel" (click)="dialog.closeAll()">
+        CANCEL</button>&nbsp;
+      <button type="button" class="btn btn-warning btn-sm repay" (click)="dialog.closeAll()">
+        SUBMIT
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #stripePop>
+  <div class="row m-2">
+    <div class="col-sm-12 p-0">
+      <p class="card-head-p1">Card Info</p>
+    </div>
+  </div>
+  <hr />
+  <div class="row m-2 ml-4 mt-4">
+    <div class="col-sm-12">
+      <label class="form-label">Card Number</label><br />
+      <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+        placeholder="Enter Card Number" (keyup)="keyup($event.target.value)" />
+
+      <div class="errormsg">
+        <p *ngIf="does">Your card number is incomplete.</p>
+        <p *ngIf="lenth16more">Card number is invalid</p>
+      </div>
+    </div>
+    <br />
+    <div class="col-sm-12 pt-3">
+      <label class="form-label">Card Details</label><br />
+      <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+        placeholder="MM/YY" />
+      <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+        placeholder="CVV" (keyup)="cvvup($event.target.value)" />
+      <p *ngIf="cvverror" class="errormsg">Invalid CVV</p>
+    </div>
+  </div>
+  <div class="col-sm-12 mt-4 ml-4">
+    <button type="button" class="btn btn-outline-warning btn-sm cancel" (click)="dialog.closeAll()">
+      CANCEL</button>&nbsp;
+    <button type="button" class="btn btn-warning btn-sm repay" (click)="dialog.closeAll()">
+      SUBMIT
+    </button>
+  </div>
+</ng-template>
+
+<!-- ReOrder PopUp -->
+<ng-template #reorderPopup>
+  <div class="row m-2">
+    <div class="col-sm-12 p-0">
+      <p class="card-head-p1 itemData">Reorder</p>
+    </div>
+  </div>
+  <div class="row m-2">
+    <div class="col-sm-12 card p-0">
+      <div class="card-header card-row">
+        <p class="card-head-p1">Item Details</p>
+        <p class="card-head-p1">Order # - {{ orderId }}</p>
+      </div>
+      <div class="detailsDiv1">
+        <div class="card-body">
+          <div class="row m-0" *ngFor="let product of orderItemsList; let i = index">
+            <div class="col-sm-2 p-0">
+              <img src="{{ product.productImage }}" (click)="goToProductsView(product.productId)" height="100"
+                width="100" />
+            </div>
+            <div class="col-sm-8">
+              <p>Item - {{ i + 1 }}</p>
+              <p class="product-name">{{ product?.product_name }}</p>
+              <p>{{ product?.currency_indicator }} {{ product?.net_amount }}</p>
+            </div>
+            <div class="col-sm-2 p-0">
+              <i class="fal fa-times pointer float-right fa-lg bot-warn"
+                (click)="clearItemFrmList(product.product_id, i)" matTooltip="remove product from reorder list"></i>
+            </div>
+            <hr class="mr-3 ml-3 width" *ngIf="orderItemsList.length - 1 !== i" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row m-2">
+    <div class="col-sm-12 p-0 text-right">
+      <button type="button" class="btn btn-outline-warning cancel btn-sm" (click)="dialog.closeAll()">
+        Cancel</button>&nbsp;
+      <button type="button" class="btn btn-warning repay btn-sm" (click)="handleReorder()"
+        matTooltip="products in this list will be reorder by clicking on reorder">
+        Reorder
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #cancelPopup>
+  <div class="row m-2">
+    <div class="col-sm-12 p-0">
+      <p class="card-head-p1 itemData">Order Cancel</p>
+    </div>
+  </div>
+  <div class="row m-2">
+    <div class="col-sm-12 card p-0">
+      <div class="card-header card-row">
+        <p class="card-head-p1">Item Details</p>
+        <p class="card-head-p1">Order # - {{ orderId }}</p>
+      </div>
+      <div class="detailsDiv1">
+        <div class="card-body">
+          <div class="row m-0" *ngFor="let product of cancelItemList; let i = index">
+            <div class="col-sm-2 p-0">
+              <img src="{{ product.productImage }}" (click)="goToProductsView(product.productId)" height="100"
+                width="100" />
+            </div>
+            <div class="col-sm-8">
+              <p>Item - {{ i + 1 }}</p>
+              <p class="product-name">{{ product?.product_name }}</p>
+              <p>{{ product?.currency_indicator }} {{ product?.net_amount }}</p>
+            </div>
+            <div class="col-sm-2 p-0 text-right">
+              <i class="fal fa-times pointer float-right fa-lg bot-warn"
+                (click)="clearCancelList(product.product_id, i)" matTooltip="remove product from cancel list"></i>
+            </div>
+            <hr class="mr-3 ml-3 width" *ngIf="cancelItemList.length - 1 !== i" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row m-2">
+    <div class="col-sm-12 p-0 text-right">
+      <button type="button" class="btn btn-outline-warning cancel btn-sm" (click)="dialog.closeAll()">
+        Cancel</button>&nbsp;
+      <button type="button" class="btn btn-warning repay btn-sm" (click)="cancelOrder()"
+        *ngIf="showPopStatus === 'cancel'" matTooltip="products in this list will be cancelled by submit">
+        Submit
+      </button>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,2010 @@
+<div class="super_container pb-5">
+  <ngx-spinner class="spinnerCss">
+    <p class="spinnerText">Loading....</p>
+  </ngx-spinner>
+  <div class="single_product" *ngIf="productshow">
+    <div class="row col-sm-12 zxc">
+      <div class="col-sm-5 img5Div">
+        <div class="main-img-section d-flex">
+          <div class="multi-imgs" *ngIf="mainImage.length > 0">
+            <p-carousel class="multiImg" [value]="this.productDetailObj.productImages" orientation="vertical"
+              [style]="{ 'max-width': '400px', 'margin-top': '1em' }" verticalViewPortHeight="350px" [numVisible]="3"
+              [numScroll]="1" [showIndicators]="false">
+              <ng-template let-product pTemplate="item">
+                <div class="product-item">
+                  <div class="product-item-content">
+                    <div class="p-mb-3"></div>
+                    <div>
+                      <img [src]="product.image" style="margin: 9px 5px 5px 6p" alt="" [title]="product.image"
+                        class="productSub-Image" (mouseover)="changeImage(product.image)" />
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </p-carousel>
+          </div>
+          <div class="d-flex flex-column right-image-section">
+            <img src="assets/svg/btn-whishlist.svg" alt="whishlist" width="50px" height="40px" class="whishlist"
+              [matTooltip]="whishlist" [matMenuTriggerFor]="wishlistMenu" *ngIf="productWishlistFlag === 1" />
+            <img src="assets/svg/btn-whishlist-selected.svg" alt="whishlist" width="50px" height="40px"
+              class="whishlist" [matTooltip]="whishlist" *ngIf="productWishlistFlag === 0" (click)="
+                removeWishlist(
+                  wishIndx,
+                  wishlistData.wishlistStatusId,
+                  wishlistData,
+                  'mainProduct'
+                )
+              " />
+            <mat-menu #wishlistMenu="matMenu">
+              <div mat-menu-item [disableRipple]="true" (click)="$event.stopPropagation()"
+                class="saveMenuItem wishlistform">
+                <div class="row p-0">
+                  <div class="col-12 pt-2" *ngIf="foldervisible">
+                    <div class="col-12">
+                      <mat-form-field appearance="outline" class="font-10">
+                        <mat-label>Folder Name</mat-label>
+                        <input matInput placeholder="Enter Name" [(ngModel)]="folderName" name="foldername" />
+                      </mat-form-field>
+                    </div>
+
+                    <div class="col-12 row m-0">
+                      <div class="col-6 p-0">
+                        <p class="newfolder text-center" (click)="hidefolder()">
+                          Back
+                        </p>
+                      </div>
+                      <div class="col-6 pr-3" (click)="addFolder()">
+                        <p class="newfolder text-center">Add</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 pt-2" *ngIf="formhide">
+                    <form>
+                      <div class="col-sm-12">
+                        <mat-form-field class="font-10" appearance="outline">
+                          <mat-label>Folder</mat-label>
+                          <mat-select [(ngModel)]="folderList" name="folders">
+                            <mat-option *ngFor="let a of folders" [value]="a.folder_id">
+                              {{ a.folder_name }}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+
+                      <div class="col-12 row m-0">
+                        <div class="col-6 p-0" (click)="showfolder()">
+                          <p class="newfolder text-center">New Folder</p>
+                        </div>
+                        <div class="col-6 pr-3" (click)="
+                            addtoWishlist(wishlistData, wishIndx, 'mainProduct')
+                          ">
+                          <p class="newfolder text-center">Add</p>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </mat-menu>
+            <img [src]="productMainImage" class="imgd pointer1" alt="Original Image" id="image"
+              (mousemove)="zoomImage($event)" (mouseleave)="hideMagnifier()" />
+            <span id="lens"></span>
+          </div>
+        </div>
+
+        <div class="d-flex align-items-center w-100">
+          <div *ngIf="this.productOverView.payment_profile.length === 0">
+            <button class="add-cart-details" (click)="onSubmit()" [disabled]="
+                subscribeFlag === true &&
+                subscriptionForm.value.priceFlag === null
+              ">
+              <img src="assets/svg/Btn-Cart.svg" alt="Cart-logo" /> &nbsp;&nbsp;
+              ADD TO CART
+            </button>
+          </div>
+          <div *ngIf="this.productOverView.payment_profile.length > 0">
+            <button class="add-cart-details" (click)="onSubmit()">
+              <img src="assets/svg/Btn-Cart.svg" alt="Cart-logo" /> &nbsp;&nbsp;
+              ADD TO CART
+            </button>
+          </div>
+          <div *ngIf="orgName === 'Botcom'">
+            <button class="btnCls3 ml-3" (click)="buyNow()">
+              <img src="assets/svg/thunder.svg" alt="Cart-logo" /> &nbsp;&nbsp;
+              BUY IT NOW
+            </button>
+          </div>
+          <div *ngIf="orgName === 'Veterneo'">
+            <button class="btnCls2 ml-3" (click)="buyNow()">
+              <img src="assets/svg/thunder.svg" alt="Cart-logo" /> &nbsp;&nbsp;
+              BUY IT NOW
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-7 deis">
+        <div class="d-flex flex-column gap-3 mt-4" *ngFor="let p of this.productDetailObj.productDetails">
+          <div class="mb-3">
+            <nav>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                  <a [routerLink]="'/home'">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                  <a [routerLink]="['/product', p.categoryId, p.categoryName]">Products</a>
+                </li>
+                <li class="breadcrumb-item active">Product Details</li>
+              </ol>
+            </nav>
+          </div>
+          <div class="title-product d-flex align-items-center mb-3">
+            <span [matTooltip]="p.productName">{{
+              p.productName | titlecase
+              }}</span>&nbsp;&nbsp;
+            <span class="barket-in-text">({{ p.productName | titlecase }} Tonic)</span>
+          </div>
+          <div class="d-flex align-items-center mb-3">
+            <div class="magnifier" #magnifier></div>
+            <span class="badge startBadgeSize" *ngIf="
+                p.ratingAvg !== null &&
+                p.ratingAvg !== undefined &&
+                p.ratingAvg >= 3
+              "><i class="fa fa-star starRatingColor"></i>
+              {{ p?.ratingAvg }} &nbsp;
+            </span>
+            <span class="badge startBadgeSize" *ngIf="
+                p.ratingAvg !== null &&
+                p.ratingAvg !== undefined &&
+                p.ratingAvg > 1 &&
+                p.ratingAvg < 3
+              "><i class="fa fa-star starRatingColor"></i><span class="starRatingColor"> {{ p?.ratingAvg }}</span>
+              &nbsp;
+            </span>
+            <span class="badge startBadgeSize" *ngIf="
+                p.ratingAvg !== null &&
+                p.ratingAvg !== undefined &&
+                p.ratingAvg <= 1
+              ">
+              <i class="fa fa-star starRatingColor"></i>
+              {{ p?.ratingAvg }} &nbsp;
+            </span>
+            <span class="rating-review" *ngIf="p.ratingCount != 0 || p.reviewCount != 0">
+              <span *ngIf="p.ratingCount != 0">
+                {{ p.ratingCount }} Ratings</span>
+              <span *ngIf="p.reviewCount != 0">
+                & {{ p.reviewCount }} Reviews</span>
+            </span>
+            <span class="rating-review" *ngIf="p.ratingCount === 0 && p.reviewCount === 0">
+              No Ratings and Reviews</span>
+          </div>
+          <div class="d-flex flex-column mb-3">
+            <div class="currency d-flex align-items-center">
+              <div class="row m-0 priceDtlsDiv" *ngIf="recurringFlag === false && apiRecurringFlag === 0">
+                <span class="product_price" *ngIf="
+                    p.offPrice != 0 &&
+                    p.offPrice !== undefined &&
+                    p.offPrice !== null
+                  ">{{ p.currencyIndicator }} {{ p?.offPrice }}</span>
+                <span class="product_price" *ngIf="
+                    p.offPrice == 0 ||
+                    p.offPrice === undefined ||
+                    p.offPrice === null
+                  ">{{ p.currencyIndicator }} {{ p.originalprice }}</span>
+                <span class="product_discount" *ngIf="
+                    p.offPrice != 0 &&
+                    p.offPrice !== undefinded &&
+                    p.offPrice !== null
+                  ">
+                  <span class="org-price-tag">{{ p?.originalprice }}</span>
+                </span>
+                <span class="product-off-price" *ngIf="
+                    p.offPrice != 0 &&
+                    p.offPrice !== undefinded &&
+                    p.offPrice !== null
+                  ">
+                  {{ p?.currencyIndicator }}&nbsp;{{ p.productDiscountPrice }}
+                  off
+                </span>
+              </div>
+              <div class="row m-0" *ngIf="recurringFlag === false && apiRecurringFlag === 1">
+                <span class="product_price" *ngIf="
+                    p.offPrice != 0 &&
+                    p.offPrice !== undefined &&
+                    p.offPrice !== null
+                  ">{{ p.currencyIndicator }} {{ p?.offPrice }}</span>
+                <span class="product_price" *ngIf="
+                    p.offPrice == 0 ||
+                    p.offPrice === undefined ||
+                    p.offPrice === null
+                  ">{{ p.currencyIndicator }} {{ p.originalprice }}</span>
+                <span class="product_discount" *ngIf="
+                    p.offPrice != 0 &&
+                    p.offPrice !== undefinded &&
+                    p.offPrice !== null
+                  ">
+                  <span class="org-price-tag">{{ p?.originalprice }}</span>
+                </span>
+                <span class="product-off-price" *ngIf="
+                    p.offPrice != 0 &&
+                    p.offPrice !== undefinded &&
+                    p.offPrice !== null
+                  ">
+                  {{ p?.currencyIndicator }}&nbsp;{{ p.productDiscountPrice }}
+                  off
+                </span>
+              </div>
+              <div class="row m-0" *ngIf="recurringFlag === true && apiRecurringFlag === 1">
+                <span class="product_price">{{ recurringObject.currency_indicator }}
+                  {{ recurringObject.price }}</span>
+              </div>
+            </div>
+            <div class="availability-text">
+              Availability : <span class="stock-text">In Stock</span>
+            </div>
+          </div>
+          <div class="d-flex align-items-center gap-2 mb-3">
+            <span class="titlesub">Ship To</span>
+
+            <div class="addrDiv d-flex align-items-center">
+              <input class="addrLbl" type="text" maxlength="8" placeholder="Delivery Pincode" [(ngModel)]="shipPinCode"
+                (input)="checkIfDirty($event)" />
+              <div class="mrleft25"></div>
+              <button mat-button color="primary" (click)="pincodeClk()" [disabled]="
+                  disableFlag === true ||
+                  pincodeFlag ||
+                  shipPinCode === null ||
+                  shipPinCode === undefinded ||
+                  shipPinCode === ''
+                ">
+                Confirm
+              </button>
+            </div>
+            <div class="delDiv">
+              <span class="ml-4">
+                <img src="assets/images/delivery-truck 1.png" class="delVanImg" />
+              </span>
+              <span>
+                <p class="DLbl">{{ this.deliveryStatus }}</p>
+              </span>
+            </div>
+          </div>
+          <div class="d-flex align-items-center gap-2 mb-4" *ngIf="orgName !== 'Botcom'">
+            <span class="package-text"> Packing Size </span>&nbsp;
+            <span class="package-num">500 gms</span>
+            <span class="package-num">1 Kg </span>
+            <span class="package-num">5 Kg</span>
+            <span class="package-num">2 Kg</span>
+          </div>
+          <div class="d-flex align-items-center mb-3">
+            <div class="form-group d-flex align-items-center" *ngIf="subscribeFlag === false && apiRecurringFlag === 0">
+              <label class="titlesub1" for="input-quantity">Quantity</label>
+              <input type="number" min="1" max="30" name="quantity" (blur)="handleChangeQty($event)"
+                value="{{ this.productOverView.Product_Details[0].qty }}" id="input-quantity"
+                class="QuantityFld ml-3" />
+            </div>
+
+            <div class="form-group d-flex align-items-center" *ngIf="
+                this.productOverView.Product_Details[0].qty != 0 &&
+                apiRecurringFlag === 1
+              ">
+              <label class="titlesub1" for="input-quantity">Quantity</label>
+              <input type="number" min="1" max="30" name="quantity" (blur)="handleChangeQty($event)"
+                value="{{ this.productOverView.Product_Details[0].qty }}" id="input-quantity"
+                class="QuantityFld ml-3" />
+            </div>
+          </div>
+          <div class="d-flex justify-content-between mb-3">
+            <span class="description">Description:</span>&nbsp;&nbsp;
+            <span *ngFor="let k of this.productDetailObj.productDetails">
+              <span *ngIf="k?.description !== ''">
+                <span class="desAlignCls" [innerHTML]="k?.description"></span>
+              </span>
+              <span class="desAlignCls" *ngIf="k?.description === ''">
+                NA
+              </span>
+            </span>
+          </div>
+          <div class="customer-reviews d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-center top-section">
+              <span class="custo-reviews">Customer Reviews</span>
+            </div>
+            <div class="d-flex flex-column down-section p-2">
+              <div class="row mt-3 ml-2" *ngIf="
+                  this.productOverView.product_reviews.product_review.length ==
+                  0
+                ">
+                <p class="noReview">No Reviews Yet</p>
+              </div>
+              <div *ngIf="
+                  this.productOverView.product_reviews.product_review.length > 0
+                " class="review-section">
+                <div *ngFor="
+                    let data of this.productOverView.product_reviews
+                      .product_review;
+                    let i = index
+                  ">
+                  <div class="d-flex align-items-center">
+                    <span class="p-rev2">{{ data.author }}</span>
+                    &nbsp;&nbsp;
+                    <span class="mb-2">
+                      <span>
+                        <ngb-rating class="warning font-20 ngbRatingColor" [max]="5" [(rate)]="data.rating"
+                          [starTemplate]="t" [readonly]="true"></ngb-rating>
+                      </span>
+                      <span class="ratetxt"> {{ data.rating }}</span>
+                      <ng-template #t let-fill="fill">
+                        <span class="star" [class.full]="fill === 100">
+                          <span class="half" [style.width.%]="fill"><em class="fa fa-star text-warning"></em></span><em
+                            class="fa fa-star-o text-warning cursor"></em>
+                        </span>
+                      </ng-template>
+                    </span>
+                  </div>
+                  <p class="p-review">{{ data.text }}</p>
+                </div>
+              </div>
+              <hr style="margin-left: 130px; margin-right: 130px" *ngIf="
+                  this.productOverView.product_reviews.product_review.length ==
+                  0
+                " />
+              <div class="row mt-2">
+                <p class="ReviewTitLbl2">
+                  You Want To Give FeedBack To The Product
+                </p>
+                <br />
+              </div>
+              <div class="row">
+                <button type="button" class="RateAltbtn" (click)="rateProduct()">
+                  <i class="fa fa-star mr-1"></i>
+                  Rate Product
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="single_product" *ngIf="productshow">
+        <!-- <div class="col-sm-1">
+          <p class="addCart p-0" *ngIf="p.wishlistflag === 1" [matMenuTriggerFor]="afterMenu">
+            <i class="fa fa-heart-o heartIco"></i>
+          </p>
+          <p class="addCart p-0">
+            wishhhhlist
+            <i class="fas fa-heart whishListAddedIcon"></i>
+          </p>
+        </div> -->
+
+        <!-- Other Features Block -->
+        <!-- <div class="row ptmDv">
+              <div class="col-12 specificationsheadingDiv">
+
+
+                <form [formGroup]="form">
+                  <div class="form-group">
+                    <div *ngIf="this.otherFeatures.length >0">
+                     
+                      <div *ngFor="let productAvailabilityOptions of this.otherFeatures">
+                        <div *ngIf="productAvailabilityOptions.type=='select'">
+                          <span *ngIf="productAvailabilityOptions.required == true" class="requiredStarColor">*</span>
+                          <span>{{productAvailabilityOptions.name}}</span>
+                          <select class="form-control prodAvailOptions" (change)="handleSelect($event)"
+                            formControlName="selectOptionControl">
+                            <option value="0" selected>--Select--</option>
+                            <option
+                              *ngFor="let productAvailabilityOptionSelectOptions of productAvailabilityOptions.option_type"
+                              value={{productAvailabilityOptionSelectOptions.product_option_value_id}}&{{productAvailabilityOptionSelectOptions.sub_name}}&{{productAvailabilityOptions.option_id}}&{{productAvailabilityOptions.product_option_id}}>
+                              {{productAvailabilityOptionSelectOptions.sub_name +' ('+
+                              productAvailabilityOptionSelectOptions.price_prefix +
+                              ''+productAvailabilityOptionSelectOptions.currency_indicator+''+
+                              productAvailabilityOptionSelectOptions.price+')'}}
+                            </option>
+                          </select>
+
+                        </div>
+                        <div *ngIf="productAvailabilityOptions.type=='text'">
+                          <span *ngIf="productAvailabilityOptions.required == true " class="requiredStarColor">*</span>
+                          <span>{{productAvailabilityOptions.name}}</span>
+                          <input type="text" id="{{productAvailabilityOptions.option_id}}"
+                            class="form-control prodAvailOptions"
+                            name="{{productAvailabilityOptions.product_option_id}}"
+                            value="{{productAvailabilityOptions.value}}" (blur)="handleTextBox($event)"
+                            formControlName="textboxControl.option_id" />
+
+                        </div>
+                        <div *ngIf="productAvailabilityOptions.type=='textarea'">
+                          <span *ngIf="productAvailabilityOptions.required == true" class="requiredStarColor">*</span>
+                          <span>{{productAvailabilityOptions.name}}</span>
+                          <textarea
+                            id="{{productAvailabilityOptions.option_id}}&{{productAvailabilityOptions.product_option_id}}"
+                            class="form-control prodAvailOptions" formControlName="textareaControl"
+                            (blur)="handleTeaxtarea($event)">{{productAvailabilityOptions.value}}</textarea>
+                        </div>
+                        <div *ngIf="productAvailabilityOptions.type=='radio'">
+                          <span *ngIf="productAvailabilityOptions.required == true" class="requiredStarColor">*</span>
+                          <span>{{productAvailabilityOptions.name}}</span>
+                          <div
+                            *ngFor="let productAvailabilityOptionsData of productAvailabilityOptions.option_type; index as j">
+                            <input (change)="handleChangeRadio($event)" type="radio" name="radioButtonControl"
+                              class="prodAvailOptions"
+                              value="{{productAvailabilityOptionsData.product_option_value_id}}&{{productAvailabilityOptionsData.sub_name}}&{{productAvailabilityOptions.option_id}}&{{productAvailabilityOptions.product_option_id}}"
+                              id="{{productAvailabilityOptionsData.product_option_value_id}}&{{productAvailabilityOptionsData.sub_name}}&{{productAvailabilityOptions.option_id}}&{{productAvailabilityOptions.product_option_id}}"
+                              formControlName="radioButtonControl" />
+                            {{productAvailabilityOptionsData.sub_name +' ('+
+                            productAvailabilityOptionsData.price_prefix +
+                            ''+productAvailabilityOptionsData.currency_indicator+''+
+                            productAvailabilityOptionsData.price+')'}}
+                          </div>
+                         
+                        </div>
+                        <div *ngIf="productAvailabilityOptions.type=='date'">
+                          <span *ngIf="productAvailabilityOptions.required == true" class="requiredStarColor">*</span>
+                          <span>{{productAvailabilityOptions.name}}</span>
+                          <input type="date"
+                            id="{{productAvailabilityOptions.option_id}}&{{productAvailabilityOptions.product_option_id}}"
+                            class="form-control prodAvailOptions" value="{{productAvailabilityOptions.value}}"
+                            (change)="handleChangeDate($event)" formControlName="dateControl.option_id" />
+                        </div>
+                        <div *ngIf="productAvailabilityOptions.type=='time'">
+                          <span *ngIf="productAvailabilityOptions.required == true" class="requiredStarColor">*</span>
+                          <span>{{productAvailabilityOptions.name}}</span>
+                          <input type="time" class="form-control prodAvailOptions"
+                            value="{{productAvailabilityOptions.value}}" />
+                        </div>
+                        <div *ngIf="productAvailabilityOptions.type=='checkbox'">
+                          <span *ngIf="productAvailabilityOptions.required == true" class="requiredStarColor">*</span>
+                          <span>{{productAvailabilityOptions.name}}</span>
+                          <div
+                            *ngFor="let productAvailabilityOptionsData of productAvailabilityOptions.option_type; index as j">
+                            <input type="checkbox" (change)="handleChangeCheckbox($event)"
+                              formControlName="checkboxControl" class="prodAvailOptions"
+                              value="{{productAvailabilityOptionsData.product_option_value_id}}&{{productAvailabilityOptionsData.sub_name}}&{{productAvailabilityOptions.option_id}}&{{productAvailabilityOptions.product_option_id}}"
+                              id="{{productAvailabilityOptionsData.product_option_value_id}}&{{productAvailabilityOptionsData.sub_name}}&{{productAvailabilityOptions.option_id}}&{{productAvailabilityOptions.product_option_id}}" />
+                            {{productAvailabilityOptionsData.sub_name +' ('+
+                            productAvailabilityOptionsData.price_prefix +
+                            ''+productAvailabilityOptionsData.currency_indicator+''+
+                            productAvailabilityOptionsData.price+')'}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                 
+
+
+                 
+                  </div>
+
+                </form> -->
+        <!-- <div class="row m-0 p-1" *ngIf="showRatingForm">
+                  <p class="mb-1 p-2">Add Review & Rating</p>
+                  <mat-form-field class="col-12 p-1">
+                    <mat-label>Customer </mat-label>
+                    <input matInput [(ngModel)]="author" value="{{logedUserName}}">
+                  </mat-form-field>
+                  <mat-form-field class="col-12 pl-0">
+                    <mat-label>Review</mat-label>
+                    <textarea matInput [(ngModel)]="customerreviewtext"></textarea>
+                  </mat-form-field>
+                  <mat-form-field class="col-12 pl-0">
+                    <mat-label>Title (optional)</mat-label>
+                    <input matInput [(ngModel)]="title" placeholder="Review Title">
+                  </mat-form-field>
+                  <div class="col-12 p-1">
+                    <mat-label>Ratings </mat-label>
+                    <ngb-rating class="warning font-20 ml-2 ngbRatingColor" [max]="5" [(rate)]="currentRate"
+                      [readonly]="false"></ngb-rating>
+                    <button type="button" class="btn red_btn mb-2 float-right" (click)="handleSubmitReview()">Submit
+                    </button>
+                  </div>
+
+                </div> -->
+        <!-- </div>
+            </div> -->
+
+        <!-- Review Block  -->
+        <!-- <div class="row m-0 mt-2">
+
+
+
+              <div class="col-12 m-0 reviewsDetailsDiv reviewsDetailsDivHeight">
+                <p *ngIf="this.productDetailObj.productReviews.length === 0">No reviews</p>
+                <div class="row">
+                  <p class="mb-1 p-3 pr-0">
+                    <span *ngFor="let data of this.productOverView.product_reviews.product_review_count;">
+                      <span>Reviews ({{data.review_count}}) & Ratings</span>
+                    </span>
+                  </p>
+                </div>
+                <div class="review-block mb-1" *ngFor="let data of this.productDetailObj.productReviews;">
+                  <div class="row m-0">
+
+                    <div class="col-sm-3">
+                      <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
+                      <div class="review-block-name"><a href="#"
+                          *ngIf="data.author !== null && data.author !== undefined">{{data?.author | titlecase}}</a>
+                      </div>
+                      <div class="review-block-date"
+                        *ngIf="data.dateAdded !== 0 && data.dateAdded !== null && data.dateAdded !== undefined">
+                        Commented On {{data?.dateAdded}} days Ago</div>
+                      <div class="review-block-date" *ngIf="data.dateAdded === 0">Commented On Today</div>
+
+                    </div>
+                    <div class="col-sm-9">
+                      <div class="review-block-rate">
+                        <span class="badge badge-success"
+                          *ngIf="data.rating !== null && data.rating !== undefined && data.rating === 4 || data.rating === 5 || data.rating === 3"><i
+                            class="fa fa-star"></i> {{data?.rating}} &nbsp; </span>
+                        <span class="badge badge-warning"
+                          *ngIf="data.rating !== null && data.rating !== undefined && data.rating === 2"><i
+                            class="fa fa-star starRatingColor"></i><span class="starRatingColor">{{data?.rating}}</span>
+                          &nbsp; </span>
+                        <span class="badge badge-danger"
+                          *ngIf="data.rating !== null && data.rating !== undefined && data.rating === 1"><i
+                            class="fa fa-star"></i> {{data?.rating}} &nbsp; </span>
+                        &nbsp;
+                      <span class="reviewTitle">{{data?.title}}</span>
+                      </div>
+                      <div class="review-block-title" *ngIf="data.text !== null && data.text !== undefined">
+                        {{data?.text}}</div>
+                     
+                    </div>
+                  </div>
+                  <hr />
+
+                </div>
+              </div> -->
+
+        <!--<div class="col-12 p-1 suggestionsDiv" *ngIf= "this.summaryData.productDetails.length > 0">
+      <h4>Frequently bought together (Suggestions)</h4>
+        <div class="row m-0" style="text-align: center;">        
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 mb-3"
+        *ngFor="let p of this.productDetailObj.productDetails">    
+        <div class="card p-0 grid-product-card d-flex align-items-stretch">
+          <div class="card-body pb-0 pt-2 pr-2 pl-2 ">                
+        <img [src]="productMainImage" class="product-image">
+   
+    <p class="productNameInSuggestion" (click)="getProductsFromRelated(p.productID)"
+        title="{{p?.productName}}">{{p?.productName }}</p>
+     
+        <span class="badge badge-success avrgRatingStar" *ngIf = "p.ratingAvg !== null && p.ratingAvg !== undefined && p.ratingAvg  >= 3"><i class="fa fa-star"></i> {{p?.ratingAvg}} &nbsp;  </span>
+              <span class="badge badge-warning avrgRatingStar" *ngIf = "p.ratingAvg !== null && p.ratingAvg !== undefined && p.ratingAvg  >1 && p.ratingAvg <3"><i class="fa fa-star" style="color: white;"></i><span style="color: white;"> {{p?.ratingAvg}}</span>  &nbsp;  </span>
+              <span class="badge badge-danger avrgRatingStar" *ngIf = "p.ratingAvg !== null && p.ratingAvg !== undefined && p.ratingAvg <= 1"><i class="fa fa-star"></i> {{p?.ratingAvg}} &nbsp;  </span>
+              <span class="rating-review" >
+                <span *ngIf = "p.ratingCount != 0" > {{p.ratingCount}} Ratings</span>
+                <span *ngIf = "p.reviewCount != 0" > & {{p.reviewCount}} Reviews</span>
+              </span>              
+              <span class="rating-review" *ngIf = "p.ratingCount === 0 && p.reviewCount === 0" > No Ratings and Reviews</span>
+              <div class="col-sm-12 p-0 row m-0">
+                <p class="mb-0">
+                    <span class="special-price" *ngIf="p.productDiscountPrice !== 0 && p.productDiscountPrice !== undefined && p.productDiscountPrice !== null">{{p?.currencyIndicator}}&nbsp;{{p?.productDiscountPrice}}</span>
+                    <span class="special-price" *ngIf="p.productDiscountPrice === 0 || p.productDiscountPrice === undefined || p.productDiscountPrice === null">{{p?.currencyIndicator}}&nbsp;{{p?.originalprice}}</span>
+                        <span class="regular-price" *ngIf="p.productDiscountPrice !== 0 && p.productDiscountPrice !== undefined && p.productDiscountPrice !== null">
+                            {{p?.currencyIndicator}}&nbsp;{{p?.originalprice}}</span>
+                        <span class="product-off-price" *ngIf="p.offPrice !== 0 && p.offPrice !== undefinded && p.offPrice !== null">
+                            {{p?.currencyIndicator}}&nbsp;{{p?.offPrice}} off
+                        </span>
+                </p>
+            </div>
+            </div>
+          </div>
+                  </div>
+                <div class="col-lg-3"></div>
+                </div>
+                <div class="row  m-0">
+                  <div class="col-lg-3"></div>
+                  <div class="col-lg-6" style="text-align: center;">
+                    <span class="plusSymbol">+</span>
+                  </div>
+                  <div class="col-lg-3"></div>                
+                </div>
+                <div class="row  m-0">
+          <div class="col-lg-4 col-md-6 col-sm-12 col-xs-4 mb-3"
+              *ngFor="let p of this.summaryData.productDetails; let i = index">
+              <div class="card p-0 grid-product-card d-flex align-items-stretch">
+                  <div class="card-body pb-0 pt-2 pr-2 pl-2 ">
+                    <mat-checkbox class="example-margin" ></mat-checkbox>
+                      <div class="col-sm-12" style="text-align: center;" (click)="getProductsFromRelated(p.productId)">                        
+                          <img [src]="p.image" class="product-image" >
+                      </div>
+                      <p class="productNameSuggestion" (click)="getProductsFromRelated(p.productId)"
+                          title="{{p?.name}}">{{p?.name }}</p>
+                       
+                          <span class="badge badge-success avrgRatingStar" *ngIf = "p.averageRating !== null && p.averageRating !== undefined && p.averageRating  >= 3"><i class="fa fa-star"></i> {{p?.averageRating}} &nbsp;  </span>
+                          <span class="badge badge-warning avrgRatingStar" *ngIf = "p.averageRating !== null && p.averageRating !== undefined && p.averageRating  >1 && p.averageRating <3"><i class="fa fa-star" style="color: white;"></i><span style="color: white;"> {{p?.averageRating}}</span>  &nbsp;  </span>
+                          <span class="badge badge-danger avrgRatingStar" *ngIf = "p.averageRating !== null && p.averageRating !== undefined && p.averageRating <= 1"><i class="fa fa-star"></i> {{p?.averageRating}} &nbsp;  </span>
+                          <span class="rating-review">
+                            <span *ngIf = "p?.ratingCount != 0">{{p?.ratingCount}} Ratings & </span>  
+                            <span *ngIf = "p?.reviewCount != 0">{{p?.reviewCount}} Reviews</span>  
+                             </span>
+                          <span class="rating-review" *ngIf = "p?.ratingCount === 0 && p?.reviewCount === 0" >No Ratings & Reviews</span>
+                      <div class="col-sm-12 p-0 row m-0">
+                          <p class="mb-0">
+                              <span class="special-priceSuggestions" *ngIf="p.discountPrice !== 0 && p.discountPrice !== undefined && p.discountPrice !== null">{{p?.currencyIndicator}}&nbsp;{{p?.discountPrice}}</span>
+                              <span class="special-priceSuggestions" *ngIf="p.discountPrice === 0 || p.discountPrice === undefined || p.discountPrice === null">{{p?.currencyIndicator}}&nbsp;{{p?.price}}</span>
+                                  <span class="regular-priceSuggestions" *ngIf="p.discountPrice !== 0 && p.discountPrice !== undefined && p.discountPrice !== null">
+                                      {{p?.currencyIndicator}}&nbsp;{{p?.price}}</span>
+                                  <span class="product-off-price" *ngIf="p.offPrice !== 0 && p.offPrice !== undefinded && p.offPrice !== null">
+                                      {{p?.currencyIndicator}}&nbsp;{{p?.offPrice}} off
+                                  </span>
+                          </p>
+                      </div>
+                  </div>
+              </div>            
+          </div>
+        </div>
+        <div class="row m-0 SuggestionsItemsAmount">
+          <div class="col-sm-9">
+            <div class="row">
+<div class="col-sm-3" *ngFor="let p of this.productDetailObj.productDetails">
+  <span>1 item</span><br/>
+  <span>{{p?.currencyIndicator}}&nbsp;{{p?.productDiscountPrice}}</span>
+</div>
+<div class="col-sm-1">
+  <span class="plusSymbol">+</span>
+</div>
+<div class="col-sm-3">
+  <span>1 item</span><br/>
+  <span>₹21,790</span>
+</div>
+<div class="col-sm-1">
+  <span class="plusSymbol">=</span>
+</div>
+<div class="col-sm-4">
+  <span>1 item</span><br/>
+  <span>₹21,790</span>
+</div>
+          </div>
+        </div>
+          <div class="col-sm-3">
+            <button type="button" class="btn addToCartInSuggetion "><i class="fas fa-shopping-cart mr-1"></i> Add to Cart </button>
+          </div>
+        </div>
+  </div>-->
+      </div>
+    </div>
+  </div>
+
+  <div #prodetailSDiv>
+    <p style="height: 60px; color: white">{{ orgName }}</p>
+  </div>
+
+  <!-- <div class="row" class="DisDiv">
+    <div class="col-sm-12">
+      <mat-tab-group
+        class="mtgCls headerTabBody"
+        mat-align-tabs="center"
+        (selectedTabChange)="onTabChanged($event.index)"
+        [selectedIndex]="tabIndex"
+      >
+        <mat-tab label="Description" class="mtgCs">
+          <div class="row mt-3">
+            <div class="col-sm-1">
+            
+            </div>
+            <div
+              class="col-sm-9 desRow"
+              *ngFor="let k of this.productDetailObj.productDetails"
+            >
+              <span *ngIf="k?.description !== ''">
+                <span class="desAlignCls" [innerHTML]="k?.description"></span>
+              </span>
+              <span class="desAlignCls" *ngIf="k?.description === ''">
+                NA
+              </span>
+
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Features">
+          <div class="row mt-3">
+            <div class="col-sm-2">
+            </div>
+            <div class="col-sm-8 p-0">
+              <ul class="p-0">
+                <li *ngFor="let h of this.productDetailObj.productHighlight">
+                  {{ h.producthighlightName }}
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </mat-tab>
+        <mat-tab label="Reviews">
+          <div
+            class="row mt-3 ml-2"
+            *ngIf="
+              this.productOverView.product_reviews.product_review.length == 0
+            "
+          >
+            <p class="noReview">No Reviews Yet</p>
+          </div>
+          <div
+            class="row mt-3 ml-2"
+            *ngIf="
+              this.productOverView.product_reviews.product_review.length > 0
+            "
+          >
+            <p class="ReviewTitLbl">Our Customer Reviews</p>
+
+            <div class="ml-2 img-slider">
+              <div #RatingContent class="img-scroll-container-rev">
+                <div
+                  class="img-widget-rev small-img1 wekCls"
+                  *ngFor="
+                    let data of this.productOverView.product_reviews
+                      .product_review;
+                    let i = index
+                  "
+                >
+                  <p class="p-review">{{ data.text }}</p>
+
+                  <p class="p-rev2">{{ data.author }}</p>
+                  <p>
+                    <span>
+                      <ngb-rating
+                        class="warning font-20 ngbRatingColor"
+                        [max]="5"
+                        [(rate)]="data.rating"
+                        [starTemplate]="t"
+                        [readonly]="true"
+                      ></ngb-rating>
+                    </span>
+                    <span class="ratetxt"> {{ data.rating }}</span>
+                    <ng-template #t let-fill="fill">
+                      <span class="star" [class.full]="fill === 100">
+                        <span class="half" [style.width.%]="fill"
+                          ><em class="fa fa-star text-warning"></em></span
+                        ><em class="fa fa-star-o text-warning cursor"></em>
+                      </span>
+                    </ng-template>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div
+            class="row"
+            *ngIf="
+              this.productOverView.product_reviews.product_review.length > 0
+            "
+          >
+            <div class="col-sm-10"></div>
+            <div class="col-sm-2">
+              <i
+                class="fa fa-arrow-left btn-slider-left-arrow2"
+                aria-hidden="true"
+                (click)="scrollRatingContentLeft()"
+              ></i
+              >&nbsp;
+              <i
+                class="fa fa-arrow-right btn-slider-left-arrow2"
+                aria-hidden="true"
+                (click)="scrollRatingContentRight()"
+              ></i>
+            </div>
+          </div>
+          <hr style="margin-left: 70px; margin-right: 158px" />
+          <div class="row">
+            <p class="ReviewTitLbl2">
+              You Want To Give FeedBack To The Product
+            </p>
+            <br />
+          </div>
+          <div class="row">
+            <button type="button" class="RateAltbtn" (click)="rateProduct()">
+              <i class="fa fa-star mr-1"></i>
+              Rate Product
+            </button>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div> -->
+
+  <!-- Related Products -->
+  <!-- <div
+    class="col-sm-12 productsPage"
+    *ngIf="this.summaryData.productDetails.length > 0"
+  >
+    <div class="row titleR">
+      <div class="col-sm-5">
+        <h4 class="subtitleone">Related Products</h4>
+      </div>
+      <div class="col-sm-4"></div>
+      <div class="col-sm-3">
+        <div class="text-right">
+          <i
+            class="fa fa-arrow-left btn-slider-left-arrow"
+            aria-hidden="true"
+            (click)="relatedScrollLeft()"
+          ></i
+          >&nbsp;
+          <i
+            class="fa fa-arrow-right btn-slider-left-arrow"
+            aria-hidden="true"
+            (click)="relatedScrollRight()"
+          ></i>
+        </div>
+      </div>
+    </div>
+    <div class="row m-0 img-slider">
+      <div #relatedContent class="d-flex">
+        <div
+          class="item-card mt-5 ml-5 p-0"
+          *ngFor="let p of this.summaryData.productDetails; let i = index"
+        >
+          <span class="text-right">
+            <span *ngIf="p.wishlistflag === 1" [matMenuTriggerFor]="afterMenu">
+              <img
+                src="assets/svg/Wishlist.svg"
+                alt="Wishlist"
+                width="25px"
+                height="25px"
+                class="product-Wishlist"
+              />
+            </span>
+            <mat-menu #afterMenu="matMenu" xPosition="before">
+              <div
+                mat-menu-item
+                [disableRipple]="true"
+                (click)="$event.stopPropagation()"
+                class="saveMenuItem wishlistform"
+              >
+                <div class="row p-0">
+                  <div class="col-12 pt-2" *ngIf="foldervisible">
+                    <div class="col-12">
+                      <mat-form-field appearance="outline" class="font-10">
+                        <mat-label>Folder Name</mat-label>
+                        <input
+                          matInput
+                          placeholder="Enter Name"
+                          [(ngModel)]="folderName"
+                          name="foldername"
+                        />
+                      </mat-form-field>
+                    </div>
+                    <div class="col-12 row m-0">
+                      <div class="col-6 p-0">
+                        <p class="newfolder text-center" (click)="hidefolder()">
+                          Back
+                        </p>
+                      </div>
+                      <div class="col-6 pr-3" (click)="addFolder()">
+                        <p class="newfolder text-center">Add</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 pt-2" *ngIf="formhide">
+                    <form>
+                      <div class="col-sm-12">
+                        <mat-form-field class="font-10" appearance="outline">
+                          <mat-label>Folder</mat-label>
+                          <mat-select [(ngModel)]="folderList" name="folders">
+                            <mat-option
+                              *ngFor="let a of folders"
+                              [value]="a.folder_id"
+                            >
+                              {{ a.folder_name }}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-12 row m-0">
+                        <div class="col-6 p-0" (click)="showfolder()">
+                          <p class="newfolder text-center">New Folder</p>
+                        </div>
+                        <div
+                          class="col-6 pr-3"
+                          (click)="addtoWishlist(p, i, 'related')"
+                        >
+                          <p class="newfolder text-center">Add</p>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </mat-menu>
+
+            <span *ngIf="p.wishlistflag === 0">
+              <img
+                src="assets/svg/btn-whishlist-selected.svg"
+                alt="Wishlist"
+                width="25px"
+                height="25px"
+                class="product-Wishlist"
+                (click)="removeWishlist(i, p.wishlistStatusId, 'related')"
+              />
+            </span>
+          </span>
+
+          <div
+            class="product-img d-flex justify-content-center"
+            (click)="getProductsFromRelated(p.productId)"
+          >
+            <img [src]="p.image" alt="watch-icon" height="200px" />
+          </div>
+          <div class="d-flex justify-content-between align-items-center">
+            <span class="product-offer" *ngIf="p.discountPrice !== '0.00'">
+              <span>Save</span>
+              <span
+                [ngClass]="{ disPrice1: p.discountPrice.length > 5 }"
+                *ngIf="p.priceType === 'F'"
+              >
+                {{ p.currencyIndicator }}{{ p.discountPrice | slice : 0 : 7 }}
+              </span>
+              <span
+                [ngClass]="{ disPrice1: p.discountPrice.length > 5 }"
+                *ngIf="p.priceType === 'P'"
+              >
+                {{ p.discountPrice | slice : 0 : 7 }}{{ p.symbol }}
+              </span>
+            </span>
+            <span class="d-flex align-items-center star-rating">
+              &nbsp; {{ p.averageRating }}&nbsp;
+              <img src="assets/svg/star.svg" alt="star-logo" />&nbsp; | &nbsp;
+              5&nbsp;&nbsp;
+            </span>
+          </div>
+
+          <div class="d-flex flex-column product-content">
+            <div
+              class="d-flex align-items-center justify-content-between pb-3"
+              (click)="goToProductsView(p.product_id)"
+            >
+              <span class="product-name" title="{{ p.name }}">{{
+                p.name
+              }}</span>
+            </div>
+            <div class="d-flex align-items-center justify-content-between">
+              <span class="d-flex align-items-center">
+                <span
+                  class="product-currency"
+                  *ngIf="
+                    p.discountPrice !== 0 &&
+                    p.discountPrice !== undefined &&
+                    p.discountPrice !== null
+                  "
+                >
+                  {{ p.currencyIndicator }}{{ p.offPrice }}
+                </span>
+                <span
+                  class="product-currency"
+                  *ngIf="
+                    p.discountPrice === 0 ||
+                    p.discountPrice === undefined ||
+                    p.discountPrice === null
+                  "
+                >
+                  {{ p.currencyIndicator }}{{ p.price }}
+                </span>
+                <span
+                  class="OfferPricewek1 ml-1"
+                  *ngIf="
+                    p.discountPrice !== 0 &&
+                    p.discountPrice !== undefined &&
+                    p.discountPrice !== null
+                  "
+                >
+                  {{ p.currencyIndicator }}{{ p.price }}
+                </span>
+              </span>
+
+              <button
+                class="add-cart"
+                (click)="getProductsFromRelated(p.productId)"
+              >
+              Click To View
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <div class="mt-4 mb-5" *ngIf="this.summaryData.productDetails.length > 0">
+    <p-carousel class="landing-carousel" [value]="this.summaryData.productDetails" [showIndicators]="false"
+      [circular]="false" [numVisible]="5" [numScroll]="4" [responsiveOptions]="responsiveOptions">
+      <ng-template pTemplate="header">
+        <h5 class="pl-4 subtitleone">Related Products</h5>
+      </ng-template>
+      <ng-template let-p pTemplate="item" let-i="index">
+        <div #relatedContent class="d-flex">
+          <div class="item-card mt-4 ml-4 p-0">
+            <span class="text-right">
+              <span *ngIf="p.wishlistflag === 1" [matMenuTriggerFor]="afterMenu">
+                <img src="assets/svg/Wishlist.svg" alt="Wishlist" width="25px" height="25px" class="product-Wishlist" />
+              </span>
+              <mat-menu #afterMenu="matMenu" xPosition="before">
+                <div mat-menu-item [disableRipple]="true" (click)="$event.stopPropagation()"
+                  class="saveMenuItem wishlistform">
+                  <div class="row p-0">
+                    <div class="col-12 pt-2" *ngIf="foldervisible">
+                      <div class="col-12">
+                        <mat-form-field appearance="outline" class="font-10">
+                          <mat-label>Folder Name</mat-label>
+                          <input matInput placeholder="Enter Name" [(ngModel)]="folderName" name="foldername" />
+                        </mat-form-field>
+                      </div>
+                      <div class="col-12 row m-0">
+                        <div class="col-6 p-0">
+                          <p class="newfolder text-center" (click)="hidefolder()">
+                            Back
+                          </p>
+                        </div>
+                        <div class="col-6 pr-3" (click)="addFolder()">
+                          <p class="newfolder text-center">Add</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 pt-2" *ngIf="formhide">
+                      <form>
+                        <div class="col-sm-12">
+                          <mat-form-field class="font-10" appearance="outline">
+                            <mat-label>Folder</mat-label>
+                            <mat-select [(ngModel)]="folderList" name="folders">
+                              <mat-option *ngFor="let a of folders" [value]="a.folder_id">
+                                {{ a.folder_name }}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-12 row m-0">
+                          <div class="col-6 p-0" (click)="showfolder()">
+                            <p class="newfolder text-center">New Folder</p>
+                          </div>
+                          <div class="col-6 pr-3" (click)="addtoWishlist(p, i, 'related')">
+                            <p class="newfolder text-center">Add</p>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </mat-menu>
+
+              <span *ngIf="p.wishlistflag === 0">
+                <img src="assets/svg/btn-whishlist-selected.svg" alt="Wishlist" width="25px" height="25px"
+                  class="product-Wishlist" (click)="removeWishlist(i, p.wishlistStatusId, p, 'related')" />
+              </span>
+            </span>
+            <div class="product-img d-flex justify-content-center" (click)="getProductsFromRelated(p.productId)">
+              <img [src]="p.image" alt="watch-icon" height="200px" />
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="product-offer" *ngIf="p.discountPrice !== '0.00'">
+                <span>Save</span>
+                <span [ngClass]="{ disPrice1: p.discountPrice.length > 5 }" *ngIf="p.priceType === 'F'">
+                  {{ p.currencyIndicator }}{{ p.discountPrice | slice : 0 : 7 }}
+                </span>
+                <span [ngClass]="{ disPrice1: p.discountPrice.length > 5 }" *ngIf="p.priceType === 'P'">
+                  {{ p.discountPrice | slice : 0 : 7 }}{{ p.symbol }}
+                </span>
+              </span>
+              <span class="d-flex align-items-center star-rating">
+                &nbsp; {{ p.averageRating }}&nbsp;
+                <img src="assets/svg/star.svg" alt="star-logo" />&nbsp; | &nbsp;
+                5&nbsp;&nbsp;
+              </span>
+            </div>
+
+            <div class="d-flex flex-column product-content">
+              <div class="d-flex align-items-center justify-content-between pb-3"
+                (click)="goToProductsView(p.product_id)">
+                <span class="product-name" title="{{ p.name }}">{{
+                  p.name
+                  }}</span>
+              </div>
+              <div class="d-flex align-items-center justify-content-between">
+                <span class="d-flex align-items-center">
+                  <span class="product-currency" *ngIf="
+                      p.discountPrice !== 0 &&
+                      p.discountPrice !== undefined &&
+                      p.discountPrice !== null
+                    ">
+                    {{ p.currencyIndicator }}{{ p.offPrice }}
+                  </span>
+                  <span class="product-currency" *ngIf="
+                      p.discountPrice === 0 ||
+                      p.discountPrice === undefined ||
+                      p.discountPrice === null
+                    ">
+                    {{ p.currencyIndicator }}{{ p.price }}
+                  </span>
+                  <span class="OfferPricewek1 ml-1" *ngIf="
+                      p.discountPrice !== 0 &&
+                      p.discountPrice !== undefined &&
+                      p.discountPrice !== null
+                    ">
+                    {{ p.currencyIndicator }}{{ p.price }}
+                  </span>
+                </span>
+
+                <button class="add-cart" (click)="getProductsFromRelated(p.productId)">
+                  Click To View
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-carousel>
+  </div>
+
+  <!-- Recently Viewd Products -->
+  <!-- <div
+    class="col-sm-12 productsPage"
+    *ngIf="this.RecentProductData.recentViewDetails.length > 0"
+  >
+    <div class="row titleR">
+      <div class="col-sm-5">
+        <h4 class="subtitleone">Recently Viewed Items</h4>
+      </div>
+      <div class="col-sm-4"></div>
+      <div class="col-sm-3">
+        <div class="text-right">
+          <i
+            class="fa fa-arrow-left btn-slider-left-arrow"
+            aria-hidden="true"
+            (click)="scrollLeft()"
+          ></i
+          >&nbsp;
+          <i
+            class="fa fa-arrow-right btn-slider-left-arrow"
+            aria-hidden="true"
+            (click)="scrollRight()"
+          ></i>
+        </div>
+      </div>
+    </div>
+    <div class="row m-0 img-slider">
+      <div #widgetsContent class="d-flex">
+        <div
+          class="item-card mt-5 ml-5 p-0"
+          *ngFor="
+            let p of this.RecentProductData.recentViewDetails;
+            let i = index
+          "
+        >
+          <span class="text-right">
+            <span *ngIf="p.wishlistflag === 1" [matMenuTriggerFor]="afterMenu">
+              <img
+                src="assets/svg/Wishlist.svg"
+                alt="Wishlist"
+                width="25px"
+                height="25px"
+                class="product-Wishlist"
+              />
+            </span>
+            <mat-menu #afterMenu="matMenu" xPosition="before">
+              <div
+                mat-menu-item
+                [disableRipple]="true"
+                (click)="$event.stopPropagation()"
+                class="saveMenuItem wishlistform"
+              >
+                <div class="row p-0">
+                  <div class="col-12 pt-2" *ngIf="foldervisible">
+                    <div class="col-12">
+                      <mat-form-field appearance="outline" class="font-10">
+                        <mat-label>Folder Name</mat-label>
+                        <input
+                          matInput
+                          placeholder="Enter Name"
+                          [(ngModel)]="folderName"
+                          name="foldername"
+                        />
+                      </mat-form-field>
+                    </div>
+                    <div class="col-12 row m-0">
+                      <div class="col-6 p-0">
+                        <p class="newfolder text-center" (click)="hidefolder()">
+                          Back
+                        </p>
+                      </div>
+                      <div class="col-6 pr-3" (click)="addFolder()">
+                        <p class="newfolder text-center">Add</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 pt-2" *ngIf="formhide">
+                    <form>
+                      <div class="col-sm-12">
+                        <mat-form-field class="font-10" appearance="outline">
+                          <mat-label>Folder</mat-label>
+                          <mat-select [(ngModel)]="folderList" name="folders">
+                            <mat-option
+                              *ngFor="let a of folders"
+                              [value]="a.folder_id"
+                            >
+                              {{ a.folder_name }}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-12 row m-0">
+                        <div class="col-6 p-0" (click)="showfolder()">
+                          <p class="newfolder text-center">New Folder</p>
+                        </div>
+                        <div
+                          class="col-6 pr-3"
+                          (click)="addtoWishlist(p, i, 'recent')"
+                        >
+                          <p class="newfolder text-center">Add</p>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </mat-menu>
+
+            <span *ngIf="p.wishlistflag === 0">
+              <img
+                src="assets/svg/btn-whishlist-selected.svg"
+                alt="Wishlist"
+                width="25px"
+                height="25px"
+                class="product-Wishlist"
+                (click)="removeWishlist(i, p.wishlistStatusId, 'recent')"
+              />
+            </span>
+          </span>
+
+          <div class="product-img d-flex justify-content-center">
+            <img
+              [src]="p.image"
+              alt="watch-icon"
+              height="200px"
+              (click)="getProductsFromRelated(p.productId)"
+            />
+          </div>
+          <div class="d-flex justify-content-between align-items-center">
+            <span class="product-offer" *ngIf="p.discountPrice !== '0.00'">
+              <span>Save</span>
+              <span
+                [ngClass]="{ disPrice1: p.discountPrice.length > 5 }"
+                *ngIf="p.priceType === 'F'"
+              >
+                {{ p.currencyIndicator }}{{ p.discountPrice | slice : 0 : 7 }}
+              </span>
+              <span
+                [ngClass]="{ disPrice1: p.discountPrice.length > 5 }"
+                *ngIf="p.priceType === 'P'"
+              >
+                {{ p.discountPrice | slice : 0 : 7 }}{{ p.symbol }}
+              </span>
+            </span>
+            <span class="d-flex align-items-center star-rating">
+              &nbsp; {{ p?.averageRating }}&nbsp;
+              <img src="assets/svg/star.svg" alt="star-logo" />&nbsp; | &nbsp;
+              5&nbsp;&nbsp;
+            </span>
+          </div>
+
+          <div class="d-flex flex-column product-content">
+            <div
+              class="d-flex align-items-center justify-content-between pb-3"
+              (click)="getProductsFromRelated(p.productId)"
+            >
+              <span class="product-name" title="{{ p.name }}">{{
+                p.name
+              }}</span>
+            </div>
+            <div class="d-flex align-items-center justify-content-between">
+              <span class="d-flex align-items-center">
+                <span
+                  class="product-currency"
+                  *ngIf="
+                    p.discountPrice !== 0 &&
+                    p.discountPrice !== undefined &&
+                    p.discountPrice !== null
+                  "
+                >
+                  {{ p.currencyIndicator }}{{ p.offPrice }}
+                </span>
+                <span
+                  class="product-currency"
+                  *ngIf="
+                    p.discountPrice === 0 ||
+                    p.discountPrice === undefined ||
+                    p.discountPrice === null
+                  "
+                >
+                  {{ p.currencyIndicator }}{{ p.price }}
+                </span>
+                <span
+                  class="OfferPricewek1 ml-1"
+                  *ngIf="
+                    p.discountPrice !== 0 &&
+                    p.discountPrice !== undefined &&
+                    p.discountPrice !== null
+                  "
+                >
+                  {{ p.currencyIndicator }}{{ p.price }}
+                </span>
+              </span>
+
+              <button
+                class="add-cart"
+                (click)="getProductsFromRelated(p.productId)"
+              >
+                Click To View
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <div class="mt-4 mb-5" *ngIf="this.RecentProductData.recentViewDetails.length > 0">
+    <p-carousel class="landing-carousel" [value]="this.RecentProductData.recentViewDetails" [showIndicators]="false"
+      [circular]="false" [numVisible]="5" [numScroll]="4" [responsiveOptions]="responsiveOptions">
+      <ng-template pTemplate="header">
+        <h5 class="pl-4 subtitleone">Recently Viewed Items</h5>
+      </ng-template>
+      <ng-template let-p pTemplate="item" let-i="index">
+        <div #widgetsContent class="d-flex">
+          <div class="item-card mt-3 ml-4 p-0">
+            <span class="text-right">
+              <span *ngIf="p.wishlistflag === 1" [matMenuTriggerFor]="afterMenu">
+                <!-- <i class="fa fa-heart heartIco product-Wishlist"></i> -->
+                <img src="assets/svg/Wishlist.svg" alt="Wishlist" width="25px" height="25px" class="product-Wishlist" />
+              </span>
+              <mat-menu #afterMenu="matMenu" xPosition="before">
+                <div mat-menu-item [disableRipple]="true" (click)="$event.stopPropagation()"
+                  class="saveMenuItem wishlistform">
+                  <div class="row p-0">
+                    <div class="col-12 pt-2" *ngIf="foldervisible">
+                      <div class="col-12">
+                        <mat-form-field appearance="outline" class="font-10">
+                          <mat-label>Folder Name</mat-label>
+                          <input matInput placeholder="Enter Name" [(ngModel)]="folderName" name="foldername" />
+                        </mat-form-field>
+                      </div>
+                      <div class="col-12 row m-0">
+                        <div class="col-6 p-0">
+                          <p class="newfolder text-center" (click)="hidefolder()">
+                            Back
+                          </p>
+                        </div>
+                        <div class="col-6 pr-3" (click)="addFolder()">
+                          <p class="newfolder text-center">Add</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 pt-2" *ngIf="formhide">
+                      <form>
+                        <div class="col-sm-12">
+                          <mat-form-field class="font-10" appearance="outline">
+                            <mat-label>Folder</mat-label>
+                            <mat-select [(ngModel)]="folderList" name="folders">
+                              <mat-option *ngFor="let a of folders" [value]="a.folder_id">
+                                {{ a.folder_name }}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-12 row m-0">
+                          <div class="col-6 p-0" (click)="showfolder()">
+                            <p class="newfolder text-center">New Folder</p>
+                          </div>
+                          <div class="col-6 pr-3" (click)="addtoWishlist(p, i, 'recent')">
+                            <p class="newfolder text-center">Add</p>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </mat-menu>
+
+              <span *ngIf="p.wishlistflag === 0">
+                <!-- <i
+                class="fa fa-heart SelectedHeartIco product-Wishlist"
+                (click)="removeWishlist(i, p.wishlistStatusId, 'recent')"
+              ></i> -->
+
+                <img src="assets/svg/btn-whishlist-selected.svg" alt="Wishlist" width="25px" height="25px"
+                  class="product-Wishlist" (click)="removeWishlist(i, p.wishlistStatusId, p, 'recent')" />
+              </span>
+            </span>
+
+            <div class="product-img d-flex justify-content-center">
+              <img [src]="p.image" alt="watch-icon" height="200px" (click)="getProductsFromRelated(p.productId)" />
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="product-offer" *ngIf="p.discountPrice !== '0.00'">
+                <span>Save</span>
+                <span [ngClass]="{ disPrice1: p.discountPrice.length > 5 }" *ngIf="p.priceType === 'F'">
+                  {{ p.currencyIndicator }}{{ p.discountPrice | slice : 0 : 7 }}
+                </span>
+                <span [ngClass]="{ disPrice1: p.discountPrice.length > 5 }" *ngIf="p.priceType === 'P'">
+                  {{ p.discountPrice | slice : 0 : 7 }}{{ p.symbol }}
+                </span>
+              </span>
+              <span class="d-flex align-items-center star-rating">
+                &nbsp; {{ p?.averageRating }}&nbsp;
+                <img src="assets/svg/star.svg" alt="star-logo" />&nbsp; | &nbsp;
+                5&nbsp;&nbsp;
+              </span>
+            </div>
+
+            <div class="d-flex flex-column product-content">
+              <div class="d-flex align-items-center justify-content-between pb-3"
+                (click)="getProductsFromRelated(p.productId)">
+                <span class="product-name" title="{{ p.name }}">{{
+                  p.name
+                  }}</span>
+              </div>
+              <div class="d-flex align-items-center justify-content-between">
+                <span class="d-flex align-items-center">
+                  <span class="product-currency" *ngIf="
+                      p.discountPrice !== 0 &&
+                      p.discountPrice !== undefined &&
+                      p.discountPrice !== null
+                    ">
+                    {{ p.currencyIndicator }}{{ p.offPrice }}
+                  </span>
+                  <span class="product-currency" *ngIf="
+                      p.discountPrice === 0 ||
+                      p.discountPrice === undefined ||
+                      p.discountPrice === null
+                    ">
+                    {{ p.currencyIndicator }}{{ p.price }}
+                  </span>
+                  <span class="OfferPricewek1 ml-1" *ngIf="
+                      p.discountPrice !== 0 &&
+                      p.discountPrice !== undefined &&
+                      p.discountPrice !== null
+                    ">
+                    {{ p.currencyIndicator }}{{ p.price }}
+                  </span>
+                </span>
+
+                <button class="add-cart" (click)="getProductsFromRelated(p.productId)">
+                  Click To View
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-carousel>
+  </div>
+</div>
+
+<ng-template #affiliationDetails>
+  <div class="row col-sm-12 rateDv" *ngIf="showRatingForm && reviewFlag === 1">
+    <div class="col-12 p-0">
+      <p class="rateHeading">Rate This Product</p>
+      <hr />
+    </div>
+    <div class="card rate-card">
+      <div class="row m-0">
+        <div class="col-sm-6 text-center">
+          <p class="YourRtingLbl">Your Rating</p>
+        </div>
+        <div class="col-sm-6 strD">
+          <ngb-rating class="warning font-20 ml-2 ngbRatingColor rateIn" [max]="5" [(rate)]="currentRate"
+            [readonly]="false">
+          </ngb-rating>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 p-0">
+      <p class="rate-p">Anything you need to write about product</p>
+    </div>
+    <div class="card review-card">
+      <div class="row m-0">
+        <div class="col-sm-12">
+          <p class="YourRtingLbl">Write a review</p>
+        </div>
+        <div class="col-sm-12 pb-3">
+          <textarea name="review" class="review-textarea" aria-describedby="review" [(ngModel)]="customerreviewtext"
+            placeholder="Review goes  here"></textarea>
+        </div>
+        <mat-form-field class="col-12">
+          <mat-label>Customer </mat-label>
+          <input matInput [(ngModel)]="author" value="{{ logedUserFrstName }} {{ logedUserLastName }}" />
+        </mat-form-field>
+        <mat-form-field class="col-12">
+          <mat-label>Title (optional)</mat-label>
+          <input matInput [(ngModel)]="title" placeholder="Review Title" />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- <mat-form-field class="col-12 pl-0">
+      <mat-label>Review</mat-label>
+      <textarea matInput [(ngModel)]="customerreviewtext"></textarea>
+    </mat-form-field> -->
+
+    <div class="col-12 boderDivShowdow">
+      <!-- <mat-label>Ratings </mat-label> -->
+      <!-- <ngb-rating class="warning font-20 ml-2 ngbRatingColor" [max]="5" [(rate)]="currentRate"
+            [readonly]="false"></ngb-rating> -->
+
+      <button type="button" class="btn red_btn mb-2 mt-3 float-right sub-btn" (click)="handleSubmitReview()">
+        Submit
+      </button>
+      <button type="button" class="btn delete mb-2 mt-3 float-right" (click)="dialog.closeAll()">
+        Cancel
+      </button>
+    </div>
+  </div>
+  <div class="row rateDv" *ngIf="showRatingForm && reviewFlag === 0">
+    <div class="col-12">
+      <p class="rateHeading">Haven't purchased this product?</p>
+      <p class="rateHeading2">
+        Sorry! You are not allowed to review this product since you haven't
+        bought it on {{ orgName }}.
+      </p>
+      <button type="button" class="btn btn-dark ok-btn mb-2 mt-3 float-right" (click)="dialog.closeAll()">
+        OK
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #chartDetails>
+  <div class="row m-2">
+    <div class="col-sm-12 p-0">
+      <div class="card p-4">
+        <!-- <div class="row"> -->
+        <div class="col-sm-12 p-0">
+          <h5>Configured Subscription Details</h5>
+        </div>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Sl.No</th>
+              <th>Cycle</th>
+              <th>Duration</th>
+              <th>Quantity</th>
+              <th>Discount Price</th>
+              <th>Valid From</th>
+              <th>Valid To</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of tenantSlabs; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ item.duration }}</td>
+              <td>{{ item.duration_range }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>{{ item.amount }}{{ item.type_symbol }}</td>
+              <td>{{ item.from_date }}</td>
+              <td>{{ item.to_date }}</td>
+
+              <!-- <td>{{item.conversations}}</td> -->
+              <!-- <td><button class="btn btn-primary">View</button></td> -->
+            </tr>
+          </tbody>
+        </table>
+        <!-- </div> -->
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #categoryDetails style="background-color: #fff">
+  <div class="row">
+    <div class="col-sm-10">
+      <p class="subTitle">Subscription Plan</p>
+    </div>
+    <div class="col-sm-2">
+      <i class="fa fa-times pointer text-right" aria-hidden="true" (click)="closeeve()"></i>
+    </div>
+  </div>
+
+  <!-- <img src="{{imgurl}}cswg.png" alt="X" style="margin-left: 5%; background-color: red; width: 40px;"> -->
+  <hr class="hrt" />
+
+  <mat-expansion-panel #matExpansionPanel1 style="background-color: #fff">
+    <mat-expansion-panel-header style="background-color: #fff">
+      <div class="mpanel" style="border: 1px solid #fff">
+        <p class="titleSLblone">Configured Subscription Details</p>
+        <!-- <button mat-stroked-button (click)="myButton()">my button</button> -->
+      </div>
+      <hr style="margin-top: 8px" />
+    </mat-expansion-panel-header>
+    <div class="row suLblDiv">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Sl.No</th>
+            <th>Cycle</th>
+            <th>Duration</th>
+            <th>Quantity</th>
+            <th>Discount Price</th>
+            <th>Valid From</th>
+            <th>Valid To</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of tenantSlabs; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ item.duration }}</td>
+            <td>{{ item.duration_range }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.amount }}{{ item.type_symbol }}</td>
+            <td>{{ item.from_date }}</td>
+            <td>{{ item.to_date }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- <table class="tablecls">
+        <tr>
+          <th>S.No</th>
+          <th>Cycle</th>
+          <th>Duration</th>
+          <th>Quantity</th>
+          <th>Discount Price</th>
+          <th>Vid From</th>
+          <th>Vid To</th>
+        </tr>
+        <tr>
+          <td>01</td>
+          <td>2</td>
+          <td>Months</td>
+          <td>3</td>
+          <td>50/-</td>
+          <td>04/06/2022</td>
+          <td>04/08/2022</td>
+        </tr>
+      </table> -->
+    </div>
+  </mat-expansion-panel>
+  <div class="row">
+    <p class="selectSubTitle">Enter The Values To Get Subscription Summary.</p>
+  </div>
+  <div class="row">
+    <div class="col-sm-4 cycleDiv">
+      <div *ngIf="subscribeFlag === true">
+        <form [formGroup]="subscriptionForm">
+          <div class="col-sm-12">
+            <p>
+              <mat-form-field appearance="standard" class="d-form-field">
+                <mat-label>Cycle</mat-label>
+                <input matInput placeholder="Enter Subscription Cycle" formControlName="cycle" required type="number"
+                  min="1" matTooltip="No Of Cycles In Subscription" aria-label="list tooltip" />
+                <mat-error *ngIf="subscriptionForm.controls.cycle.invalid">{{ getErrorMessage() }}
+                </mat-error>
+                <mat-error *ngIf="subscriptionForm.controls.cycle.hasError('minLength')">min lenght
+                </mat-error>
+              </mat-form-field>
+            </p>
+          </div>
+          <div class="col-sm-12">
+            <p>
+              <mat-form-field appearance="standard" class="d-form-field">
+                <mat-label>Period</mat-label>
+                <mat-select formControlName="period" name="period" required>
+                  <mat-option *ngFor="let item of durationList" [value]="item">
+                    {{ item }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="subscriptionForm.controls.period.invalid">
+                  {{ getErrorMessage() }}</mat-error>
+              </mat-form-field>
+            </p>
+          </div>
+          <div class="col-sm-12">
+            <mat-form-field appearance="standard" class="d-form-field">
+              <mat-label>Quantity</mat-label>
+              <input matInput placeholder="Enter Quantity" formControlName="qty" required type="number" min="1" />
+              <mat-error *ngIf="subscriptionForm.controls.qty.invalid">{{ getErrorMessage() }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-sm-12">
+            <p>
+              <mat-form-field color="accent" appearance="standard" class="d-form-field">
+                <mat-label>Start Date</mat-label>
+                <input matInput [matDatepicker]="picker1" formControlName="frmDate" required />
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+                <mat-error *ngIf="subscriptionForm.controls.frmDate.invalid">
+                  {{ getErrorMessage() }}</mat-error>
+              </mat-form-field>
+            </p>
+          </div>
+          <div class="col-sm-12">
+            <p>
+              <mat-form-field color="accent" appearance="standard" class="d-form-field">
+                <mat-label>End Date</mat-label>
+                <input matInput [matDatepicker]="picker2" formControlName="endDate" required />
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+                <mat-error *ngIf="subscriptionForm.controls.endDate.invalid">
+                  {{ getErrorMessage() }}</mat-error>
+              </mat-form-field>
+            </p>
+          </div>
+          <div class="col-sm-12">
+            <button mat-flat-button color="primary" (click)="submitSubscription()" class="checkPBtn">
+              Check Price
+            </button>
+          </div>
+        </form>
+      </div>
+      <!-- <h1>MBR</h1> -->
+    </div>
+    <div class="col-sm-7 pr-0 sumDetDiv" *ngIf="subscriptionSlabs.length > 0 || errorMsg">
+      <div class="col-sm-12 p-0">
+        <!-- <span class="product_discountmsg"
+          *ngIf="subscriptionSlabs.length > 0">asdf.{{subscriptionSlabs[0].msg}}</span> -->
+        <span class="product_discount" *ngIf="errorMsg">{{ errorMsg }}</span>
+      </div>
+      <div class="row" *ngIf="subscriptionSlabs.length > 0">
+        <div class="col-12 p-0 sumDetlsTitle">Subscription Summary</div>
+        <br />
+        <div class="col-5 sumsubtitlee">Subscription Valid up to :</div>
+        <div class="col-7 pl-0 sumsubtitlee15mr">
+          {{ subscriptionSlabs[0].to_date }}
+        </div>
+        <div class="col-5 sumsubtitlee">Subscription amount :</div>
+        <div class="col-7 pl-0 sumsubtitlee15mr">
+          {{ subscriptionSlabs[0].currency_indicator }}
+          {{ subscriptionSlabs[0].final_price }}
+        </div>
+        <!-- <p class="sumsubtitlee">Discount</p> -->
+        <div class="col-5 sumsubtitlee">Delievery Interval</div>
+        <div class="col-7 pl-0 sumsubtitlee15mr">
+          {{ subObj.cycle }} {{ subObj.period }}
+        </div>
+        <div class="col-5 sumsubtitlee">Number Of Deliveries</div>
+        <div class="col-7 pl-0 sumsubtitlee15mr">
+          {{ subscriptionSlabs[0].no_of_sub }}
+        </div>
+        <div class="col-5 sumsubtitlee lineHeight">
+          Total subscription amount for all deliveries
+        </div>
+        <div class="col-7 pl-0 sumsubtitlee15mr lineHeight">
+          {{ subscriptionSlabs[0].currency_indicator }}
+          {{ subscriptionSlabs[0].sub_total }}
+        </div>
+        <div class="col-12 subTotalamt">
+          <span *ngIf="subscriptionSlabs[0].subscription_id !== 0">
+            A discount of {{ subscriptionSlabs[0].amount
+            }}{{ subscriptionSlabs[0].type_symbol }} is applicable for orders
+            before {{ subscriptionSlabs[0].to_date }}.
+          </span>
+        </div>
+      </div>
+      <div class="row mar20 ml-0" *ngIf="subscriptionSlabs.length > 0">
+        <form [formGroup]="subscriptionForm">
+          <mat-radio-group aria-label="Select an option" formControlName="priceFlag" (change)="radioClk($event)">
+            <mat-radio-button value="0">Subscription Wise Payment</mat-radio-button><br />
+            <mat-radio-button value="1">Full Upfront Payment</mat-radio-button>
+          </mat-radio-group>
+          <!-- {{subscriptionForm.value.priceFlag}} -->
+        </form>
+      </div>
+      <!-- <h2>MBRMVKR</h2> -->
+    </div>
+  </div>
+  <!-- <div class="row">
+     <div class="row col-sm-12">
+      <div *ngIf="subscribeFlag === true"> -->
+
+  <!-- <div class="col-sm-5 cycleDiv"  > -->
+  <!-- *ngIf="subscribeFlag === true" -->
+  <!-- <form [formGroup]="subscriptionForm">
+                <div class="col-sm-12">
+                  <p>
+                    <mat-form-field appearance="standard" class="d-form-field">
+                      <mat-label>Cycle</mat-label>
+                      <input matInput placeholder="Enter Subscription Cycle" formControlName="cycle"
+                        required matTooltip="No Of Cycles In Subscription" aria-label="list tooltip">
+                      <mat-error *ngIf="subscriptionForm.controls.cycle.invalid">{{getErrorMessage()}}
+                      </mat-error>
+                    </mat-form-field>
+                  </p>
+                </div>
+                <div class="col-sm-12">
+                  <p>
+                    <mat-form-field appearance="standard" class="d-form-field">
+                      <mat-label>Period</mat-label>
+                      <mat-select formControlName="period" name="period" required>
+                        <mat-option *ngFor="let item of durationList" [value]="item">
+                          {{item}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="subscriptionForm.controls.period.invalid">
+                        {{getErrorMessage()}}</mat-error>
+                    </mat-form-field>
+                  </p>
+                </div>
+                <div class="col-sm-12 ">
+                  <mat-form-field appearance="standard" class="d-form-field">
+                    <mat-label>Quantity</mat-label>
+                    <input matInput placeholder="Enter Quantity" formControlName="qty" required>
+                    <mat-error *ngIf="subscriptionForm.controls.qty.invalid">{{getErrorMessage()}}
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+           
+           
+                  <div class="col-sm-12">
+                    <p>
+                      <mat-form-field color="accent" appearance="standard" class="d-form-field">
+                        <mat-label>Start Date</mat-label>
+                        <input matInput [matDatepicker]="picker1" formControlName="frmDate" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                        <mat-error *ngIf="subscriptionForm.controls.frmDate.invalid">
+                          {{getErrorMessage()}}</mat-error>
+                      </mat-form-field>
+                    </p>
+                  </div>
+                  <div class="col-sm-12">
+                    <p>
+                      <mat-form-field color="accent" appearance="standard" class="d-form-field">
+                        <mat-label>End Date</mat-label>
+                        <input matInput [matDatepicker]="picker2" formControlName="endDate" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                        <mat-error *ngIf="subscriptionForm.controls.endDate.invalid">
+                          {{getErrorMessage()}}</mat-error>
+                      </mat-form-field>
+                    </p>
+                  </div>
+                  <div class="col-sm-12 ">
+                    <button mat-flat-button color="primary"  (click)="submitSubscription()" class="checkPBtn">Check
+                      Price</button>
+                    <button mat-flat-button color="primary" *ngIf="subscribePriceFlag === true">Subscribe</button>&nbsp;&nbsp;&nbsp;
+                  </div> -->
+  <!--
+                                        <div class="col-sm-12 p-0">
+                                          <span class="product_discountmsg"
+                                            *ngIf="subscriptionSlabs.length > 0">asdf.{{subscriptionSlabs[0].msg}}</span>
+                                          <span class="product_discount" *ngIf="errorMsg">s{{errorMsg}}</span>
+                                        </div>
+                                        <div class="col-sm-12 p-0" *ngIf="subscriptionSlabs.length > 0">
+                                          <p> <span class="sub_descrptn">Total Subscription Amount:</span><strong>
+                                              {{subscriptionSlabs[0].currency_indicator}}
+                                              {{subscriptionSlabs[0].sub_total}}</strong></p>
+                                          <span *ngIf="subscriptionSlabs[0].subscription_id !== 0 ">
+                                            A discount of {{subscriptionSlabs[0].amount}} {{subscriptionSlabs[0].type_symbol}} is
+                                            applicable for orders before {{subscriptionSlabs[0].to_date}}.
+                                         
+                                          </span>
+
+                                          <p><strong class="sub_strong">Deliver every:</strong> <span class="sub_descrptn">
+                                              {{subObj.cycle}} {{subObj.period}}</span></p>
+                                          <p><strong class="sub_strong">Number Of Deliveries:</strong> <span
+                                              class="sub_descrptn"> {{subscriptionSlabs[0].no_of_sub}}</span></p>
+                                        </div><br>
+                                        <div class="col-sm-12 p-0" *ngIf="subscriptionSlabs.length > 0">
+                                          <mat-radio-group aria-label="Select an option" formControlName="priceFlag">
+                                            <mat-radio-button value="0">Subscription Wise Payment</mat-radio-button>&nbsp;
+                                            <mat-radio-button value="1">Full Upfront Payment</mat-radio-button>
+                                          </mat-radio-group>
+                                         
+                                        </div> -->
+
+  <!--      </form> -->
+
+  <!-- </div> -->
+  <!-- <div class="col-sm-5 sumDetDiv"  *ngIf="subscriptionSlabs.length > 0">
+         
+              <div class="row">
+             
+              <p class="sumDetlsTitle">
+                Subscription Summary
+              </p>
+              <hr>
+              <p class="sumsubtitlee">
+                Subscription Valid up to:  {{subObj.cycle}} {{subObj.period}}
+              </p>
+              <p class="sumsubtitlee">Subscription amount : {{subscriptionSlabs[0].currency_indicator}}
+                {{subscriptionSlabs[0].sub_total}}</p>
+              <p class="sumsubtitlee">Discount</p>
+              <p class="sumsubtitlee">Delievery Interval</p>{{subObj.cycle}} {{subObj.period}}
+              </div>
+             <div class="row" *ngIf="subscriptionSlabs.length > 0">
+              <form [formGroup]="subscriptionForm">
+              <mat-radio-group aria-label="Select an option" formControlName="priceFlag">
+                <mat-radio-button value="0">Subscription Wise Payment</mat-radio-button>&nbsp;
+                <mat-radio-button value="1">Full Upfront Payment</mat-radio-button>
+              </mat-radio-group>
+              {{subscriptionForm.value.priceFlag}}
+              </form>
+              </div>
+         
+            </div>
+      -->
+
+  <!-- </div>
+    </div>
+  </div> -->
+</ng-template>
+<app-footer></app-footer>
+<!-- <footer id="footer">
+  <div class="row m-0">
+      <div class="col-sm-3">
+          <h5 class="footer-heading">ABOUT</h5>
+          <p class="footer-links">Contact Us</p>
+          <p class="footer-links">About Us</p>
+          <p class="footer-links">Careers </p>      
+          <p class="footer-links">News</p>    
+          <p class="footer-links">Corporate Information</p>
+      </div>
+      <div class="col-sm-3">
+          <h5 class="footer-heading">Help</h5>
+          <p class="footer-links">Payments</p>
+          <p class="footer-links">Shipping</p>
+          <p class="footer-links">Cancellation & Returns</p>
+          <p class="footer-links">FAQ’s</p>
+          <p class="footer-links">Reports</p>
+          <p class="footer-links">Refer-a-friend</p>
+          <p class="footer-links">Shining a Light</p>
+       
+      </div>
+      <div class="col-sm-3">
+          <h5 class="footer-heading">Legal</h5>
+          <p class="footer-links">General Info</p>
+          <p class="footer-links">Privacy Policy</p>
+          <p class="footer-links">Terms of Service</p>
+       
+      </div>
+      <div class="col-sm-3">
+          <h5 class="footer-heading">Address & Location</h5>
+          <div>
+              <p class="footer-links">4400 Route 9 South Freehold</p>
+              <p class="footer-links"><span>New Jersey</span>,<span>07728</span></p>
+              <p class="footer-links">USA</p>
+              <p class="footer-links">ecomsupport@arkatiss.com</p>
+
+          </div>
+
+      </div>
+  </div><hr>
+  <div class="row mt-5">
+      <div class="col-lg-4 col-md-4 col-sm-5">
+          <img src="{{imgurl}}cswg.png" alt=""
+              class="pointer logo-img" >
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-3">
+          <p class=" text-center footer-text"> © 2022 BOTCOM. All Rights Reserved. </p>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4">
+          <div class="example-button-container text-center">
+           
+              <button mat-mini-fab color="primary" class="bg-fb">
+                <i class="fa fa-facebook" aria-hidden="true"></i>
+                </button>&nbsp;&nbsp;
+                <button mat-mini-fab color="primary" class="bg-ln">
+                  <i class="fa fa-linkedin" aria-hidden="true"></i>
+                </button> &nbsp;&nbsp;
+                <button mat-mini-fab color="primary" class="bg-google"   matTooltip="Share this site with your friends">
+                  <i class="fa fa-share-alt  font-18" aria-hidden="true" ></i>
+                </button>
+            </div>
+      </div>
+     
+  </div>
+
+</footer> -->
+
+<!-- <ng-template #mymodal let-modal>
+  <div class="modal-header">
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <img src="{{imageInModel}}" width="100%" />
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Close</button>
+  </div>
+</ng-template> -->

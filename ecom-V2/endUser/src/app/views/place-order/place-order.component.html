@@ -1,0 +1,1876 @@
+<div class="row m-0">
+    <div class="col-7 p-0">
+        <p class="checkoutHeading ml-5 mt-4 pl-3">Check Out</p>
+    </div>
+    <div class="col-5 p-0 text-right">
+        <p class="BTSClk mr-5 mt-4 pointer" (click)="btshoping()">Back To Shopping</p>
+    </div>
+</div>
+<ngx-spinner class="spinnerCss">
+    <p class="spinnerText">Loading....</p>
+</ngx-spinner>
+<div class="row m-0">
+    <div class="col-8 pl-0">
+        <div class="card ml-5 pb-3">
+            <div class="row m-0">
+                <div class="col-12 p-0 shipaddDiv">
+                    <span class="p-4 headingsTxt">Shipping Address</span>
+                    <span *ngIf="changeaddClk">
+                        <p class="p-4 changeTxt pointer" (click)="shipaddChangeClk()">Change</p>
+                    </span>
+                    <span *ngIf="shippAdd">
+                        <p class="p-4 newAdd pointer" (click)="AddNAddrBtnClk()">Add New Address</p>
+                    </span>
+                </div>
+                <div class="col-12 p-0">
+                    <div class="shipaddDisplayDiv pr-0" *ngIf="shippAdd">
+                        <div class="" *ngIf="noAddressFoundFlag">
+                            No address found. Click on add new address to proceed.
+                        </div>
+                        <div class="row m-0 delAddrDiv1 p-0" #addressDiv>
+                            <div class="col-12 p-0 pl-3">
+                                <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                                    [(ngModel)]="deladdress" name="opList" required layout="row">
+                                    <mat-radio-button class=" paymentOptionRadioBtn  example-radio-button"
+                                        *ngFor="let ad of this.placeOrdObj.GetDeliveryAddressData; let idx=index"
+                                        (change)="selectedAddress(ad)" [value]="ad.addressId" name="opList"
+                                        [checked]=" ad.addressId === selectedAddressForDelivery  ">
+                                        <div class="row addressInfoDiv">
+                                            <p class="col-12 font-14 addtitles">
+                                                <span> {{ad.firstName}} {{ad.lastName}}</span> &nbsp;
+                                                <span class="badge badge-secondary add-type-badge"
+                                                    *ngIf="ad.addressType !== undefinded && ad.addressType !== null && ad.addressType !== '' ">
+                                                    {{ad.addressType |titlecase}}
+                                                </span>
+                                            </p>
+                                            <p class="col-12 font-12"> {{ad.address1}}, {{ad.city}} </p>
+                                            <p class="col-12 font-12"> {{ad.zone_name}} {{ad.postcode}},
+                                                {{ad.countryName}}
+                                            </p>
+                                            <p class="col-12 font-12">
+                                                <span *ngIf="ad.mobile !== undefinded && ad.mobile !== null"> Ph:
+                                                    {{ad.mobile}}</span> &nbsp;
+                                                <span *ngIf="ad.mobile === undefinded || ad.mobile === null"> Ph:
+                                                    {{logedPhone}}</span> &nbsp;
+                                                <span *ngIf="ad.defaultAddress === 0"
+                                                    class="badge badge-secondary defaultAdd">Default</span>
+                                            </p>
+                                        </div>
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 delDivIAd pl-0">
+                            <div class="delrydiv">
+                                <p class="titleHLbl">Delivery Options</p>
+                            </div>
+                            <div style="margin-top: 20px;margin-left: 15px;">
+                                <mat-radio-button class="paymentOptionRadioBtn"
+                                    [disabled]="selectedAddressForDelivery === undefined"
+                                    [matTooltip]="selectedAddressForDelivery == undefined ?'Please select shipping address to proceed':'select an option'"
+                                    (change)="getOrderProductSummary('Standard')"
+                                    [checked]=" expressFlag === 'Standard'">
+                                    Standard Delivery ({{currencyIndicator}} {{standardCharge}}/Product)
+                                </mat-radio-button>
+                                <mat-radio-button class="paymentOptionRadioBtn"
+                                    [disabled]="selectedAddressForDelivery === undefined"
+                                    [matTooltip]="selectedAddressForDelivery == undefined ?'Please select shipping address to proceed':'select an option'"
+                                    (change)="getOrderProductSummary('Express')" [checked]=" expressFlag === 'Express'">
+                                    Express Delivery ({{currencyIndicator}} {{expressCharge}}/Product)
+                                </mat-radio-button>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <button class="continueBtn" (click)="sav()" [disabled]="proceedFlag === false">
+                                <span
+                                    [matTooltip]="proceedFlag == false ?'Please select the delivery option to proceed':'save and proceed'">Save
+                                    & Continue</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="addressFormsDiv" *ngIf="newAddForm">
+                        <div class=" card-body p-0 row m-0  p-2 ml-3">
+                            <div class="col-6 p-0">
+                                <mat-form-field class="col-10 p-0">
+                                    <input matInput placeholder="First Name" [(ngModel)]="newaddressform.firstname"
+                                        required>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-6 p-0">
+                                <mat-form-field class="col-10 p-0">
+                                    <input matInput placeholder="Last Name" [(ngModel)]="newaddressform.lastname"
+                                        required>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-6 p-0">
+                                <mat-form-field class="col-10 p-0">
+                                    <input matInput placeholder="Address" [(ngModel)]="newaddressform.address" required>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-6 p-0">
+                                <mat-form-field class="col-10 p-0">
+                                    <input matInput placeholder="City" [(ngModel)]="newaddressform.city" required>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-6 p-0">
+                                <mat-form-field class="col-10 p-0">
+                                    <input matInput placeholder="Pincode" [(ngModel)]="newaddressform.pincode" required>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-6 p-0">
+                                <mat-form-field class="col-10 p-0">
+                                    <mat-label>Country</mat-label>
+                                    <mat-select [(ngModel)]="newaddressform.country" required
+                                        (selectionChange)="handleGetRegionByCountry($event.value)">
+                                        <mat-option *ngFor="let c of this.countryInfo" value="{{c.country_id}}">
+                                            {{c.country_name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-6 p-0">
+                                <mat-form-field class="col-10 p-0">
+                                    <mat-label>State</mat-label>
+                                    <mat-select [(ngModel)]="newaddressform.zone" required>
+                                        <mat-option *ngFor="let z of this.regionInfo" value="{{z.zone_id}}">
+                                            {{z.zone_name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-6 p-0">
+                                <mat-form-field class="col-10 p-0">
+                                    <input matInput placeholder="Phone Number" [(ngModel)]="newaddressform.mobile"
+                                        required>
+                                </mat-form-field>
+
+                            </div>
+                            <div class="col-6 p-0">
+                                <mat-form-field class="col-10 p-0">
+                                    <mat-label>Address Type</mat-label>
+                                    <mat-select [(ngModel)]="newaddressform.addresstype">
+                                        <mat-option value="Home">Home</mat-option>
+                                        <mat-option value="Office">Office</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-6 p-0">
+                                <mat-form-field class="col-10 p-0">
+                                    <input matInput placeholder="Street Name" [(ngModel)]="newaddressform.streetname">
+                                </mat-form-field>
+
+                            </div>
+                            <div class="col-6 p-0">
+                                <mat-form-field class="col-10 p-0">
+                                    <input matInput placeholder="Landmark" [(ngModel)]="newaddressform.landmark">
+                                </mat-form-field>
+
+                            </div>
+
+                            <div class="col-6 p-0">
+                                <mat-checkbox class="mt-4" [(ngModel)]="newaddressform.default_address">Mark
+                                    As Default</mat-checkbox>
+                            </div>
+                            <div class=" col-12 p-0">
+                                <button mat-raised-button type="submit" class="continueBtn "
+                                    (click)="newAddressSubmit('add')">Save & Continue</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-3" *ngIf="addressShipView">
+                        <div class="col-12 p-0 pl-3">
+                            <p class="col-12">
+                                <span class="fullAddress">{{addressDetails.firstName}}
+                                    {{addressDetails.lastName}}</span>&nbsp;
+                                <span class="fullAddress2">{{addressDetails.address1}}, {{addressDetails.city}} </span>
+                                <span class="fullAddress2">{{addressDetails.zone_name}} {{addressDetails.postcode}},
+                                    {{addressDetails.countryName}}</span>&nbsp;
+                                <span class="badge badge-secondary add-type-badge"
+                                    *ngIf="addressDetails.addressType !== undefinded && addressDetails.addressType !== null && addressDetails.addressType !== '' ">
+                                    {{addressDetails.addressType |titlecase}}
+                                </span>
+                            </p>
+                            <p class="col-12">
+                                <span class="fullAddress">Phone:</span>&nbsp;
+                                <span class="fullAddress2">{{addressDetails.mobile}}</span>
+                            </p>
+                            <p class="col-12">
+                                <span class="fullAddress">Delievery Mode</span>&nbsp;
+                                <span class="fullAddress2">{{expressFlag | titlecase}} Delivery </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-0">
+                <div class="col-12 p-0 shipaddDiv">
+                    <span class="p-4 headingsTxt" *ngIf="orderexpandDiv === true || ordersummChangeDiv === true">Order
+                        Summary</span>
+                    <span *ngIf="orderConfirmFlag">
+                        <p class="p-4 changeTxt pointer" (click)="orderSumChangeClk()">Change</p>
+                    </span>
+                </div>
+                <div class="col-12 p-0  mb-3"
+                    [ngClass]="{'delAddrDiv': (cartData.length > 1 && orderConfirmFlag == true) || (ordersummChangeDiv == true) || (cartData.length > 1 && orderConfirmFlag == false)  , 'delAddrDiv2': (cartData.length == 1 && orderConfirmFlag == false)  || (cartData.length == 1 && orderConfirmFlag == true) }">
+                    <div class="sumexpDisplayDiv" *ngIf="orderexpandDiv">
+                        <div class="sumchangesDiv" *ngFor="let cdata of summaryData.cart_details; let i = index">
+                            <p class="productName pointer" [title]="cdata?.product_name"
+                                [routerLink]="['/productDetail', cdata.product_id]">
+                                {{cdata?.product_name}}</p>
+                            <p class="productsub ">
+                                {{cdata?.delivery_est}}</p>
+                        </div>
+                    </div>
+                    <div class="row sumexpDisplayDiv" *ngIf="ordersummChangeDiv">
+                        <div class="row sumchangeClkDiv p-4"
+                            *ngFor="let cdata of summaryData.cart_details; let i = index">
+                            <div class="col-sm-3 p-0 pointer" [routerLink]="['/productDetail', cdata.product_id]">
+                                <img src={{cdata?.imageUrl}} class="orderedImgInOrderSummary" alt="">
+                            </div>
+                            <div class="col-sm-9 p-0">
+                                <p class="productName pointer" [title]="cdata?.product_name"
+                                    [routerLink]="['/productDetail', cdata.product_id]">{{cdata?.product_name
+                                    |titlecase}}
+                                </p>
+                                <div class="row m-0 pt-2"
+                                    *ngIf="cdata.subscription_to_date === 0 && cdata.recurring_id === 0">
+                                    <span class="p-price"
+                                        *ngIf="cdata.discount_price == '0.00'">{{cdata?.currency_indicator}}
+                                        {{cdata?.price}}</span>
+                                    <span class="p-price"
+                                        *ngIf="cdata.discount_price != '0.00'">{{cdata?.currency_indicator}}
+                                        {{cdata?.discount_off_price}}</span>
+                                    <span class="off-price"
+                                        *ngIf="cdata.discount_price != '0.00'">{{cdata?.currency_indicator}}{{cdata?.price}}</span>
+                                </div>
+                                <div class="row m-0 pt-2" *ngIf="cdata.subscription_to_date !== 0">
+                                    <span class="p-price" *ngIf="cdata?.total_flag === 0">
+                                        {{cdata?.currency_indicator}} {{cdata?.recurring_subs_total_price}}
+                                    </span>
+                                    <span class="p-price" *ngIf="cdata?.total_flag === 1">
+                                        {{cdata?.currency_indicator}} {{cdata?.recurring_subs_total_price}}
+                                    </span>
+                                </div>
+                                <div class="row m-0 pt-2" *ngIf="cdata.recurring_id > 0">
+                                    <span class="p-price">
+                                        {{cdata?.currency_indicator}} {{cdata?.recurring_subs_total_price}}
+                                    </span>
+                                </div>
+                                <div class="row m-0 pt-2 pb-2">
+                                    <span class="p-qty">Quantity</span> &nbsp;&nbsp;
+                                    <span class="p-select">
+                                        {{cdata?.quantity}}
+                                    </span>
+                                </div>
+                                <div class="row m-0" *ngIf="cdata.subscription_from_date !== 0">
+                                    <p>
+                                        <span class="p-recurring">Subscription Active</span>&nbsp;
+                                        <span>
+                                            <img src="assets/images/info.png" [matMenuTriggerFor]="menu"
+                                                #menuTrigger="matMenuTrigger">
+                                        </span>
+                                        <mat-menu #menu="matMenu">
+                                            <div class="row m-2">
+                                                <div class="col-sm-8 p-0">
+                                                    <p class="sub-head pl-3">Subscription Summary</p>
+                                                </div>
+                                                <div class="col-sm-4 text-right"><i
+                                                        class="fa fa-times fa-close curser close-ico" aria-hidden="true"
+                                                        (click)="menu.closeMenu();"></i></div>
+                                            </div>
+                                            <hr class="p-hr1">
+                                            <div class="row m-0">
+                                                <div class="col-sm-7">
+                                                    <span class="sub-col">Subscription Valid Up To</span>
+                                                </div>
+                                                <div class="col-sm-5 text-right">
+                                                    <span class="sub-price">{{cdata.subscription_to_date.split('
+                                                        ')[0]}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="row m-0">
+                                                <div class="col-sm-7">
+                                                    <span class="sub-col">Total Subscription Amount</span>
+                                                </div>
+                                                <div class="col-sm-5 text-right">
+                                                    <span
+                                                        class="sub-price">{{cdata?.currency_indicator}}{{cdata?.recurring_subs_total_price}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="row m-0" *ngIf="cdata?.discount !== 0">
+                                                <div class="col-sm-7">
+                                                    <span class="sub-col">Discount</span>
+                                                </div>
+                                                <div class="col-sm-5 text-right">
+                                                    <span
+                                                        class="sub-price">{{cdata?.currency_indicator}}{{cdata?.discount}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="row m-0">
+                                                <div class="col-sm-7">
+                                                    <span class="sub-col">Delivery Interval</span>
+                                                </div>
+                                                <div class="col-sm-5 text-right">
+                                                    <span class="sub-price">{{cdata?.subscription_cycle}}
+                                                        {{cdata?.subscription_period}}</span>
+                                                </div>
+                                            </div>
+                                        </mat-menu>
+                                    </p>
+                                </div>
+                                <div class="row m-0" *ngIf="cdata.recurring_id > 0">
+                                    <p>
+                                        <span class="p-recurring">Recurring Active</span>&nbsp;
+                                        <span>
+                                            <img src="assets/images/info.png" [matMenuTriggerFor]="recurringMenu"
+                                                #menuTrigger="matMenuTrigger">
+                                        </span>
+                                        <mat-menu #recurringMenu="matMenu">
+                                            <div class="row m-2">
+                                                <div class="col-sm-8 p-0">
+                                                    <p class="sub-head pl-3">Recurring Summary</p>
+                                                </div>
+                                                <div class="col-sm-4 text-right"><i
+                                                        class="fa fa-times fa-close curser close-ico" aria-hidden="true"
+                                                        (click)="menu.closeMenu();"></i></div>
+                                            </div>
+                                            <hr class="p-hr1">
+                                            <div class="row m-0">
+                                                <div class="col-sm-12">
+                                                    <span class="sub-col1 pl-2">Selected Recurring Plan:</span>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <span class="sub-price pl-2">{{cdata?.recurring_name}}</span>
+                                                </div>
+                                            </div>
+                                        </mat-menu>
+                                    </p>
+                                </div>
+                                <hr class="p-hr">
+                                <p>
+                                    <span>
+                                        <img src="{{imgurl}}delivery-truck 1 (1).png" class="VanImagesCls"> <span
+                                            class="productsuhghb ">
+                                            {{cdata?.delivery_est}}</span>
+                                    </span>&nbsp;
+                                    <span *ngIf="expressFlag === 'Standard' || expressFlag === 'selected'"
+                                        class="lineT3">
+                                        <select
+                                            (change)="selectDeliveryMode2($event.target.value, cdata.cart_id, cdata.product_id)">
+                                            <option *ngFor="let item of deliveryOptionList"
+                                                value="{{item.shipping_method}}"
+                                                [selected]="cdata.delivery_type == item.shipping_method">
+                                                {{item.shipping_method}}
+                                            </option>
+                                        </select>
+                                    </span>
+                                    <span *ngIf="expressFlag === 'Express'">
+                                        {{cdata.delivery_type}}
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <button class="continueBtn" (click)="handlePlaceorder()" *ngIf="orderConfirmFlag">Continue</button>
+                    <button class="continueBtn" (click)="handlePlaceorder()"
+                        *ngIf="ordersummChangeDiv">Continue</button>
+                </div>
+            </div>
+            <div class="row m-0" *ngIf="paymentFlag">
+                <div class="col-12 p-0 shipaddDiv">
+                    <span class="p-4 headingsTxt">Payment Options</span>
+                </div>
+                <div class="col-12 pt-3">
+                    <div class="col-12 ">
+                        <mat-accordion>
+                            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                                <mat-expansion-panel-header class="expan-header">
+                                    <mat-panel-title>
+                                        <span><img src="{{imgurl}}credit-cardI.png" class="payImagesCls"></span>
+                                        <span class="titleHLbla">
+                                            Pay with Credit Card
+                                        </span>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="col-sm-12 p-0 text-center">
+                                    <p>Coming Soon</p>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                    <div class="col-12">
+                        <mat-accordion>
+                            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        <span><img src="{{imgurl}}decardI.png" class="payImagesCls"></span>
+                                        <span class="titleHLbla">
+                                            Pay with Dedit Card
+                                        </span>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="col-sm-12 p-0 text-center">
+                                    <p>Coming Soon</p>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                    <div class="col-12 ">
+                        <mat-accordion>
+                            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                                <mat-expansion-panel-header class="expan-header">
+                                    <mat-panel-title>
+                                        <span><img src="{{imgurl}}onlineNetbanking 1.png" class="payImagesCls"></span>
+                                        <span class="titleHLbla">
+                                            Pay with Net Banking
+                                        </span>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="row m-2 ml-4 mt-4">
+                                    <div class="col-sm-3 p-0">
+                                        <input type="radio" name="payment" id="RazorpayBtn"
+                                            (click)="handlePayments('razor')"><img src="{{imgurl}}razorpaywebnew.svg"
+                                            alt="" class="Razor img-fluid">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 text-right mt-4">
+                                    <button mat-raised-button type="submit" class="continueBtn"
+                                        [disabled]="razorFlag === false" (click)="rClick()">PROCEED</button>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                    <div class="col-12">
+                        <mat-accordion>
+                            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                                <mat-expansion-panel-header class="expan-header">
+                                    <mat-panel-title>
+                                        <span><img src="{{imgurl}}cash-on-delivery 1.png" class="payImagesCls"></span>
+                                        <span class="titleHLbla">
+                                            Cash On Delievery
+                                        </span>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="row m-2 ml-4 mt-4">
+                                    <div class="col-sm-3 p-0">
+                                        <input type="radio" name="payment" id="visaBtn" (click)="handlePayments('cod')">
+                                        <span class="codBtn pl-2">Cash On
+                                            Delivery</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 text-right mt-4">
+                                    <button mat-raised-button type="submit" class="continueBtn"
+                                        [disabled]="codFlag === false" (click)="orderConfirmed()">Confirm Order</button>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 p-0">
+            <p class="ml-5 disableTxt " *ngIf="inactiveSummary === false"
+                [ngClass]="{'disableDiv': orderexpandDiv === false}">Order Summary</p><br>
+            <p class="ml-5 disableTxt mb-3" *ngIf="paymentFlag === false"
+                [ngClass]="{'disableDiv': paymentFlag === false}">
+                Payment Options</p>
+        </div>
+    </div><br>
+    <div class="col-4 ">
+        <div class="card priceDetailscard mr-4" *ngIf="orderexpandDiv === true || ordersummChangeDiv === true">
+            <div class="card-body">
+                <p class="card-text2">Price Details</p>
+                <hr>
+                <p class="card-row">
+                    <span class="card-text">Shopping Cart Total</span>
+                    <span class="card-prices"> {{summaryData.currency_indicator}}
+                        {{summaryData.total_cart_price}}</span>
+                </p>
+                <p class="card-row" *ngIf="summaryData.tax_names.length >0">
+                    <span class="card-text">Tax Amount ({{summaryData.tax_names[0].name}})</span>
+                    <span class="card-prices"> {{summaryData.currency_indicator}}
+                        {{summaryData.tax_names[0].tax_price}}</span>
+                </p>
+                <p class="card-row">
+                    <span class="card-text">Delivery Charges</span>
+                    <span class="card-prices"> {{summaryData.currency_indicator}}
+                        {{summaryData.delivery_charges}}</span>
+                </p>
+                <p class="card-row"
+                    *ngIf="summaryData.coupon_discount !== '0' && summaryData.coupon_discount !== '0.00'">
+                    <span class="card-text">Coupon Discount</span>
+                    <span class="discountPrice"> - {{summaryData.currency_indicator}}
+                        {{summaryData.coupon_discount}}</span>
+                </p>
+                <p class="card-row" *ngIf="summaryData.voucher_discount != 0">
+                    <span class="card-text">Voucher Discount</span>
+                    <span class="discountPrice"> - {{summaryData.currency_indicator}}
+                        {{summaryData.voucher_discount}}</span>
+                </p>
+                <p class="saved-Price saveAmt discountPrice" *ngIf="summaryData.saved_price >0">You save
+                    {{summaryData.currency_indicator}}{{summaryData.saved_price |number : '1.2-2'}} on this order</p>
+            </div>
+            <hr class="divider">
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <p><span class="totalAmt">Total Price</span> <span class="saveAmt"> (Incl Taxes)</span></p>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <p class="p-price"> {{summaryData.currency_indicator}} {{summaryData.grand_total}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card priceDetailscard mr-4" *ngIf="orderexpandDiv === true || ordersummChangeDiv === true">
+            <div class="card-body">
+                <p class="card-text2">Voucher Details</p>
+                <hr>
+                <div class="col-sm-12 p-0">
+                    <form [formGroup]="VocherForm">
+                        <span>
+                            <mat-form-field class="col-sm-12 p-0 font-12 VocherTxt" appearance="outline">
+                                <mat-label>Enter Voucher Code</mat-label>
+                                <input matInput formControlName="VocherCode" required autocomplete="off" type="text">
+                            </mat-form-field>
+                        </span>
+                        <span>
+                            <button class="btn btn-primary  mb-1 voucher-btn" type="button"
+                                (click)="applyVocherClks()">APPLY</button>
+                        </span>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- 
+    <div class="row m-0">
+        <div class="col-8 p-0">
+            <div class="row m-0">
+                <div class="col-12 p-0 shipaddDiv">
+                    <span><button class="titleHLbl22" (click)="shipptouch()">Shipping Address </button></span>
+                    <span>
+                        <p class="changeShipAdd" *ngIf="changeaddClk" (click)="shipaddChangeClk()">Change</p>
+                    </span>
+                    <span>
+                        <p class="changeShipAdd2" *ngIf="AddNAddrk" (click)="AddNAddrBtnClk()">Add New Address</p>
+                    </span>
+                </div>
+                <div class="col-12 p-0">
+                    <div class="shipaddDisplayDiv" *ngIf="shippD">
+                        <div class="" *ngIf="noAddressFoundFlag">
+                            No address found. Click on add new address to proceed.
+                        </div>
+                        <div class="col-sm-12 delAddrDiv">
+                            <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                                [(ngModel)]="deladdress" name="opList" required>
+                                <mat-radio-button
+                                    *ngFor="let ad of this.placeOrdObj.GetDeliveryAddressData; let idx=index"
+                                    class="paymentOptionRadioBtn example-radio-button "
+                                    (change)="selectedAddress(ad.addressId)" [value]="ad.addressId" name="opList">
+                                    <div class="row addressInfoDiv">
+                                        <span class="col-12 font-14 addtitles"> {{ad.firstName}} {{ad.lastName}}</span>
+                                        
+                                        <p class="col-12 font-12"> {{logedPhone}}</p>
+                                        <p class="col-12 font-12"> {{ad.address1}}, {{ad.city}}, {{ad.zone_name}},
+                                            {{ad.postcode}},
+                                            {{ad.countryName}}</p>
+                                        <p class="col-12 font-12"> {{ad.address}}</p>
+                                    </div>
+                                </mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                        <div class="col-sm-12 delDivIAd">
+                            <div class="delrydiv">
+                                <p class="titleHLbl">Delivery Options</p>
+                            </div>
+                            <div style="margin-top: 20px;margin-left: 15px;">
+                                <mat-radio-button class="paymentOptionRadioBtn"
+                                    (change)="getOrderProductSummary('Standard')">
+                                    Standard Delivery
+                                </mat-radio-button>
+                                <mat-radio-button class="paymentOptionRadioBtn"
+                                    (change)="getOrderProductSummary('Express')">
+                                    Express Delivery
+                                </mat-radio-button>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <button class="SaveconBtn" (click)="sav()">Save & Continue</button>
+                        </div>
+                    </div>
+                    <div class="addressFormsDiv" *ngIf="newAddForm">
+                        <div class=" card-body p-0 row m-0  p-2 ml-3">
+                            <div class="col-6 p-0">
+                                <mat-form-field class="col-10 p-0">
+                                    <input matInput placeholder="FirstName" [(ngModel)]="newaddressform.firstname"
+                                        required>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-6 p-0">
+                                <mat-form-field class="col-10 p-0">
+                                    <input matInput placeholder="LastName" [(ngModel)]="newaddressform.lastname"
+                                        required>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-6 p-0">
+                                <mat-form-field class="col-10 p-0">
+                                    <input matInput placeholder="Address" [(ngModel)]="newaddressform.address" required>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-6 p-0">
+                                <mat-form-field class="col-10 p-0">
+                                    <input matInput placeholder="City" [(ngModel)]="newaddressform.city" required>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-6 p-0">
+                                <mat-form-field class="col-10 p-0">
+                                    <input matInput placeholder="Pincode" [(ngModel)]="newaddressform.pincode" required>
+                                </mat-form-field>
+                            </div>
+                            <div class="dropdownRow">
+                                <div class="col-12 p-0">
+                                    <mat-form-field class="col-10 p-0">
+                                        <mat-label>Country</mat-label>
+                                        <mat-select [(ngModel)]="newaddressform.country" required
+                                            (selectionChange)="handleGetRegionByCountry($event.value)">
+                                            <mat-option *ngFor="let c of this.countryInfo" value="{{c.country_id}}">
+                                                {{c.country_name}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-6 p-0">
+                                <mat-form-field class="col-10 p-0">
+                                    <mat-label>State</mat-label>
+                                    <mat-select [(ngModel)]="newaddressform.zone" required>
+                                        <mat-option *ngFor="let z of this.regionInfo" value="{{z.zone_id}}">
+                                            {{z.zone_name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-6 p-0">
+                                <mat-form-field class="col-10 p-0">
+                                    <mat-label>Address Type</mat-label>
+                                    <mat-select [(ngModel)]="newaddressform.addresstype">
+                                        <mat-option value="Home">Home</mat-option>
+                                        <mat-option value="Office">Office</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-6 p-0">
+                                <mat-form-field class="col-10 p-0">
+                                    <input matInput placeholder="Street Name" [(ngModel)]="newaddressform.streetname">
+                                </mat-form-field>
+
+                            </div>
+                            <div class="col-6 p-0">
+                                <mat-form-field class="col-10 pl-0">
+                                    <input matInput placeholder="Landmark" [(ngModel)]="newaddressform.landmark">
+                                </mat-form-field>
+
+                            </div>
+
+                            <div class=" subclkk">
+                                <button mat-raised-button type="submit" class=" placeOrderBtn "
+                                    (click)="newAddressSubmit()">Save &
+                                    Continue</button>
+                            </div>
+                            <div class="col-2 p-0">
+                                <p class="loadinText" *ngIf="resultOfAddressInsertSuccess === false"><img
+                                        src="{{imgurl}}loaderGif.gif" class="addreddAddLoader" /></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-0">
+                <div class="col-12 p-0 shipaddDiv">
+                    <span>
+                        <button [disabled]="disabled" class="titleHBLbl22" (click)="Ordersumtouch()">Order Summary
+                        </button>
+                    </span>
+                    <span>
+                        <p class="changeShipAdd" (click)="orderSumChangeClk()">Change</p>
+                    </span>
+                </div>
+                <div class="col-12 p-0">
+                    <div class="sumexpDisplayDiv" *ngIf="orderexpandDiv">
+                        <div class="sumchangesDiv" *ngFor="let cdata of summaryData.cart_details; let i = index">
+                            <p class="productSumHeading " [title]="cdata?.data?.product_name">
+                                {{cdata?.product_name}}</p>
+                            <p class="productsub ">
+                                {{cdata?.delivery_est}}</p>
+
+                        </div>
+                        <div class="col-sm-12">
+                            <button class="sumconBtn" (click)="handlePlaceorder()">Continue</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 p-0">
+
+        </div>
+    </div>
+
+    <div class="row col-sm-12">
+        <div class="col-sm-8 contDiv">
+            <div class="row shipaddDiv">
+                <span><button class="titleHLbl22" (click)="shipptouch()">Shipping Address </button></span>
+                <span>
+                    <p class="changeShipAdd" *ngIf="changeaddClk" (click)="shipaddChangeClk()">Change</p>
+                </span>
+                <span>
+                    <p class="changeShipAdd2" *ngIf="AddNAddrk" (click)="AddNAddrBtnClk()">Add New Address</p>
+                </span>
+            </div>
+
+            <div class="addressFormsDiv" *ngIf="newAddForm">
+                <div class=" card-body p-0 row m-0  p-2 ml-3">
+                    <div class="col-6 p-0">
+                        <mat-form-field class="col-10 p-0">
+                            <input matInput placeholder="FirstName" [(ngModel)]="newaddressform.firstname" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-6 p-0">
+                        <mat-form-field class="col-10 p-0">
+                            <input matInput placeholder="LastName" [(ngModel)]="newaddressform.lastname" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-6 p-0">
+                        <mat-form-field class="col-10 p-0">
+                            <input matInput placeholder="Address" [(ngModel)]="newaddressform.address" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-6 p-0">
+                        <mat-form-field class="col-10 p-0">
+                            <input matInput placeholder="City" [(ngModel)]="newaddressform.city" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-6 p-0">
+                        <mat-form-field class="col-10 p-0">
+                            <input matInput placeholder="Pincode" [(ngModel)]="newaddressform.pincode" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="dropdownRow">
+                        <div class="col-12 p-0">
+                            <mat-form-field class="col-10 p-0">
+                                <mat-label>Country</mat-label>
+                                <mat-select [(ngModel)]="newaddressform.country" required
+                                    (selectionChange)="handleGetRegionByCountry($event.value)">
+                                    <mat-option *ngFor="let c of this.countryInfo" value="{{c.country_id}}">
+                                        {{c.country_name}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-6 p-0">
+                        <mat-form-field class="col-10 p-0">
+                            <mat-label>State</mat-label>
+                            <mat-select [(ngModel)]="newaddressform.zone" required>
+                                <mat-option *ngFor="let z of this.regionInfo" value="{{z.zone_id}}">{{z.zone_name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-6 p-0">
+                        <mat-form-field class="col-10 p-0">
+                            <mat-label>Address Type</mat-label>
+                            <mat-select [(ngModel)]="newaddressform.addresstype">
+                                <mat-option value="Home">Home</mat-option>
+                                <mat-option value="Office">Office</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-6 p-0">
+                        <mat-form-field class="col-10 p-0">
+                            <input matInput placeholder="Street Name" [(ngModel)]="newaddressform.streetname">
+                        </mat-form-field>
+
+                    </div>
+                    <div class="col-6 p-0">
+                        <mat-form-field class="col-10 pl-0">
+                            <input matInput placeholder="Landmark" [(ngModel)]="newaddressform.landmark">
+                        </mat-form-field>
+
+                    </div>
+
+                    <div class=" subclkk">
+                        <button mat-raised-button type="submit" class=" placeOrderBtn "
+                            (click)="newAddressSubmit()">Save &
+                            Continue</button>
+                    </div>
+                    <div class="col-2 p-0">
+                        <p class="loadinText" *ngIf="resultOfAddressInsertSuccess === false"><img
+                                src="{{imgurl}}loaderGif.gif" class="addreddAddLoader" /></p>
+                    </div>
+                </div>
+            </div>
+            <div class="shipaddDisplayDiv" *ngIf="shippD">
+                <div class="" *ngIf="noAddressFoundFlag">
+                    No address found. Click on add new address to proceed.
+                </div>
+                <div class="col-sm-12 delAddrDiv">
+                    <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                        [(ngModel)]="deladdress" name="opList" required>
+                        <mat-radio-button *ngFor="let ad of this.placeOrdObj.GetDeliveryAddressData; let idx=index"
+                            class="paymentOptionRadioBtn example-radio-button " (change)="selectedAddress(ad.addressId)"
+                            [value]="ad.addressId" name="opList">
+                            <div class="row addressInfoDiv">
+                                <span class="col-12 font-14 addtitles"> {{ad.firstName}} {{ad.lastName}}</span>
+                             
+                                <p class="col-12 font-12"> {{logedPhone}}</p>
+                                <p class="col-12 font-12"> {{ad.address1}}, {{ad.city}}, {{ad.zone_name}},
+                                    {{ad.postcode}},
+                                    {{ad.countryName}}</p>
+                                <p class="col-12 font-12"> {{ad.address}}</p>
+                            </div>
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="col-sm-12 delDivIAd">
+                    <div class="delrydiv">
+                        <p class="titleHLbl">Delivery Options</p>
+                    </div>
+                    <div style="margin-top: 20px;margin-left: 15px;">
+                        <mat-radio-button class="paymentOptionRadioBtn" (change)="getOrderProductSummary('Standard')">
+                            Standard Delivery
+                        </mat-radio-button>
+                        <mat-radio-button class="paymentOptionRadioBtn" (change)="getOrderProductSummary('Express')">
+                            Express Delivery
+                        </mat-radio-button>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <button class="SaveconBtn" (click)="sav()">Save & Continue</button>
+                </div>
+            </div>
+            <div class="row shipaddDiv">
+                <span><button [disabled]="disabled" class="titleHBLbl22" (click)="Ordersumtouch()">Order Summary
+                    </button>
+                </span>
+                <span>
+                    <p class="changeShipAdd" (click)="orderSumChangeClk()">Change</p>
+                </span>
+
+            </div>
+            <div class="row sumexpDisplayDiv" *ngIf="ordersummChangeDiv">
+
+                <div class="row sumchangeClkDiv" *ngFor="let cdata of summaryData.cart_details; let i = index">
+                    <div class="col-sm-3">
+                        <img src={{cdata?.imageUrl}} class="orderedImgInOrderSummary" alt="">
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="row">
+                            <span>
+                                <p class="productSumHeading " [title]="cdata?.product_name">
+                                    {{cdata?.product_name}}</p>
+                            </span>
+                        </div>
+                        <div class="row priceD">
+                            <p class="" *ngIf="cdata?.total_flag === 0">{{cdata?.org_price}}</p>
+                            <p class="" *ngIf="cdata?.total_flag === 1">{{cdata?.recurring_sub_price}}</p>
+                        </div>
+                        <div class="row">
+                            <span>
+                                <label class="QL">Quantity:</label>
+                            </span>
+
+                            <span>
+                                <p class="QLnum" *ngIf="cdata?.total_flag === 0">{{cdata?.quantity}}</p>
+                                <p class="QLnum" *ngIf="cdata?.total_flag === 1">---</p>
+                            </span>
+                        </div>
+                        <div class="row">
+                            <span class="mobileNameHeading mb-2 ml-2" [title]="cdata?.product_name">
+
+                                <p class="saved-Price mt-4 pb-2"
+                                    *ngIf="cdata?.price_after_coupon != 0.00 && cdata?.recurring_id === 0 && cdata?.subscription_to_date === 0">
+                                    <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                    Coupon Applied
+                                </p>
+                            </span>
+                            <span *ngIf="cdata?.subscription_to_date !== 0" class="mobileNameHeading mb-2 ml-2">
+                                <div class="row">
+                                    <div class="col-sm-7 pr-0"><span>From:</span>
+                                        {{cdata?.subscription_from_date.split(' ')[0]}}</div>
+                                    <div class="col-sm-5 p-0"><span>To:</span> {{cdata?.subscription_to_date.split('
+                                        ')[0]}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 pr-0">
+                                        <strong>Deliver Every:</strong> {{cdata?.subscription_cycle}}
+                                        {{cdata?.subscription_period}}
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <h5><span class="badge badge-success">Subscribed</span></h5>
+                                        <p class="saved-Price mt-4 pb-2" *ngIf="cdata?.price_after_coupon != 0.00">
+                                            <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                            Coupon Applied
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 " *ngIf="cdata?.total_flag === 1">
+                                        <p class="font-12 specs "> <b>Note: </b>Number of deliveries for this
+                                            subscription
+                                            is {{cdata?.num_of_delivery}}, the total subscription amount will be
+                                            <b>{{cdata?.currency_indicator}}{{cdata?.recurring_subs_total_price}}</b>
+                                        </p>
+                                    </div>
+                                </div>
+                            </span>
+                            <span *ngIf="cdata?.recurring_id > 0" class="mobileNameHeading mb-2 ml-2">
+                                <div class="row m-0">
+                                    <div class="col-sm-12 p-0">
+                                        <span class="font-12 specs">{{cdata?.recurring_name}}</span>
+                                    </div>
+                                    <div class="col-sm-12 p-0">
+                                        <h5><span class="badge badge-primary">Recurring</span></h5>
+                                        <p class="saved-Price mt-4 pb-2" *ngIf="cdata?.price_after_coupon != 0.00">
+                                            <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                            Coupon Applied
+                                        </p>
+                                    </div>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="row">
+                            <span>
+                                <img src="{{imgurl}}delivery-truck 1 (1).png" class="VanImagesCls">
+                            </span>
+                            <span>
+                                <p class="productsuhghb ">
+                                    {{cdata?.delivery_est}}</p>
+                            </span>
+                            <span class="lineT">
+                                |
+                            </span>
+                            <span>
+                                <div *ngIf="expressFlag === 'Standard' || expressFlag === 'selected'" class="lineT3">
+                                    <select
+                                        (change)="selectDeliveryMode2($event.target.value, cdata.cart_id, cdata.product_id)">
+                                        <option *ngFor="let item of deliveryOptionList" value="{{item.shipping_method}}"
+                                            [selected]="cdata.delivery_type == item.shipping_method">
+                                            {{item.shipping_method}}
+                                        </option>
+                                    </select>
+
+                                </div>
+                                <div *ngIf="expressFlag === 'Express'">
+                                    {{cdata.delivery_type}}
+                                    <p class="est-days">{{cdata.delivery_est}}</p>
+
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sumexpDisplayDiv" *ngIf="orderexpandDiv">
+                <div class="sumchangesDiv" *ngFor="let cdata of summaryData.cart_details; let i = index">
+                    <p class="productSumHeading " [title]="cdata?.product_name">
+                        {{cdata?.product_name}}</p>
+                    <p class="productsub ">
+                        {{cdata?.delivery_est}}</p>
+
+                </div>
+                <div class="col-sm-12">
+                    <button class="sumconBtn" (click)="handlePlaceorder()">Continue</button>
+
+                </div>
+            </div>
+
+            <div class="row shipaddDiv">
+                <button [disabled]="disabledp" class="titleHBLbl22" (click)="paymenttouch()">Payment Options</button>
+
+            </div>
+            <div class="payexpDisplayDiv" *ngIf="paymentexpandDiv">
+                <mat-expansion-panel #matExpansionPanel1 class="steperDivHideDiv">
+                    <mat-expansion-panel-header>
+                        <div class=" row my-panels">
+                            <span><img src="{{imgurl}}credit-cardI.png" class="payImagesCls"></span>
+                            <span>
+                                <p class="titleHLbla">Pay with Credit Card</p>
+                            </span>
+
+                        </div>
+                    </mat-expansion-panel-header>
+                </mat-expansion-panel>
+                <mat-expansion-panel #matExpansionPanel1 class="steperDivHideDiv">
+                    <mat-expansion-panel-header>
+                        <div class=" row my-panels">
+                            <span><img src="{{imgurl}}decardI.png" class="payImagesCls"></span>
+                            <span>
+                                <p class="titleHLbla">Pay with Dedit Card</p>
+                            </span>
+                        </div>
+                    </mat-expansion-panel-header>
+                </mat-expansion-panel>
+                <mat-expansion-panel #matExpansionPanel1 class="steperDivHideDiv">
+                    <mat-expansion-panel-header>
+
+                        <div class=" row my-panels">
+                            <span><img src="{{imgurl}}onlineNetbanking 1.png" class="payImagesCls"></span>
+                            <span>
+                                <p class="titleHLbla">Pay with Net Banking</p>
+                            </span>
+                        </div>
+                    </mat-expansion-panel-header>
+                </mat-expansion-panel>
+                <mat-expansion-panel #matExpansionPanel1 class="steperDivHideDiv">
+                    <mat-expansion-panel-header>
+
+                        <div class=" row my-panels">
+                            <span><img src="{{imgurl}}cash-on-delivery 1.png" class="payImagesCls"></span>
+                            <span>
+                                <p class="titleHLbla">Cash On Delievery</p>
+                            </span>
+                        </div>
+                    </mat-expansion-panel-header>
+
+                    <div class="col-sm-6 p-1 ">
+                        <input type="radio" name="payment" id="visaBtn" (click)=handlePlaceorder()> Cash On Delivery
+                    </div>
+                    <div class="col-sm-6 float-right">
+                        <button mat-raised-button type="submit" class=" cns-btn placeOrderBtn p-2 float-right mt-1"
+                            (click)="codClick()">Cash On Delivery</button>
+                    </div>
+                </mat-expansion-panel>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="row priceDetailsDiv" *ngIf="aa">
+                <span class="Sheading"><b>Price Details</b></span>
+                <table class="table">
+                    <tr>
+                        <td class="shLbl">Shopping Cart Total</td>
+                        <td> {{summaryData.currency_indicator}}{{summaryData.sub_total|number : '1.2-2'}}</td>
+                    </tr>
+                    <tr>
+                        <td class="shLbl">Delivery Charges</td>
+                        <td> {{summaryData.currency_indicator}}{{summaryData.delivery_charges |number : '1.2-2'}}</td>
+                    </tr>
+                    <tr>
+                        <td class="shLbl">Total Payable <span>(Incl Taxs)</span></td>
+                        <td><b> {{summaryData.currency_indicator}}{{summaryData.total |number : '1.2-2'}}</b></td>
+                    </tr>
+                    <tr *ngIf="vocherFlag">
+                        <span>
+                            <td class="shLbl">Product Discount
+                            </td>
+                        </span>
+                        <td><b class="vocherdisPrice">-{{summaryData.currency_indicator}}{{summaryData.voucher_redeem
+                                |number : '1.2-2'}}</b></td>
+                    </tr>
+                    <tr *ngIf="vocherFlag">
+                        <td class="shLbl">Balance Amount</td>
+                        <td><b>{{summaryData.currency_indicator}}{{summaryData.grand_total |number : '1.2-2'}}</b></td>
+                    </tr>
+                </table>
+            </div>
+        </div> -->
+
+
+    <!--  
+<mat-expansion-panel #matExpansionPanel1 class="steperDiv">
+    <mat-expansion-panel-header>
+      <div class=" my-panel">
+      <p class="titleHLbl" >sShipping Address1 </p>
+       
+      </div>
+    </mat-expansion-panel-header>
+
+    <div class="row warDiv">
+        <div class="row">
+            
+            <span class="newAddressSpan"  style=" margin-top:3px; margin-bottom: 3px;">
+              
+                <i class="fa fa-plus IconNewAddress" class="addNAddClk"
+                    (click)="addAddress(openAddressPopup)">Add New Address</i>
+            </span>
+
+        </div>
+      
+        <div class="" *ngIf="noAddressFoundFlag">
+            No address found. Click on add new address to proceed.
+        </div>
+        <div class="delAddrDiv">
+        <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+            [(ngModel)]="deladdress" name="opList" required>
+            <mat-radio-button *ngFor="let ad of this.placeOrdObj.GetDeliveryAddressData; let idx=index" class="paymentOptionRadioBtn example-radio-button "
+                (change)="selectedAddress(ad.addressId)" [value]="ad.addressId" name="opList"  >
+           
+                <h6 class="font-14 addTitle" >Delivery Address {{idx+1}}      
+                </h6>
+                <div class="row m-0 p-2 addressInfoDiv">
+                    <span class="col-12 font-14 mb-2 addtitles"> {{ad.firstName}} {{ad.lastName}}</span>
+                   
+                    <p class="col-12 font-12"> {{logedPhone}}</p>
+                    <p class="col-12 font-12 mb-2"> {{ad.address1}}, {{ad.city}}, {{ad.zone_name}}, {{ad.postcode}}, {{ad.countryName}}</p>
+                    <p class="col-12 font-12"> {{ad.address}}</p>
+                </div>
+                <hr class="mt-1 mb-1">
+            </mat-radio-button>
+        </mat-radio-group>
+    </div>
+    <div class="row delDivIAd" >
+        <div class="delrydiv" >
+            <p class="titleHLbl">Delivery Options</p>
+
+        </div>
+      
+        
+        <div  style="margin-top: 20px;margin-left: 15px;">
+            <mat-radio-button class="paymentOptionRadioBtn"   (change)="getOrderProductSummary('Standard')" >
+                Standard Delivery
+            </mat-radio-button>
+            <mat-radio-button  class="paymentOptionRadioBtn"  (change)="getOrderProductSummary('Express')">
+                Express Delivery
+            </mat-radio-button>
+
+
+        </div>
+        
+    </div>
+    <div class="col-sm-12">
+        <button class="SaveconBtn">Save & Continue</button>
+
+    </div>
+
+      
+   </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel #matExpansionPanel1 class="steperDiv">
+   
+    <mat-expansion-panel-header >
+      <div class="my-panel">
+      <p class="titleHLbl">Order Summary</p>
+       
+      </div>
+    </mat-expansion-panel-header>
+
+    <div class="col-sm-12 warDiv">
+            <p class="changesumClk">change</p>                   
+        <div class="sumpViewDiv" >
+            <div class="eachProductDiv" *ngFor="let cdata of cartData; let i = index">
+                
+                     
+            </div>
+        </div>
+        <div class="sumchangeDiv" *ngFor="let cdata of cartData; let i = index">
+            <div class="row">
+                <span >
+                    <img src={{cdata.image}} class="orderedImgInOrderSummary" alt="">
+                </span>
+                <span>
+                  <p class="productSumHeading mb-2 ml-2" [title]="cdata?.data?.product_name">
+                        {{cdata?.data?.product_name}}</p>
+                </span>
+
+            </div>
+
+        </div>
+
+     <div class="col-sm-12">
+        <button class="sumconBtn">Continue</button>
+
+    </div>
+   </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel #matExpansionPanel1 class="steperDiv">
+    <mat-expansion-panel-header>
+      <div class="my-panel">
+      <p class="titleHLbl">Delivery Options</p>
+       
+      </div>
+    </mat-expansion-panel-header>
+
+    <div class="row warDiv">
+      <span>
+ 
+       </span>
+     <span>
+       
+        <div >
+            <mat-radio-button class="paymentOptionRadioBtn"   (change)="getOrderProductSummary('Standard')" >
+                Standard Delivery
+            </mat-radio-button>
+            <mat-radio-button  class="paymentOptionRadioBtn"  (change)="getOrderProductSummary('Express')">
+                Express Delivery
+            </mat-radio-button>
+
+
+        </div>
+        <div *ngIf="taxDetails">
+            <div *ngFor="let cdata of summaryData.cart_details; let i = index">
+           <p> {{cdata?.product_name}}`</p>
+           <p>{{cdata?.delivery_est}}</p>
+                        
+                         
+            </div>
+        </div>
+       
+     </span>
+   </div>
+  </mat-expansion-panel> -->
+
+
+
+
+
+
+    <!-- </div> -->
+
+    <!-- </div> -->
+
+
+
+    <!-- code commented -->
+
+    <!-- <div class="col-8 card" *ngIf="cartData.length>0">
+<mat-vertical-stepper  linear  >
+
+<mat-step >
+    
+   
+    <ng-template matStepLabel="1">DELIVERY ADDRESS  </ng-template>
+
+    <span class="newAddressSpan" >
+     
+        <i class="fa fa-plus IconNewAddress"
+            (click)="addAddress(openAddressPopup)">Address</i>
+    </span>
+    <div class="" *ngIf="noAddressFoundFlag">
+        No address found. Click on add new address to proceed.
+    </div>
+    <div class="delAddrDiv">
+    <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+        [(ngModel)]="deladdress" name="opList" required>
+        <mat-radio-button *ngFor="let ad of this.placeOrdObj.GetDeliveryAddressData; let idx=index" class="paymentOptionRadioBtn example-radio-button "
+            (change)="selectedAddress(ad.addressId)" [value]="ad.addressId" name="opList"  >
+            
+            <h6 class="font-14 addTitle" >Delivery Address {{idx+1}}      
+            </h6>
+            <div class="row m-0 p-2 addressInfoDiv">
+                <span class="col-12 font-14 mb-2"> {{ad.firstName}} {{ad.lastName}}</span>
+                <p class="col-12 font-12"> {{logedPhone}}</p>
+                <p class="col-12 font-12 mb-2"> {{ad.address1}}, {{ad.city}}, {{ad.zone_name}}, {{ad.postcode}}, {{ad.countryName}}</p>
+                <p class="col-12 font-12"> {{ad.address}}</p>
+            </div>
+            <hr class="mt-1 mb-1">
+        </mat-radio-button>
+    </mat-radio-group>
+</div>
+</mat-step>
+
+<mat-step>
+    <ng-template matStepLabel>ORDER SUMMARY</ng-template>
+    <div class="col-sm-12 p-1 orderSummaryInfo mt-4">
+        <table class="table table-bordered" >
+            <tr>
+                <th>S.No</th>
+                <th>Image</th>
+                <th style="width: 20%;">Product Name</th>
+                <th>Price</th>
+                <th>Tax Amount</th>
+                <th>Price With Tax</th>
+                <th>Quantity</th>
+                <th>Num Of Deliveries</th>
+                <th>Total Amount</th>
+            </tr>
+            <tbody>
+                <tr  *ngFor="let cdata of cartData; let i = index">
+                    <td>{{i+1}}</td>
+                    <td> <img src={{cdata.image}} class="orderedImgInOrderSummary" alt=""></td>
+
+                    <td> <span class="mobileNameHeading mb-2 ml-2" [title]="cdata?.data?.product_name">
+                        {{cdata?.data?.product_name}}
+                        <p class="saved-Price mt-4 pb-2" *ngIf="cdata?.data?.price_after_coupon != 0.00 && cdata?.data?.recurring_id === 0 && cdata?.data?.subscription_to_date === 0">
+                            <i class="fa fa-check-circle" aria-hidden="true"></i>
+                            Coupon Applied
+                        </p>
+                    </span>
+                        <span *ngIf="cdata?.data?.subscription_to_date !== 0" class="mobileNameHeading mb-2 ml-2">
+                             <div class="row">
+                                 <div class="col-sm-7 pr-0"><span>From:</span> {{cdata?.data?.subscription_from_date.split(' ')[0]}}</div>
+                                 <div class="col-sm-5 p-0"><span>To:</span> {{cdata?.data?.subscription_to_date.split(' ')[0]}}</div>
+                             </div>
+                           <div class="row">
+                             <div class="col-sm-12 pr-0">
+                                 <strong>Deliver Every:</strong> {{cdata?.data?.subscription_cycle}} {{cdata?.data?.subscription_period}}
+                             </div>
+                             <div class="col-sm-12">
+                                <h5><span class="badge badge-success">Subscribed</span></h5>
+                                <p class="saved-Price mt-4 pb-2" *ngIf="cdata?.data?.price_after_coupon != 0.00">
+                                    <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                    Coupon Applied
+                                </p>
+                            </div>
+                         </div>
+                           <div class="row">
+                            <div class="col-sm-12 " *ngIf="cdata?.data?.total_flag === 1">
+                                <p class="font-12 specs "> <b>Note: </b>Number of deliveries for this subscription is {{cdata?.data?.num_of_delivery}}, the total subscription amount will be <b>{{cdata?.data?.currency_indicator}}{{cdata?.data?.recurring_subs_total_price}}</b></p>
+                            </div>
+                           </div>
+                           
+                        </span>
+                        <span *ngIf="cdata?.data?.recurring_id > 0" class="mobileNameHeading mb-2 ml-2">
+                            <div class="row m-0">
+                                <div class="col-sm-12 p-0">
+                                    <span class="font-12 specs">{{cdata?.data?.recurring_name}}</span>
+                                </div>
+                                <div class="col-sm-12 p-0">
+                                    <h5><span class="badge badge-primary">Recurring</span></h5>
+                                    <p class="saved-Price mt-4 pb-2" *ngIf="cdata?.data?.price_after_coupon != 0.00">
+                                        <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                        Coupon Applied
+                                    </p>
+                                </div>
+                            </div>
+                       </span>
+                    </td>
+                    <td>
+                        <p class="mt-2 mb-2 ml-2" *ngIf="cdata?.data?.total_flag === 0">{{cdata?.data?.org_price}}</p>
+                        <p class="mt-2 mb-2 ml-2" *ngIf="cdata?.data?.total_flag === 1">{{cdata?.data?.recurring_sub_price}}</p>
+                    </td>
+                    <td>
+                        <p class="mt-2 mb-2 ml-2" *ngIf="cdata?.data?.total_flag === 0"> {{cdata?.data?.tax}}</p>
+                        <p class="mt-2 mb-2 ml-2" *ngIf="cdata?.data?.total_flag === 1"> {{cdata?.data?.recurring_sub_total_tax}}</p>
+                    </td>
+                    <td>
+                        <p class="mt-2 mb-2 ml-2" *ngIf="cdata?.data?.total_flag === 0">{{cdata?.data?.unit_price}}</p>
+                        <p class="mt-2 mb-2 ml-2" *ngIf="cdata?.data?.total_flag === 1">---</p>
+                    </td>
+
+                    <td>
+                        <p class="mt-2 mb-2 ml-2" *ngIf="cdata?.data?.total_flag === 0">{{cdata?.data?.quantity}}</p>
+                        <p class="mt-2 mb-2 ml-2" *ngIf="cdata?.data?.total_flag === 1">---</p>
+                    </td>
+                    <td>
+                        <p class="mt-2 mb-2 ml-2" *ngIf="cdata?.data?.subscription_to_date !== 0">{{cdata?.data?.num_of_delivery}}</p>
+                        <p class="mt-2 mb-2 ml-2" *ngIf="cdata?.data?.subscription_to_date === 0">---</p>
+                    </td>
+                    <td>
+                        <p class="mt-2 mb-2 ml-2" *ngIf="cdata?.data?.total_flag === 0"> {{cdata?.data?.sub_total}} </p>
+                        <p class="mt-2 mb-2 ml-2" *ngIf="cdata?.data?.total_flag === 1"> {{cdata?.data?.recurring_subs_total_price}} </p>
+                    </td>
+                   
+                </tr>
+            </tbody>
+        </table>
+        <div class="item row mb-3 m-4" *ngFor="let cdata of cartData">
+            <div class="col-2 p-1">
+          
+            </div>
+            <div class="col-2 p-1">
+          
+            </div>
+            <div class="col-2 p-1">
+               
+            </div>
+            <div class="col-2 p-1">
+              
+            </div>
+         
+            <div class="col-2 p-1">
+               
+            </div>
+       
+        </div>
+    </div>
+</mat-step>
+
+
+<mat-step [completed]="false">
+    <ng-template matStepLabel>DELIVERY OPTIONS</ng-template>
+
+        <mat-radio-button class="paymentOptionRadioBtn"   (change)="getOrderProductSummary('Standard')" >
+        Standard Delivery
+    </mat-radio-button>
+    <mat-radio-button  class="paymentOptionRadioBtn"  (change)="getOrderProductSummary('Express')">
+        Express Delivery
+    </mat-radio-button>
+
+
+<div *ngIf="taxDetails">
+    <table class="table table-bordered" >
+        <tr>
+            <th>S.No</th>
+            <th style="width: 20%;">Product Name</th>
+            <th >Delivery Options</th>
+            <th>Price</th>
+            <th>Tax Amount</th>
+            <th style="width: 20%;">Price With Tax</th>
+            <th>Quantity</th>
+            <th>Num Of Deliveries</th>
+            <th>Delivery Charges</th>
+            <th>Total Amount</th>
+        </tr>
+        <tbody>
+        
+            <tr *ngFor="let cdata of summaryData.cart_details; let i = index">
+                <td>{{i+1}}</td>
+                <td>
+                    <span class="mobileNameHeading mb-2">
+                         {{cdata?.product_name}}
+                      
+                    </span>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <span *ngIf="cdata?.subscription_to_date !== 0">
+                                <h5><span class="badge badge-success">Subscribed</span></h5>
+                                <p class="saved-Price mt-4 pb-2" *ngIf="cdata?.price_after_coupon !== '0.00'">
+                                    <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                    Coupon Applied
+                                </p>
+                            </span>
+                            <span *ngIf="cdata?.recurring_id > 0">
+                                <h5><span class="badge badge-primary">Recurring</span></h5>
+                                <p class="saved-Price mt-4 pb-2" *ngIf="cdata?.price_after_coupon !== '0.00'">
+                                    <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                    Coupon Applied
+                                </p>
+                            </span>
+                            <span *ngIf="cdata.recurring_id === 0 && cdata.subscription_to_date === 0 && cdata.price_after_coupon !== '0.00'">
+                            <p class="saved-Price mt-4 pb-2">
+                                <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                Coupon Applied
+                            </p>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 " *ngIf="cdata?.total_flag === 1">
+                            <p class="font-12 specs "> <b>Note: </b>Number of deliveries for this subscription is {{cdata?.num_of_delivery}}, the total subscription amount will be <b>{{cdata?.currency_indicator}}{{cdata?.recurring_subs_total_price}}</b></p>
+                        </div>
+                    </div>
+                </td>
+                <td *ngIf="expressFlag === 'Standard' || expressFlag === 'selected'">
+                    <select (change)="selectDeliveryMode2($event.target.value, cdata.cart_id, cdata.product_id)">
+                        <option *ngFor="let item of deliveryOptionList" value="{{item.shipping_method}}" [selected]="cdata.delivery_type ==item.shipping_method">
+                            {{item.shipping_method}}
+                        </option>
+                    </select>
+                    <p class="est-days">{{cdata.delivery_est}}</p>
+                </td>
+                <td *ngIf="expressFlag === 'Express'">
+                    {{cdata.delivery_type}}
+                    <p class="est-days">{{cdata.delivery_est}}</p>
+
+                </td>
+                <td>
+                   <p *ngIf="cdata.total_flag === 0">{{cdata?.org_price |number : '1.2-2'}}</p>
+                   <p *ngIf="cdata.total_flag === 1">{{cdata?.recurring_sub_price |number : '1.2-2'}}</p>
+
+                </td>
+                <td>
+                    <p *ngIf="cdata.total_flag === 0">{{cdata?.tax}}</p>
+                    <p *ngIf="cdata.total_flag === 1">{{cdata?.recurring_sub_total_tax}}</p>
+                </td>
+                <td>
+                 
+                    <p *ngIf="cdata.total_flag === 0">  {{cdata?.unit_price|number : '1.2-2' }}</p>
+                    <p *ngIf="cdata.total_flag === 1">---</p>
+                </td>
+                <td>
+                    <p *ngIf="cdata.total_flag === 0">  {{cdata?.quantity}}</p>
+                    <p *ngIf="cdata.total_flag === 1">---</p>
+                </td>
+                <td>
+                    <p *ngIf="cdata.subscription_to_date !== 0">  {{cdata?.num_of_delivery}}</p>
+                    <p *ngIf="cdata.subscription_to_date === 0">---</p>
+                </td>
+                <td>
+                    <p *ngIf="cdata.delivery_charges !== 0">  {{cdata?.delivery_charges |number : '1.2-2'}}</p>
+                    <p *ngIf="cdata.delivery_charges === 0">---</p>
+                </td>
+                
+                <td>
+                    <p *ngIf="cdata.total_flag === 0">   {{cdata?.sub_total |number : '1.2-2'}}</p>
+                    <p *ngIf="cdata.total_flag === 1"> {{cdata?.recurring_subs_total_price |number : '1.2-2'}}</p>
+                   
+                </td>
+            </tr>
+            <tr *ngFor="let tx of this.orderedProductEntireDetails.tax_names">
+                <td colspan="9">
+                    {{tx.name}}
+                </td>
+                <td>
+                    {{tx.tax_price |number : '1.2-2'}}
+                 </td>
+            </tr>
+            <tr><td colspan="9">Sub Total</td><td> <b>{{this.orderedProductEntireDetails.currency_indicator}}{{this.orderedProductEntireDetails.sub_total |number : '1.2-2'}}</b></td>
+            <tr>
+                <td colspan="9">
+                    Delivery charges
+                </td>
+               <td><b>{{this.orderedProductEntireDetails.currency_indicator}}{{this.orderedProductEntireDetails.delivery_charges |number : '1.2-2'}}</b></td>
+            </tr>                  
+                <tr><td colspan="9">Total amount</td>
+                    <td>
+                    
+                    <p><b>{{this.orderedProductEntireDetails.currency_indicator}}{{summaryData.grand_total |number : '1.2-2'}}</b>                                </p>
+                    </td>
+
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="col-12 p-1 float-right">
+        <button mat-raised-button type="submit" class=" cns-btn placeOrderBtn p-2 float-right mt-1"
+            (click)="handlePlaceorder()">Continue</button>
+    </div>    
+    </div>
+
+ 
+</mat-step>
+<mat-step  >
+    <ng-template matStepLabel>PAYMENT OPTIONS</ng-template>
+
+  <div class="row paymentDiv">
+      <div class="col-sm-3">
+        <input type="radio"   name="payment" id="paypalBtn" (click)="paypalClk(paypalPopup)"> <img src="{{imgurl}}paypalweb.svg"  alt="" class="paypalImg img-fluid" >
+      </div>
+      <div class="col-sm-3">
+
+        <input type="radio"   name="payment" id="RazorpayBtn" (click)="razorpay()"><img src="{{imgurl}}razorpaywebnew.svg" alt="" class="Razor img-fluid" >
+       
+      </div>
+      <div class="col-sm-3">
+        <input type="radio"   name="payment" id="StripeBtn" (click)="stripeClk(stripePop)"><img src="{{imgurl}}stripeweb.png" alt="" class="stripeImg img-fluid" >
+      </div>
+      <div class="col-sm-3">
+        <input type="radio"   name="payment" id="visaBtn" (click)= codClick() > Cash On Delivery
+      </div>
+  </div>
+  <div class="col-12 p-4  float-right" *ngIf="confrmOrderFlag === true">
+    <button mat-raised-button type="submit" class="btn cnfrmOrderBtn p-2 float-right mt-1" (click)= confirmorderClick() >Confirm Order</button>
+</div>
+</mat-step>
+
+
+
+
+</mat-vertical-stepper>
+</div>
+
+<div class="col-3 card ml-4 mt-4 rightDiv" *ngIf="cartData.length>0">
+
+<div class="row priceDetailsDiv" *ngIf="aa">
+    <span class="heading  m-1 p-2"><b>Bill Details</b></span>
+    <table class="table" >
+        <tr>
+            <td>Item Price</td>
+            <td> {{summaryData.currency_indicator}}{{summaryData.sub_total|number : '1.2-2'}}</td>
+        </tr>
+      
+        <tr>
+            <td>Delivery Fee</td>
+            
+         
+           <td> {{summaryData.currency_indicator}}{{summaryData.delivery_charges |number : '1.2-2'}}</td>             
+        
+
+        </tr>
+                          <tr>
+            <td>Total Amount</td>
+            <td><b> {{summaryData.currency_indicator}}{{summaryData.total |number : '1.2-2'}}</b></td>
+        </tr>
+        <tr *ngIf="vocherFlag">
+            <span><td>Vocher Discount
+            </td></span>
+           
+            
+            
+            <td><b class="vocherdisPrice">-{{summaryData.currency_indicator}}{{summaryData.voucher_redeem |number : '1.2-2'}}</b></td>
+        </tr>
+        <tr *ngIf="vocherFlag">
+            <td>Balance Amount</td>
+            <td><b>{{summaryData.currency_indicator}}{{summaryData.grand_total |number : '1.2-2'}}</b></td>
+        </tr>
+     
+    </table>
+
+</div>
+<div class="row safetyDiv" *ngIf="safeDiv">
+    <span>
+        <img src="{{imgurl}}safeimage.png" alt="" class="safeImg" >
+    </span>
+       
+    <span>
+        <p class="safetyp"> Safe and Secure Payments.Easy returns.100% Authentic products.</p>  
+
+
+    </span>
+   
+</div>
+
+<div class=" card row" *ngIf="safeDiv" style="margin-top: 2% ;">
+    <span class="heading  m-1 p-2">Voucher Details</span>
+    <form [formGroup]="VocherForm">
+
+
+    <span>
+        <mat-form-field class="col-sm-12 p-0 font-12 VocherTxt">
+            <mat-label>Enter Voucher Code</mat-label>
+            <input matInput  formControlName="VocherCode" required 
+                autocomplete="off"  type="text">
+        </mat-form-field>
+       
+    </span>
+   
+       
+    <span>
+        <button class="btn btn-primary float-right applyBtn" type="button"
+        (click)="applyVocherClks()">APPLY</button>
+        <button  class="btn btn-primary float-right applyBtn" (click)="vocherAddArray()">+</button>
+    </span>
+    <p id="infotag">**Add another vocher click on '+' Button then Apply</p>
+   </form>
+   <p style="width: 50%; padding-left: 20px;" *ngIf="vocherEntercodeArray.length >=1">Applied Vochers : </p>
+   <ul>
+    <li *ngFor="let voArray of vocherEntercodeArray" style="width: 70px; float: left; text-decoration:  none; list-style: none;">{{voArray}}</li>
+
+   </ul>
+   
+</div>
+
+
+
+
+
+
+
+</div>
+
+
+</div>
+<ng-template #placeorderPopup>
+<h5 class="AddressPopupTitle mb-2 float-right" (click)="closeDialog()">X</h5>
+<div class="p-fluid p-formgrid p-grid  m-0">
+<div class="row p-0 m-0">
+<h5 class="popup mt-4">Order Placed Successfully</h5>
+</div>
+</div>
+</ng-template>
+<ng-template #paypalPopup>
+<h5 class="AddressPopupTitle mb-2 float-right" (click)="closepaymentDialog()">X</h5>
+<div class="p-fluid p-formgrid p-grid  m-0">
+    <div class="row p-0 m-0">
+  
+    </div>
+
+<div class="row ">
+   
+    <div class="row ">
+   
+        <div class="col-sm-6">
+            <label for="cname" class="cardLbl">Name on Card</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" id="cname" name="cardname" placeholder="Enter Card Name">
+        </div>
+
+
+     
+        <div class="col-sm-6">
+            <label for="ccnum" class="cardLbl">Credit card number</label>
+         
+        </div>
+        <div class="col-sm-6">
+            <input type="text"  id="ccnum"  name="cardnumber" placeholder="Enter Card Number">
+        </div>
+
+       
+          <div class="col-sm-6">
+            <label for="expmonths"  class="cardLbl">Exp Month </label>
+          </div>
+
+          <div class="col-sm-6">
+             <input type="text"  id="expyear" name="expyear" placeholder="Enter expire Date on Card">
+           </div>
+
+         
+   
+                <div class="col-sm-6">
+                    <label for="cvv" class="cardLbl">CVV</label>
+                </div>
+
+                <div class="col-sm-6">
+                    <input type="text" id="cvv" name="cvv" placeholder="Enter CVV">
+                </div>
+           
+                <div class="col-sm-4">
+
+                </div>
+                <div class="col-sm-4">
+                    <button mat-raised-button color="primary" class="submitButton">Submit</button>
+                   
+
+                </div>
+
+
+    </div>
+</div>
+</div>  
+</ng-template>
+
+<ng-template #stripePop>
+<h5 class="AddressPopupTitle mb-2 float-right" (click)="closepaymentDialog()">X</h5>
+<div class="p-fluid p-formgrid p-grid  m-0">
+   
+
+
+   
+    <div class="row">
+        <div class="col-sm-4">
+
+        </div>
+        <div class="col-sm-4">
+            <label>Card Info</label>
+
+        </div>
+        <div class="col-sm-4">
+
+        </div>
+    </div>
+        <div class="row">
+            
+                <div class="col-sm-6">
+                    <input  type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                    placeholder="Card Number" (keyup)="keyup($event.target.value)"/>
+                   
+                    <div  class="errormsg">
+                       <p *ngIf="does"> Your card number is incomplete.</p>  
+                        <p *ngIf="lenth16more">Card number is invalid</p>
+                    </div>
+                   
+
+                </div>
+                <div class="col-sm-2">
+                    <input  type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" placeholder="MM/YY" />
+                </div>
+               
+                <div class="col-sm-2">
+                    <input  type="text"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                     placeholder="CVV" (keyup)="cvvup($event.target.value)"/>  
+                     <p *ngIf="cvverror" class="errormsg">Invalid CVV</p>
+                </div>
+                <div class="col-sm-1">
+                </div>
+         
+        
+
+        </div>
+         
+
+</div>
+
+</ng-template>
+<ng-template #openAddressPopup>
+<h5 class="AddressPopupTitle mb-2">Add New Address <span class="float-right" (click)="closeNewAddressDialog()">X</span></h5>
+<div class=" card-body p-0 row m-0  p-2 ml-3" >
+<div class="col-6 p-0">
+<mat-form-field class="col-10 pl-0">
+    <input matInput placeholder="FirstName" [(ngModel)]="newaddressform.firstname">
+</mat-form-field>
+</div>
+<div class="col-6 p-0">
+  <mat-form-field class="col-10 pl-0">
+    <input matInput placeholder="LastName" [(ngModel)]="newaddressform.lastname">
+  </mat-form-field>
+</div>          
+<div class="col-6 p-0">
+    <mat-form-field class="col-10 pl-0">
+        <input matInput placeholder="Address" [(ngModel)]="newaddressform.address">
+    </mat-form-field>
+    </div>  
+    <div class="col-6 p-0">
+    <mat-form-field class="col-10 pl-0">
+        <input matInput placeholder="City" [(ngModel)]="newaddressform.city">
+    </mat-form-field>
+    </div>
+    <div class="col-6 p-0">
+        <mat-form-field class="col-10 pl-0">
+            <input matInput placeholder="Pincode" [(ngModel)]="newaddressform.pincode">
+        </mat-form-field>
+        </div>                    
+        <div class="dropdownRow">    
+            <div class="col-6 p-0">
+                <mat-form-field class="col-15 p-0">
+                    <mat-label>Country</mat-label>
+                    <mat-select [(ngModel)]="newaddressform.country" (selectionChange)="handleGetRegionByCountry($event.value)">
+                        <mat-option *ngFor="let c of this.countryInfo" value="{{c.country_id}}" >{{c.country_name}}</mat-option>                                
+                    </mat-select>
+                  </mat-form-field>                        
+        </div>
+    </div>            
+             <div class="col-6 p-0">
+                <mat-form-field class="col-15 p-0">
+                    <mat-label>State</mat-label>
+                    <mat-select [(ngModel)]="newaddressform.zone">
+                        <mat-option *ngFor="let z of this.regionInfo" value="{{z.zone_id}}">{{z.zone_name}}</mat-option>                                
+                    </mat-select>
+                  </mat-form-field>
+        </div>    
+        <div class="col-6 p-0">
+            <mat-form-field class="col-15 p-0">
+                <mat-label>Address Type</mat-label>
+                <mat-select [(ngModel)]="newaddressform.addresstype">
+                  <mat-option value="Home">Home</mat-option>
+                  <mat-option value="Office">Office</mat-option>                            
+                </mat-select>
+              </mat-form-field>                              
+        </div>
+        <div class="col-6 p-0">
+            <mat-form-field class="col-10 pl-0">
+                <input matInput placeholder="Street Name" [(ngModel)]="newaddressform.streetname">
+            </mat-form-field>
+           
+        </div>
+        <div class="col-6 p-0">
+            <mat-form-field class="col-10 pl-0">
+                <input matInput placeholder="Landmark" [(ngModel)]="newaddressform.landmark">
+            </mat-form-field>
+           
+        </div>
+
+            <div class="col-4 p-0">
+                <button mat-raised-button type="submit" class="primary-btn placeOrderBtn p-2  mt-1" (click)="newAddressSubmit()">Submit</button>
+            </div>
+            <div class="col-2 p-0">
+                <p class="loadinText" *ngIf ="resultOfAddressInsertSuccess"><img src="{{imgurl}}loaderGif.gif" class="addreddAddLoader"/></p>
+            </div>  
+</div>
+</ng-template> -->

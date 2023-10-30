@@ -1,0 +1,1102 @@
+@import "src/assets/styles/scss/variables";
+// @import "../../../assets/styles/scss/variables";
+
+example-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+}
+
+.paymentOptionRadioBtn {
+  margin: 5px;
+}
+
+#infotag {
+  padding-left: 10px;
+  color: #b8b4b4;
+  font-size: x-small;
+}
+
+.VocherTxt {
+  margin-left: 2%;
+  margin-right: 2%;
+  width: 55%;
+}
+
+.paymentOptionRadioBtnas {
+  margin-top: 5px;
+}
+
+.paymentOptionRadioGrp.example-radio-group-label {
+  font-family: Poppins !important;
+  font-size: 14px !important;
+  color: #d92337 !important;
+}
+
+.orderSummaryDiv {
+  font-family: Poppins;
+}
+
+.qunty-input:focus-visible {
+  border: 0px !important;
+  box-shadow: none;
+  outline: 0 !important;
+}
+
+.ordSummaryTextHeading {
+  opacity: 0.7;
+  color: #000;
+}
+
+.addTitle,
+.AddressPopupTitle {
+  font-family: Poppins;
+  font-size: 14px;
+  color: #1a6796;
+  cursor: pointer;
+  margin-left: 1.3rem;
+}
+
+.placeOrderBtn {
+  height: 46px;
+  width: 200px;
+  left: 575px;
+  top: 0px;
+  border-radius: 10px;
+  padding: 16px, 24px, 16px, 24px;
+  line-height: 14px;
+  background: $theme_color !important;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  color: #ffffff;
+}
+
+.sumchangesDiv {
+  height: 95px;
+}
+
+.cnfrmOrderBtn {
+  line-height: 16px;
+  background-color: #fb641b;
+  color: white;
+}
+
+.safetyDiv {
+  border-radius: 9px;
+  margin-top: 2%;
+  background-color: white;
+  height: auto;
+}
+
+.rightDiv {
+  background-color: transparent;
+  border-color: transparent;
+  border-collapse: collapse;
+}
+
+.safetyp {
+  font-size: x-small;
+  margin-top: 9px;
+}
+
+.safeImg {
+  float: left;
+  height: 30px;
+  width: 30px;
+}
+
+.formHeading {
+  font-family: Poppins;
+  font-size: 14px;
+  color: #000;
+  opacity: 0.8;
+}
+
+.cart-container {
+  margin: 30px 5%;
+}
+
+.count-inlineflex {
+  display: inline-flex;
+  border: solid 2px #ccc;
+  border-radius: 9px;
+  margin-top: 8%;
+}
+
+input.qty {
+  border: 1px solid #e0dddd;
+  text-align: center;
+  width: 80px;
+}
+
+.qtyminus,
+.qtyplus {
+  width: 34px;
+  height: 34px;
+  background: transparent;
+  text-align: center;
+  font-size: 19px;
+  line-height: 34px;
+  color: #000;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.qtyminus {
+  line-height: 32px;
+}
+
+.qtyminus {
+  border-radius: 3px 0 0 3px;
+}
+
+.qtyplus {
+  border-radius: 0 3px 3px 0;
+}
+
+.cardview {
+  box-shadow: 0px 0px 1px 2px #f7f7f7;
+  border-radius: 8px;
+}
+
+.priceview {
+  box-shadow: 0px 0px 1px 2px #f7f7f7;
+  border-radius: 8px;
+  height: 46vh !important;
+}
+
+.cardview span {
+  font-size: 16px;
+  padding: 1%;
+}
+
+.cardview p {
+  font-size: 14px;
+}
+
+.popup {
+  text-align: center;
+  margin: auto;
+}
+
+h4.heading {
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.trash i {
+  float: right;
+  font-size: 15px;
+  color: red;
+  cursor: pointer;
+}
+
+.assd {
+  background-color: red;
+}
+
+.stpeerLbl {
+  width: 182px;
+  height: 29px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  color: red;
+  color: #2f294d;
+}
+
+.addNAddClk {
+  width: 142px;
+  height: 22px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  color: $theme_color !important;
+}
+
+.titleHLbl {
+  width: 182px;
+  height: 29px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 21px;
+  line-height: 29px;
+  color: #2f294d;
+}
+
+.titleHBLbl {
+  width: 182px;
+  height: 29px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  color: #2f294d;
+}
+
+.titleHBLbl22 {
+  width: 182px;
+  height: 29px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  color: #626165;
+  border: 1px solid #fff;
+  border-color: #fff;
+  background-color: #fff;
+}
+
+.contDiv {
+  margin-top: 40px;
+  border-radius: 9px;
+}
+
+.titleHLbl22 {
+  border: 1px solid #fff;
+  border-color: #fff;
+  background-color: #fff;
+  width: 182px;
+  height: 29px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 29px;
+  color: #2f294d;
+}
+
+.VanImagesCls {
+  margin-left: 0px;
+}
+
+.titleHLbla {
+  margin-left: 13px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  color: rgba(51, 51, 51, 0.75);
+}
+
+.titleHDLbl {
+  width: 160px;
+  height: 24px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  color: #2f294d;
+}
+
+.delDivIAd {
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+.SaveconBtn {
+  float: right;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 24px;
+  width: 200px;
+  height: 46px;
+  background: $theme_color !important;
+  border-radius: 10px;
+  border: 1px solid $theme_color !important;
+  color: #fff;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.sumconBtn {
+  float: right;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 24px;
+  gap: 4px;
+  width: 200px;
+  height: 46px;
+  background: $theme_color !important;
+  border-radius: 10px;
+  border: 1px solid $theme_color !important;
+  color: #fff;
+}
+
+.changesumClk {
+  float: right;
+  width: 60px;
+  height: 22px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  color: rgba(47, 41, 77, 0.7);
+}
+
+.addtitles {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 24px;
+  color: #2f294d;
+}
+
+.steperDiv {
+  margin-top: 20%;
+  background-color: #fff;
+  margin-left: 70px;
+  width: 832px;
+  border: 1px solid #fff;
+}
+
+.steperDivHideDiv {
+  background-color: #fff;
+  width: 832px;
+  border-radius: 0px;
+}
+
+mat-expansion-indicator {
+  visibility: hidden;
+}
+
+.mobileNameHeading {
+  overflow: hidden;
+  font-size: 0.9rem;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.submitButton {
+  margin-top: 10%;
+}
+
+.vocherdisPrice {
+  color: #f13939;
+}
+
+.newAddressSpan {
+  margin-left: 38rem;
+}
+
+.IconNewAddress {
+  cursor: pointer;
+  background-color: #33ccc6;
+  border-radius: 10;
+  padding: 1%;
+}
+
+.addressInfoDiv {
+  height: 150px;
+  overflow-y: scroll;
+}
+
+.orderSummaryInfo {
+  height: 250px;
+  overflow: auto;
+}
+
+.orderedImgInOrderSummary {
+  height: 150px;
+  width: 130px;
+}
+
+.productSubtitleHeading {
+  width: 159px;
+  height: 34px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+
+  color: rgba(47, 41, 77, 0.7);
+}
+
+.loaderImg {
+  width: 100px;
+}
+
+.addreddAddLoader {
+  width: 100px;
+  position: relative;
+  bottom: 1rem;
+}
+
+.phonepeImg {
+  height: 24px;
+  width: 24px;
+  margin-right: 10px;
+}
+
+.paypalImg {
+  width: 46%;
+  height: 88%;
+}
+
+.RazorImg {
+  width: 36%;
+  height: 54%;
+  margin-top: 15px;
+  margin-left: 1px;
+}
+
+.errormsg {
+  color: #d92337;
+}
+
+#StripeBtn {
+  margin-top: 8%;
+}
+
+.stripeImg {
+  width: 36%;
+  height: 54%;
+  margin-top: 1px;
+  margin-left: 3px;
+}
+
+.visaImg {
+  width: 36%;
+  height: 36%;
+  margin-top: 15px;
+  margin-left: 1px;
+}
+
+.masterImg {
+  width: 36%;
+  height: 36%;
+  margin-top: 15px;
+  margin-left: 1px;
+}
+
+.pay {
+  margin-left: 10%;
+  margin-right: 5%;
+}
+
+#cname,
+#ccnum,
+#expmonthsss,
+#expyear,
+#cvv {
+  margin-left: 3%;
+  margin-right: 3%;
+  margin-top: 5px;
+}
+
+.discountdiv {
+  margin-top: 10px;
+  height: 30px;
+}
+
+.cardLbl {
+  margin-top: 5px;
+  width: 50%;
+}
+
+#paypalBtn {
+  margin-top: 8%;
+}
+
+#RazorpayBtn {
+  margin-top: 10%;
+}
+
+.Razor {
+  margin-top: -4%;
+  margin-left: 6%;
+  width: 120px;
+  height: 81%;
+}
+
+#visaBtn {
+  margin-top: 10%;
+}
+
+.codBtn {
+  font-size: 17px;
+  font-weight: 500;
+  font-family: "Lato";
+}
+
+#cashOnDeliveryBtn {
+  margin-top: 12%;
+}
+
+.saved-Price {
+  color: #388e3c;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.table th {
+  font-weight: 500;
+}
+
+.est-days {
+  font-size: 13px;
+  color: #595959;
+}
+
+// ---------------------------------------------//
+
+.titleLbl {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 38px;
+  color: #2f294d;
+}
+
+.BTSClk {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 17px;
+  color: #2f294d;
+}
+
+.shipaddDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 16px;
+  gap: 16px;
+  width: 832px;
+  height: 50px;
+  background: #ffffff;
+}
+
+.shipaddDisplayDiv {
+  padding: 16px;
+  height: 335px;
+  background: #ffffff;
+}
+
+.card {
+  margin-top: 3%;
+  border-radius: 9px;
+}
+
+.priceDetailsDiv {
+  margin-top: 7%;
+  height: 340px;
+  border-radius: 3px;
+  background-color: white;
+}
+
+.disableDiv {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.delAddrDiv2 {
+  height: 69px;
+}
+
+.delAddrDiv {
+  height: 220px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.delAddrDiv1 {
+  height: 155px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.eachProductDiv {
+  margin-left: 16px;
+  margin-top: 43px;
+  overflow-y: scroll;
+}
+
+.sumpViewDiv {
+  margin-top: 2px;
+  margin-left: 10px;
+}
+
+.productsub {
+  margin-top: 8px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 19px;
+  color: rgba(47, 41, 77, 0.75);
+}
+
+.priceD {
+  margin-top: 10px;
+}
+
+.productSumHeading {
+  text-size-adjust: auto;
+  width: 499px;
+  padding-top: 10px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  color: #2f294d;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mat-expansion-indicator::after {
+  visibility: hidden;
+  color: red;
+}
+
+.mat-expansion-indicator {
+  position: absolute;
+  right: 55px;
+  color: red;
+}
+
+.delrydiv {
+  margin-left: 16px;
+  width: 100%;
+}
+
+.asfds {
+  height: 30px;
+  overflow: scroll;
+}
+
+.asfd {
+  height: 30px;
+  overflow: scroll;
+}
+
+.productSubsum {
+  width: 163px;
+  height: 19px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: rgba(47, 41, 77, 0.75);
+}
+
+.QL {
+  width: 71px;
+  height: 22px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  color: rgba(47, 41, 77, 0.85);
+  margin-top: 16px;
+}
+
+.QLnum {
+  width: 71px;
+  height: 22px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  color: rgba(47, 41, 77, 0.85);
+  margin-top: 16px;
+  margin-left: 18px;
+}
+
+.productsuhghb {
+  margin-top: 4px;
+  margin-left: 5px;
+  font-size: 14px;
+}
+
+.lineT {
+  margin-left: 5px;
+  margin-top: 4px;
+  font-size: 14px;
+}
+
+.lineT3 {
+  margin-top: 5px;
+  margin-left: 5px;
+  font-size: 14px;
+}
+
+.sumexpDisplayDiv {
+  margin-left: 3%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 16px;
+  gap: 16px;
+  background: #ffffff;
+}
+
+.payexpDisplayDiv {
+  margin-left: 3%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  width: 832px;
+  height: 190px;
+  background: #ffffff;
+}
+
+.Sheading {
+  margin-left: 16px;
+  margin-top: 24px;
+  width: 376px;
+  height: 22px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 22px;
+  color: #2f294d;
+  color: #2f294d;
+}
+
+.shLbl {
+  width: 290px;
+  height: 19px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  color: #2f294d;
+}
+
+.productSubHeading {
+  padding-top: 10px;
+  font-family: "Lato";
+  font-style: normal;
+  overflow: hidden;
+  width: 329px;
+  height: 34px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: rgba(47, 41, 77, 0.7);
+}
+
+.sumchangeClkDiv {
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  width: 100%;
+}
+
+.sumchangeDiv {
+  height: 80px;
+  margin-top: 1px;
+}
+
+.changeShipAdd {
+  margin-left: 520px;
+  width: 80px;
+  height: 22px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  color: rgba(47, 41, 77, 0.7);
+}
+
+.changeShipAdd2 {
+  margin-left: 450px;
+  width: 135px;
+  height: 22px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  color: rgba(47, 41, 77, 0.7);
+}
+
+.addressFormsDiv {
+  padding: 16px;
+  height: 435px;
+  background: #ffffff;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.checkoutHeading {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 46px;
+  color: #2f294d;
+}
+
+.headingsTxt {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 0px;
+  color: #2f294d;
+}
+
+.headingLine {
+  width: 48px;
+  height: 0px;
+  border: 1px solid #000000;
+}
+
+.changeTxt {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  color: rgba(47, 41, 77, 0.7);
+}
+
+.newAdd {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  color: $theme_color !important;
+}
+
+.disableTxt {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  color: rgba(0, 0, 0, 0.25);
+}
+
+.continueBtn {
+  background: $theme_color !important;
+  border-radius: 10px;
+  color: white;
+  float: right;
+  border: 0px;
+  height: 37px;
+  width: 140px;
+}
+
+.productName {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 24px;
+  color: #2f294d;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.priceDetailscard {
+  width: 408px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  margin-top: 7%;
+}
+
+.card-text2 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  color: #2f294d;
+}
+
+.card-row {
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-direction: row;
+  display: flex;
+}
+
+.saveAmt {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: #2f294d;
+}
+
+.saved-Price {
+  color: green;
+}
+
+.totalAmt {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 24px;
+  color: #2f294d;
+}
+
+.card-footer {
+  background-color: white !important;
+  border-top: 0px;
+}
+
+.divider {
+  margin-top: 0px !important;
+  margin-bottom: 0px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.card-text {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 35px;
+  color: #2f294d;
+}
+
+.card-prices {
+  font-size: 15px;
+}
+
+.product-model {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: rgba(47, 41, 77, 0.7);
+}
+
+.p-price {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 22px;
+  color: rgba(47, 41, 77, 0.85);
+}
+
+.off-price {
+  color: rgb(124 120 143 / 85%);
+  margin-left: 1%;
+  text-align: left;
+  -webkit-text-decoration-line: line-through;
+  text-decoration-line: line-through;
+}
+
+.p-qty {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  color: rgba(47, 41, 77, 0.85);
+}
+
+.p-select {
+  background: #ffffff;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
+  width: 50px;
+  height: 24px;
+  padding: 3px;
+  border: hidden;
+  text-align: center;
+}
+
+.sub-head {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  color: #2f294d;
+}
+
+.sub-col {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 45px;
+  color: #2f294d;
+}
+
+.sub-price {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 45px;
+  color: #3d3d3d;
+}
+
+.defaultAdd {
+  background-color: #e53030;
+}
+
+.repay {
+  width: 93px;
+  background: $theme_color !important;
+  border-radius: 5px;
+  color: white;
+}
+
+.fullAddress {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 24px;
+  color: #2f294d;
+}
+
+.fullAddress2 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 19px;
+  color: rgba(47, 41, 77, 0.75);
+}
+
+.voucher-btn {
+  height: 38px;
+  background-color: $theme_color !important;
+  border: $theme_color !important;
+}

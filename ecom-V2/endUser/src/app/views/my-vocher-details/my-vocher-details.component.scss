@@ -1,0 +1,130 @@
+@import "src/assets/styles/scss/variables";
+// @import "../../../assets/styles/scss/variables";
+
+.ordersDiv:nth-child(even) {
+  background-color: #e8fcfc;
+}
+
+.ordersDiv:nth-child(odd) {
+  background-color: #e9f5e1c9;
+}
+
+.ordersDiv {
+  margin-top: 2%;
+}
+
+.heading-col {
+  padding-left: 31px;
+}
+
+.heading-p1 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 22px;
+  color: #2f294d;
+}
+
+.heading-p2 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 19px;
+  color: #2f294d;
+}
+
+.send-btn {
+  width: 200px;
+  height: 36px;
+  background: $theme_color !important;
+  border-color: $theme_color !important;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.dashed-col {
+  border-right: 2px dashed rgba(47, 41, 77, 0.55);
+}
+
+.gift-rcv-name {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 13px;
+  line-height: 21px;
+  color: #2f294d;
+}
+
+.gift-des {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 24px;
+  color: #2f294d;
+}
+
+.card-value {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 17px;
+  color: #333333;
+}
+
+.gift-img {
+  width: 200px;
+  height: 125px;
+}
+
+.expan-header {
+  height: 56px;
+  margin-bottom: 17px;
+  background: rgba(244, 244, 244, 0.75) !important;
+}
+
+.expan-header:hover {
+  background: rgba(244, 244, 244, 0.75) !important;
+}
+
+::ng-deep .mat-expansion-panel-body {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+.bottom-left {
+  position: absolute;
+  bottom: 34px;
+  left: 116px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 17px;
+  color: #e7e9b7;
+}
+
+.submit-btn {
+  width: 152px;
+  height: 36px;
+  background: $theme_color !important;
+  border-radius: 5px;
+  border-color: $theme_color !important;
+}
+
+.cancel-btn {
+  width: 107px;
+  height: 36px;
+  color: $theme_color !important; // white;
+  border-radius: 5px;
+  border-color: $theme_color !important; // #a5aeaf;
+}
+
+.img-height {
+  height: 180px;
+  margin-left: auto;
+  margin-right: auto;
+}
