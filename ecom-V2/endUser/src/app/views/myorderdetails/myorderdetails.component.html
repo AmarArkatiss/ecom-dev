@@ -7,7 +7,7 @@
       <div class="card-header bg-white order-card">
         <div class="row m-0">
           <div class="col-sm-6 p-0">
-            <p class="card-head-p1 pl-3">Order No: {{ this.orderProduct.orderId }}</p>
+            <p class="card-head-p1 pl-3">Order No: {{ orderId }}</p>
           </div>
           <div class="col-sm-6 p-0 text-right">
             <p class="card-head-p2 pointer" [routerLink]="'/myorders'">
@@ -33,7 +33,7 @@
             <div class="card-header bg-white products-card-bottom">
               <div class="row m-0">
                 <div class="col-sm-7 p-0">
-                  <p class="order-date">Ordered On: {{ this.orderProduct.orderedDate }}</p>
+                  <p class="order-date">Ordered On: {{ orderDate }}</p>
                 </div>
                 <div class="col-sm-5 text-right p-0">
                 </div>
@@ -91,7 +91,7 @@
                     (click)="viewCancel(cancelPopup, 'cancel')">
                     Cancel Order</button>&nbsp;
                   <button type="button" class="btn btn-warning btn-sm repay"
-                    (click)="repayClick(paymentPopup, this.orderProduct.orderId)">
+                    (click)="repayClick(paymentPopup, orderId)">
                     Pay
                   </button>
                 </div>
@@ -111,7 +111,7 @@
                 </div>
                 <div *ngIf="itemStatus == 'Delivered'" class="col-sm-6 text-right">
                   <button type="button" class="btn btn-outline-warning cancel btn-sm" id="returnid"
-                    (click)="handleReturn(this.orderProduct.orderId)">
+                    (click)="handleReturn(orderId)">
                     Return</button>&nbsp;
                   <button type="button" class="btn btn-warning repay btn-sm"
                     (click)="viewReorder(reorderPopup, 'reOrder')">
@@ -241,18 +241,18 @@
   <div class="col-sm-12 text-right mt-4">
     <button type="button" class="btn btn-outline-warning btn-sm cancel" (click)="dialog.closeAll()">
       CANCEL</button>&nbsp;
-    <button type="button" class="btn btn-warning btn-sm repay"  (click)="paymentFlag === 'paypal' ? paypalClk(paypalPopup) : paymentFlag === 'stripe' ? stripeClk(stripePop) : paymentFlag === 'razor' ? rClick() : paymentFlag === 'cod' ?  codClick() : ''">
+    <button type="button" class="btn btn-warning btn-sm repay" *ngIf="paypalFlag" (click)="paypalClk(paypalPopup)">
       PROCEED
     </button>
-    <!-- <button type="button" class="btn btn-warning btn-sm repay" *ngIf="paymentFlag === 'stripe'" (click)="stripeClk(stripePop)">
+    <button type="button" class="btn btn-warning btn-sm repay" *ngIf="stripeFlag" (click)="stripeClk(stripePop)">
       PROCEED
     </button>
-    <button type="button" class="btn btn-warning btn-sm repay" *ngIf="paymentFlag === 'razor'" (click)="rClick()">
+    <button type="button" class="btn btn-warning btn-sm repay" *ngIf="razorFlag" (click)="rClick()">
       PROCEED
     </button>
-    <button type="button" class="btn btn-warning btn-sm repay" *ngIf="paymentFlag === 'cod'" (click)="codClick()">
+    <button type="button" class="btn btn-warning btn-sm repay" *ngIf="codFlag" (click)="codClick()">
       PROCEED
-    </button> -->
+    </button>
   </div>
 </ng-template>
 
@@ -353,7 +353,7 @@
     <div class="col-sm-12 card p-0">
       <div class="card-header card-row">
         <p class="card-head-p1">Item Details</p>
-        <p class="card-head-p1">Order # - {{ this.orderProduct.orderId }}</p>
+        <p class="card-head-p1">Order # - {{ orderId }}</p>
       </div>
       <div class="detailsDiv1">
         <div class="card-body">
@@ -399,7 +399,7 @@
     <div class="col-sm-12 card p-0">
       <div class="card-header card-row">
         <p class="card-head-p1">Item Details</p>
-        <p class="card-head-p1">Order # - {{ this.orderProduct.orderId }}</p>
+        <p class="card-head-p1">Order # - {{ orderId }}</p>
       </div>
       <div class="detailsDiv1">
         <div class="card-body">
