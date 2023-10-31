@@ -3,14 +3,11 @@ import { MyorderDetailService } from '../myorderdetails/service/myorderdetails.s
 import { OrderDetailsData, myOrderDetails, OtherItemOrderDetailsData } from './modal/myorderdetails-modal';
 import { environment } from 'src/environments/environment.prod';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MyorderService } from '../myorders/service/myorder.service';
 import { myOrder } from '../myorders/modal/myorder-modal';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { DatePipe } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { CommonService } from '../../helper/common.service';
-import { element } from 'protractor';
 import { MenuService } from 'src/app/layout/service/menu.service';
 import { PlaceOrderService } from '../place-order/services/place-order.service';
 import { AuthService } from 'src/app/helper/auth.service';
@@ -24,20 +21,12 @@ export class MyorderdetailsComponent implements OnInit {
   myProducts = [];
   address;
   itemStatus;
-  orderId;
   orderProduct: any;
-  customerId: any;
-  productId;
   orderLineId;
   ordAddress: myOrderDetails = new myOrderDetails();
   ord: myOrder = new myOrder();
   noOrdersImg;
   imgurl;
-  logedSeeionId;
-  logedCustomerId;
-  logedEmailId;
-  logedUserName;
-  logedPhone;
   otherItemsInOrder;
   otherItemsInOrderDetails;
   ProductStatus;
@@ -49,7 +38,6 @@ export class MyorderdetailsComponent implements OnInit {
   panelOpenState = false;
   sellerInformation = [];
   storeId;
-  orderDate: any;
   paymentStatus: any;
   storeName: any;
   totalAmnt: any;
@@ -57,38 +45,30 @@ export class MyorderdetailsComponent implements OnInit {
   tenantId;
   orderItemsList = []
   razorpayOrderId;
-  stripeFlag = false;
-  paypalFlag = false;
-  razorFlag = false;
-  codFlag = false
+  paymentFlag:any = '';
   currencyCode;
   paramRoute;
   showPopStatus: string;
   cancelItemList = [];
   productShipStatus = false;
-  constructor(private myOdrDetails: MyorderDetailService, public dialog: MatDialog, private route: ActivatedRoute, private datePipe: DatePipe, private menu: MenuService,
-    private router: Router, private common: CommonService, private snack: MatSnackBar, private myorder: MyorderService, private spinner: NgxSpinnerService,
+  sessionData: any = {};
+  constructor(private myOdrDetails: MyorderDetailService, public dialog: MatDialog, private route: ActivatedRoute, private menu: MenuService,
+    private router: Router, private common: CommonService, private snack: MatSnackBar, private spinner: NgxSpinnerService,
     private ps: PlaceOrderService, public auth: AuthService) {
     this.imgurl = environment.imageURL;
   }
 
   ngOnInit(): void {
-    this.logedSeeionId = sessionStorage.getItem('sessionId');
-    this.logedCustomerId = sessionStorage.getItem('customerId');
-    this.logedEmailId = sessionStorage.getItem('userEmail');
-    this.logedUserName = sessionStorage.getItem('userdata');
-    this.logedPhone = sessionStorage.getItem('telephone');
-    this.tenantId = sessionStorage.getItem('tenantId');
+    const keys = Object.keys(sessionStorage);
+    keys.forEach(key => {
+      this.sessionData[key] = sessionStorage.getItem(key);
+    });
     const id = this.route.snapshot.paramMap.get('id');
     this.paramRoute = id
     const decoded = decodeURI(id);
     const prodInfo = JSON.parse(decoded);
     this.orderProduct = prodInfo;
-    this.orderId = this.orderProduct.orderId;
-    this.productId = this.orderProduct.productId;
-    this.orderLineId = this.orderProduct.orderLineId
-    this.customerId = this.orderProduct.customerId;
-    this.orderDate = this.orderProduct.orderedDate;
+    this.orderLineId = this.orderProduct.orderLineId;
     this.paymenttypeStatus = this.orderProduct.paymentStatus;
     if (this.paymenttypeStatus == "Pending") {
       this.retryStatus = true;
@@ -107,9 +87,9 @@ export class MyorderdetailsComponent implements OnInit {
   getMyOrders(): any {
     this.spinner.show();
     const body = {
-      order_op_type: "order_details", order_id: this.orderId, login: true,
-      customer_id: this.logedCustomerId,
-      session_id: this.logedSeeionId,
+      order_op_type: "order_details", order_id: this.orderProduct.orderId, login: true,
+      customer_id: this.sessionData.customerId,
+      session_id: this.sessionData.sessionId,
     };
     this.myOdrDetails.getSummaryOrderDetails(body).subscribe((data) => {
       this.ordAddress.data = Array<OrderDetailsData>();
@@ -250,10 +230,10 @@ export class MyorderdetailsComponent implements OnInit {
       apiItemList.push(item.product_id)
     })
     let body = {
-      "order_op_type": "re_order_details", "customer_id": this.logedCustomerId,
-      "order_id": this.orderId, "product_id": apiItemList, tenant_id: this.tenantId,
-      "session_id": this.logedSeeionId,
-      "login": true, "quantity": 1
+      order_op_type: "re_order_details", customer_id: this.sessionData.customerId,
+      order_id: this.orderProduct.orderId, product_id: apiItemList, tenant_id: this.sessionData.tenantId,
+      session_id: this.sessionData.sessionId,
+      login: true, quantity: 1
     }
     body = this.common.referenceIdValidation(body)
     this.myOdrDetails.reOrder(body).subscribe((data) => {
@@ -275,7 +255,7 @@ export class MyorderdetailsComponent implements OnInit {
     this.cancelItemList.map((item) => {
       orderLinesList.push(item.order_line_id)
     })
-    let body = { order_id: this.orderId, order_line_id: orderLinesList, customer_id: this.logedCustomerId }
+    let body = { order_id: this.orderProduct.orderId, order_line_id: orderLinesList, customer_id: this.sessionData.customerId }
     this.myOdrDetails.cancelOrder(body).subscribe((data) => {
       this.spinner.hide()
       if (data.res_status === true) {
@@ -299,7 +279,7 @@ export class MyorderdetailsComponent implements OnInit {
       this.snack.open('The Product is in Draft Stage', 'Ok', { duration: 5000 });
     }
     else {
-      this.router.navigate(['/invoice'], { queryParams: { OrdersId: this.orderId, paramRoute: this.paramRoute } })
+      this.router.navigate(['/invoice'], { queryParams: { OrdersId: this.orderProduct.orderId, paramRoute: this.paramRoute } })
     }
   }
 
@@ -311,9 +291,9 @@ export class MyorderdetailsComponent implements OnInit {
   */
   getProductsFromRelated(pid, oid, olId) {
     this.router.navigate(['/myorderdetails', pid, oid, olId]);
-    this.productId = pid;
+    this.orderProduct.productId = pid;
     this.orderLineId = olId
-    this.orderId = oid
+    this.orderProduct.orderId = oid
     this.getMyOrders();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -325,44 +305,22 @@ export class MyorderdetailsComponent implements OnInit {
   // Payment Methods
   repayClick(paymentPopup) {
     this.dialog.open(paymentPopup, { width: '50%', height: '305px', disableClose: true });
-    this.stripeFlag = false;
-    this.paypalFlag = false;
-    this.razorFlag = false;
-    this.codFlag = false;
+    this.paymentFlag = '';
   }
   handlePayments(data) {
-    if (data === 'paypal') {
-      this.paypalFlag = true;
-      this.stripeFlag = false;
-      this.razorFlag = false;
-      this.codFlag = false;
-    } else if (data === 'stripe') {
-      this.stripeFlag = true;
-      this.paypalFlag = false;
-      this.razorFlag = false;
-      this.codFlag = false;
-    } else if (data === 'razor') {
-      this.stripeFlag = false;
-      this.paypalFlag = false;
-      this.razorFlag = true;
-      this.codFlag = false;
-    } else {
-      this.stripeFlag = false;
-      this.paypalFlag = false;
-      this.razorFlag = false;
-      this.codFlag = true;
-    }
+    this.paymentFlag = data;
+    
   }
   codClick() {
     let body;
     body = {
-      "customer_id": this.logedCustomerId,
-      "session_id": this.logedSeeionId,
-      "order_id": this.orderId,
-      "tenant_id": this.tenantId,
-      "payment_type": "COD",
-      "store_id": this.storeId,
-      "api_name": "Cod",
+      customer_id: this.sessionData.customerId,
+      session_id: this.sessionData.sessionId,
+      order_id: this.orderProduct.orderId,
+      tenant_id: this.sessionData.tenantId,
+      payment_type: "COD",
+      store_id: this.storeId,
+      api_name: "Cod",
     };
     body = this.common.referenceIdValidation(body)
     const success = this.codOnSucess.bind(this);
@@ -402,7 +360,7 @@ export class MyorderdetailsComponent implements OnInit {
       key: 'rzp_test_s82NKjqnrIcU79',
       amount: amountcurrency, // amount should be in paise format to display Rs 1255 without decimal point
       currency: this.currencyCode,
-      name: this.logedEmailId, // company name or product name
+      name: this.sessionData.userEmail, // company name or product name
       description: '',  // product description
       image: './assets/logo.jpg', // company logo or product image
       razorpay_order_id: this.razorpayOrderId, // order_id created by you in backend
