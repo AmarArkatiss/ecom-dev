@@ -66,6 +66,7 @@ export class MyorderdetailsComponent implements OnInit {
   showPopStatus: string;
   cancelItemList = [];
   productShipStatus = false;
+  testing:any;
   constructor(private myOdrDetails: MyorderDetailService, public dialog: MatDialog, private route: ActivatedRoute, private datePipe: DatePipe, private menu: MenuService,
     private router: Router, private common: CommonService, private snack: MatSnackBar, private myorder: MyorderService, private spinner: NgxSpinnerService,
     private ps: PlaceOrderService, public auth: AuthService) {
